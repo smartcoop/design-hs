@@ -4,6 +4,7 @@ module Main where
 
 import Data.List (find)
 import qualified Data.Text.Lazy.IO as T
+import qualified Text.Blaze.Html.Renderer.Pretty as Pretty (renderHtml)
 import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Blaze.Html5 (preEscapedToHtml, toHtml, (!), Html)
 import qualified Text.Blaze.Html5 as H
@@ -14,7 +15,10 @@ import System.Environment (getArgs)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = do
-  T.putStr (renderHtml page)
+  args <- getArgs
+  case args of
+    ["--pretty"] -> putStr (Pretty.renderHtml page)
+    _ -> T.putStr (renderHtml page)
 
 
 --------------------------------------------------------------------------------
