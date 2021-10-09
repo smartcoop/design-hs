@@ -30,7 +30,7 @@ main = do
 page :: Html
 page = document "Smart design system" $ do
   navbar
-  mainContent (return ())
+  mainContent panels
 
 
 --------------------------------------------------------------------------------
@@ -145,6 +145,95 @@ toolbar =
 
 
 --------------------------------------------------------------------------------
+panels =
+  H.div ! A.class_ "o-container o-container--large" $ do
+    H.div ! A.class_ "o-container-vertical" $ do
+      H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
+        H.div ! A.class_ "c-panel__header" $
+          H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
+        H.div ! A.class_ "c-panel__body" $ do
+          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" $ "Add client"
+              H.div ! A.class_ "c-empty-state c-empty-state--bg-alt" $ do
+                H.p ! A.class_ "u-text-muted c-body-1" $ "Please add a client for this quote."
+                H.div ! A.class_ "c-button-toolbar" $ do
+                  H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+                    H.span ! A.class_ "c-button__content" $ do
+                      H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
+                        svgIconAdd
+                      H.span ! A.class_ "c-button__label" $ "Add new client"
+                  H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+                    H.span ! A.class_ "c-button__content" $ do
+                      H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
+                        svgIconAdd
+                      H.span ! A.class_ "c-button__label" $ "Add existing client"
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" $ "Radio"
+              H.div ! A.class_ "o-form-group__controls" $
+                H.div ! A.class_ "c-radio-group" $ do
+                  H.div ! A.class_ "c-radio" $
+                    H.label $ do
+                      H.input ! A.type_ "radio" ! A.name "radio1" ! A.checked "checked"
+                      "Lorem ipsum dolor sit amet."
+                  H.div ! A.class_ "c-radio" $
+                    H.label $ do
+                      H.input ! A.type_ "radio" ! A.name "radio1"
+                      "Lorem ipsum dolor sit amet."
+      H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
+        H.div ! A.class_ "c-panel__header" $
+          H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
+        H.div ! A.class_ "c-panel__body" $ do
+          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Input"
+              H.div ! A.class_ "o-form-group__controls" $
+                H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "input"
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "select" $ "Select"
+              H.div ! A.class_ "o-form-group__controls" $ do
+                H.div ! A.class_ "c-select-holder" $
+                  H.select ! A.class_ "c-select" ! A.id "select" $ do
+                    H.option "Choose an item"
+                    H.option "A"
+                    H.option "B"
+                    H.option "C"
+                H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "textarea" $ "Textarea"
+              H.div ! A.class_ "o-form-group__controls" $ do
+                H.textarea ! A.class_ "c-textarea" ! A.rows "5" ! A.id "textarea" $ ""
+                H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+      H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
+        H.div ! A.class_ "c-panel__header" $
+          H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
+        H.div ! A.class_ "c-panel__body" $ do
+          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Nr BCE"
+              H.div ! A.class_ "o-form-group__controls" $
+                H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "__/__/__" ! A.id "input"
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "saleAmount" $ "Sale amount"
+              H.div ! A.class_ "c-input-group" $ do
+                H.input ! A.class_ "c-input" ! A.type_ "number" ! A.id "saleAmount"
+                H.div ! A.class_ "c-input-group__append" $ "€"
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "time" $ "Time"
+              H.div ! A.class_ "o-flex o-flex--vertical-center o-flex--spaced" $ do
+                H.span $ do
+                  H.p "From"
+                  H.input ! A.class_ "c-input" ! A.type_ "time" ! A.id "time"
+                H.span $ do
+                  H.p "To"
+                  H.input ! A.class_ "c-input" ! A.type_ "time" ! A.id "time"
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "date" $ "Default label"
+              H.div ! A.class_ "o-form-group__controls" $
+                H.input ! A.class_ "c-input" ! A.type_ "date" ! A.id "date"
+
+
+--------------------------------------------------------------------------------
 document title body = do
   H.docType
   H.html
@@ -248,4 +337,14 @@ svgIconSave =
     ! SA.fill "none" $
     S.path
       ! SA.d "M3 5C3 3.89543 3.89543 3 5 3H9H15H16.5858C17.1162 3 17.6249 3.21071 18 3.58579L20.7071 6.29289C20.8946 6.48043 21 6.73478 21 7V19C21 20.1046 20.1046 21 19 21H15H9H5C3.89543 21 3 20.1046 3 19V5ZM9 19H15V13H9V19ZM17 19H19V7.41421L17 5.41421V7C17 8.10457 16.1046 9 15 9H9C7.89543 9 7 8.10457 7 7V5H5V19H7V13C7 11.8954 7.89543 11 9 11H15C16.1046 11 17 11.8954 17 13V19ZM9 5V7H15V5H9Z"
+      ! SA.fill "#595959"
+
+svgIconAdd =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M12 4C12.5523 4 13 4.44771 13 5V11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H13V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H11V5C11 4.44771 11.4477 4 12 4Z"
       ! SA.fill "#595959"
