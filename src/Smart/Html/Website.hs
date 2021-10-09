@@ -12,7 +12,7 @@ import qualified Text.Blaze.Svg as S (toSvg)
 import qualified Text.Blaze.Svg11 as S
 import qualified Text.Blaze.Svg11.Attributes as SA
 
-import Smart.Html.Application (js, myHead)
+import Smart.Html.Application (js, myHead, svgIconClose)
 
 
 --------------------------------------------------------------------------------
@@ -36,14 +36,85 @@ document title body = do
 --------------------------------------------------------------------------------
 myBody body =
   H.body ! A.class_ "u-maximize-height" $ do
-    H.header ! A.id "header" $
-      return ()
+    myHeader
     H.main ! A.class_ "o-container" $
       H.div ! A.class_ "o-container o-container--medium" $
         H.div ! A.class_ "o-container-vertical" $
           body
     myFooter
     js
+
+myHeader =
+  H.header ! A.id "header" $
+    H.div ! A.class_ "o-container" $
+      H.div ! A.class_ "c-navbar c-navbar--bordered-bottom c-navbar--main" $
+        H.div ! A.class_ "c-toolbar" $ do
+          H.div ! A.class_ "c-toolbar__left" $
+            H.div ! A.class_ "c-toolbar__item" $
+              H.a ! A.href "/" $
+                H.img ! A.class_ "c-design-system-logo" ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
+          H.div ! A.class_ "c-toolbar__right" $
+            H.div ! A.class_ "c-toolbar__item" $
+              H.nav ! A.class_ "c-design-system-nav" $ do
+                H.button ! A.class_ "c-button c-button--borderless c-button--icon c-design-system-nav-open" ! A.type_ "button" ! A.id "c-design-system-nav-open" $
+                  H.span ! A.class_ "c-button__content" $ do
+                    H.div ! A.class_ "o-svg-icon o-svg-icon-menu  " $
+                      svgIconMenu
+                    H.div ! A.class_ "u-sr-accessible" $ "Open menu"
+                H.button ! A.class_ "c-button c-button--borderless c-button--icon c-design-system-nav-close" ! A.type_ "button" ! A.id "c-design-system-nav-close" $
+                  H.span ! A.class_ "c-button__content" $ do
+                    H.div ! A.class_ "o-svg-icon o-svg-icon-close  " $
+                      svgIconClose
+                    H.div ! A.class_ "u-sr-accessible" $ "Close menu"
+                H.div ! A.class_ "c-design-system-nav__mobile" $
+                  H.ul $ do
+                    H.li $ do
+                      H.span "Design"
+                      H.ul $ do
+                        H.li $
+                          H.a ! A.href "/design/how-it-works.html" $ "Design workflow"
+                        H.li $
+                          H.a ! A.href "/design/in-practice/copywriting.html" $ "Design system in practice"
+                    H.li $ do
+                      H.span "Development"
+                      H.ul $
+                        H.li $
+                          H.a ! A.href "/development/getting-started.html" $ "Getting started"
+                    H.li $
+                      H.a ! A.href "/blog/index.html" $ "Blog"
+                    H.li $
+                      H.a ! A.href "/changelog.html" $ "Changelog"
+                H.div ! A.class_ "c-design-system-nav__desktop" $
+                  H.ul ! A.class_ "c-pill-navigation" $ do
+                    H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
+                      H.a ! A.href "#" ! customAttribute "data-menu" "menu1" ! customAttribute "data-menu-samewidth" "true" $ "Design"
+                      H.ul ! A.class_ "c-menu c-menu--large" ! A.id "menu1" $ do
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/design/how-it-works.html" $ "Design workflow"
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/design/in-practice/copywriting.html" $ "Design system in practice"
+                    H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
+                      H.a ! A.href "#" ! customAttribute "data-menu" "menu2" ! customAttribute "data-menu-samewidth" "true" $ "Development"
+                      H.ul ! A.class_ "c-menu c-menu--large" ! A.id "menu2" $ do
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/development/getting-started.html" $ "Getting started"
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/development/package-and-repo-links.html" $ "Package and repo links"
+                        H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/development/component-documentation.html" $ "Component documentation"
+                        H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/development/browser-support.html" $ "Browser support"
+                        H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/development/writing-css/architecture.html" $ "CSS architecture"
+                        H.li ! A.class_ "c-menu__item" $
+                          H.a ! A.class_ "c-menu__label" ! A.href "/development/writing-css/component-structure.html" $ "CSS component structure"
+                    H.li ! A.class_ "c-pill-navigation__item" $
+                      H.a ! A.href "/blog/index.html" $ "Blog"
+                    H.li ! A.class_ "c-pill-navigation__item" $
+                      H.a ! A.href "/changelog.html" $ "Changelog"
 
 myFooter =
   H.footer ! A.id "footer" $
@@ -60,6 +131,16 @@ myFooter =
                 "Share feedback on GitHub"
 
 --------------------------------------------------------------------------------
+svgIconMenu =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M4 7C4 6.44772 4.44772 6 5 6H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H5C4.44772 8 4 7.55228 4 7ZM4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12ZM4 17C4 16.4477 4.44772 16 5 16H19C19.5523 16 20 16.4477 20 17C20 17.5523 19.5523 18 19 18H5C4.44772 18 4 17.5523 4 17Z"
+      ! SA.fill "#595959"
+
 svgIconGitHub =
   S.svg
     ! SA.width "24"
