@@ -43,6 +43,7 @@ common common-dependencies
     -- servant "core" (& server)
     , blaze-markup
     , blaze-html
+    , blaze-svg
 
     , containers
 
