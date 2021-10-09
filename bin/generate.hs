@@ -28,8 +28,9 @@ main = do
 
 --------------------------------------------------------------------------------
 page :: Html
-page = document "Smart design system" $
+page = document "Smart design system" $ do
   navbar
+  mainContent (return ())
 
 
 --------------------------------------------------------------------------------
@@ -110,6 +111,40 @@ navbar = do
 
 
 --------------------------------------------------------------------------------
+mainContent content =
+  H.main ! A.class_ "u-scroll-wrapper u-maximize-width" $ do
+    toolbar
+    H.div ! A.class_ "u-scroll-wrapper-body" $
+      content
+
+toolbar =
+  H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
+    H.div ! A.class_ "c-toolbar" $ do
+      H.div ! A.class_ "c-toolbar__left" $ do
+        H.div ! A.class_ "c-toolbar__item" $ do
+          H.a ! A.class_ "c-button c-button--icon c-button--borderless" ! A.href "#" $ do
+            H.div ! A.class_ "c-button__content" $ do
+              H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-left" $ do
+                svgIconArrowLeft
+              H.div ! A.class_ "u-sr-accessible" $ "Back"
+        H.div ! A.class_ "c-toolbar__item" $ do
+          H.h2 ! A.class_ "c-toolbar__title" $ "Toolbar title"
+      H.div ! A.class_ "c-toolbar__right" $ do
+        H.div ! A.class_ "c-toolbar__item" $ do
+          H.div ! A.class_ "c-button-toolbar" $ do
+            H.button ! A.class_ "c-button c-button--danger-secondary" ! A.type_ "button" $ do
+              H.span ! A.class_ "c-button__content" $ do
+                H.div ! A.class_ "o-svg-icon o-svg-icon-close" $ do
+                  svgIconClose
+                H.span ! A.class_ "c-button__label" $ "Cancel"
+            H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $ do
+              H.span ! A.class_ "c-button__content" $ do
+                H.div ! A.class_ "o-svg-icon o-svg-icon-save" $ do
+                  svgIconSave
+                H.span ! A.class_ "c-button__label" $ "Save"
+
+
+--------------------------------------------------------------------------------
 document title body = do
   H.docType
   H.html
@@ -180,4 +215,37 @@ svgIconSearch =
     ! SA.fill "none" $
     S.path
       ! SA.d "M10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4ZM2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10C18 11.8487 17.3729 13.551 16.3199 14.9056L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3166 22.0976 20.6834 22.0976 20.2929 21.7071L14.9056 16.3199C13.551 17.3729 11.8487 18 10 18C5.58172 18 2 14.4183 2 10Z"
+      ! SA.fill "#595959"
+
+svgIconArrowLeft :: Html
+svgIconArrowLeft =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M11.7071 5.29289C12.0976 5.68342 12.0976 6.31658 11.7071 6.70711L7.41421 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H7.41421L11.7071 17.2929C12.0976 17.6834 12.0976 18.3166 11.7071 18.7071C11.3166 19.0976 10.6834 19.0976 10.2929 18.7071L4.29289 12.7071C4.10536 12.5196 4 12.2652 4 12C4 11.7348 4.10536 11.4804 4.29289 11.2929L10.2929 5.29289C10.6834 4.90237 11.3166 4.90237 11.7071 5.29289Z"
+      ! SA.fill "#595959"
+
+svgIconClose :: Html
+svgIconClose =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M5.29289 5.2929C5.68342 4.90237 6.31658 4.90237 6.70711 5.2929L12 10.5858L17.2929 5.2929C17.6834 4.90237 18.3166 4.90237 18.7071 5.2929C19.0976 5.68342 19.0976 6.31659 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31659 4.90237 5.68342 5.29289 5.2929Z"
+      ! SA.fill "#595959"
+
+svgIconSave :: Html
+svgIconSave =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M3 5C3 3.89543 3.89543 3 5 3H9H15H16.5858C17.1162 3 17.6249 3.21071 18 3.58579L20.7071 6.29289C20.8946 6.48043 21 6.73478 21 7V19C21 20.1046 20.1046 21 19 21H15H9H5C3.89543 21 3 20.1046 3 19V5ZM9 19H15V13H9V19ZM17 19H19V7.41421L17 5.41421V7C17 8.10457 16.1046 9 15 9H9C7.89543 9 7 8.10457 7 7V5H5V19H7V13C7 11.8954 7.89543 11 9 11H15C16.1046 11 17 11.8954 17 13V19ZM9 5V7H15V5H9Z"
       ! SA.fill "#595959"
