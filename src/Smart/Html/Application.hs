@@ -14,6 +14,7 @@ import qualified Text.Blaze.Svg11.Attributes as SA
 
 
 --------------------------------------------------------------------------------
+-- https://design.smart.coop/development/template-examples/app-form.html
 page :: Html
 page = document "Smart design system" $ do
   navbar

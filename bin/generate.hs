@@ -8,11 +8,13 @@ import Text.Blaze.Html.Renderer.Text (renderHtml)
 import System.Environment (getArgs)
 
 import qualified Smart.Html.Application as App
+import qualified Smart.Html.Website as Web
 
 
 --------------------------------------------------------------------------------
 -- Example usage:
 --   runghc -i src/ bin/generate.hs --pretty app-form
+--   runghc -i src/ bin/generate.hs --pretty blog-post
 main :: IO ()
 main = do
   args_ <- getArgs
@@ -22,5 +24,6 @@ main = do
 
   case args of
     ["app-form"] -> render App.page
+    ["blog-post"] -> render Web.page
     [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."
     _ -> putStrLn "Missing argument: example name"
