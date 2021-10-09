@@ -18,12 +18,19 @@ import qualified Text.Blaze.Svg11.Attributes as SA
 
 
 --------------------------------------------------------------------------------
+-- Example usage:
+--   runghc bin/generate.hs --pretty app-form
 main :: IO ()
 main = do
-  args <- getArgs
+  args_ <- getArgs
+  let (render, args) = case args_ of
+        "--pretty" : rest -> (putStr . Pretty.renderHtml, rest)
+        _ -> (T.putStr . renderHtml, args_)
+
   case args of
-    ["--pretty"] -> putStr (Pretty.renderHtml page)
-    _ -> T.putStr (renderHtml page)
+    ["app-form"] -> render page
+    [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."
+    _ -> putStrLn "Missing argument: example name"
 
 
 --------------------------------------------------------------------------------
