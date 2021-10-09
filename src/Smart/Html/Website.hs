@@ -19,7 +19,7 @@ import Smart.Html.Application (js, myHead, svgIconClose)
 -- https://design.smart.coop/blog/2021/10/08/smart-announces-an-open-design-system.html
 page :: Html
 page = document "Smart design system" $ do
-  return ()
+  article
 
 
 --------------------------------------------------------------------------------
@@ -31,6 +31,45 @@ document title body = do
     ! A.lang "en" $ do
     myHead title
     myBody body
+
+article =
+  H.article ! A.class_ "c-blog-article" $ do
+    H.div ! A.class_ "c-blog-article__header" $ do
+      H.h1 ! A.class_ "c-d-h1" $ "Smart announces an open design system"
+      H.p "October 8, 2021"
+    H.div ! A.class_ "c-blog-article__content" $ do
+      H.div ! A.class_ "c-display" $ do
+        H.p $ do
+          "We're happy to announce we, at Smart Belgium, have started to work on a design system for the web applications of the Smart group. For the first time, but surely not the last, we've decided to make this project open source and available on "
+          H.a ! A.href "https://github.com/smartcoop/design" $ "GitHub"
+          ". We believe this matches the collaborative values of Smart and will enable various parties of the Smart ecosystem to benefit from it."
+        H.p $ do
+          "The home of the design system lives at the homepage of this very website. In addition to the blog that you're reading right now, you will be able to learn what's new, find the necessary documentation to get started with "
+          H.a ! A.href "https://design.smart.coop/design/how-it-works.html" $ "designing"
+          ", using and "
+          H.a ! A.href "https://design.smart.coop/development/getting-started.html" $ "developing"
+          " the design system yourself, as well as find the right links to be able to contribute."
+        H.p "With this design system we are pursuing three goals:"
+        H.ul $ do
+          H.li "The first goal is to create the visual basis of our future software developments. This may mean the different colors that can be used, the shape and size of a button, or the location of a menu or a form on the screen. This visual work follows and stands on top of the graphic charter introduced in early 2019."
+          H.li "The second goal is to create and assemble those design elements in a tool called Figma. Figma is specialized to design software interfaces. In addition of design work by designers, it can also be used by software development teams to prototype what new screens could look like and how they are organized."
+          H.li "The third goal is to implement and present the design using web technologies: HTML and CSS. This implementation is meant to be a source of truth for other developers, so they can replicate the design in whatever programming language and technical stack they want."
+        H.p $ do
+          "We're very excited by what we've done so far and will write additional blog posts soon. In the mean time, you can already join the conversation using "
+          H.a ! A.href "https://github.com/smartcoop/design/issues/111" $ "the GitHub issue for commenting for this post"
+          ". Feel free to raise your own issues to give feedback and comment on the design system, or start your first contribution."
+      H.div ! A.class_ "o-container-vertical o-container-vertical--padding-mini" $
+        H.ul ! A.class_ "c-avatar-and-text-list" $ do
+          H.li ! A.class_ "c-avatar-and-text" $ do
+            H.a ! A.class_ "c-avatar c-avatar--img c-avatar--regular" ! A.href "https://github.com/thusc/" $
+              H.img ! A.src "https://avatars.githubusercontent.com/u/45588452?v=4" ! A.alt "avatar-image"
+            H.div ! A.class_ "c-avatar-and-text__text" $
+              H.p "Thu"
+          H.li ! A.class_ "c-avatar-and-text" $ do
+            H.a ! A.class_ "c-avatar c-avatar--img c-avatar--regular" ! A.href "https://github.com/Wolfr/" $
+              H.img ! A.src "https://avatars.githubusercontent.com/u/12690?v=4" ! A.alt "avatar-image"
+            H.div ! A.class_ "c-avatar-and-text__text" $
+              H.p "Wolfr"
 
 
 --------------------------------------------------------------------------------
