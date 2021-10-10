@@ -23,6 +23,7 @@ main = do
         _ -> (T.putStr . renderHtml, args_)
 
   case args of
+    ["index"] -> render Web.index
     ["app-form"] -> render App.page
     ["blog-post"] -> render Web.page
     [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."

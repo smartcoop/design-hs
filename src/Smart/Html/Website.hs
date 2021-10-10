@@ -16,12 +16,34 @@ import Smart.Html.Application (js, myHead, svgIconClose)
 
 
 --------------------------------------------------------------------------------
+index :: Html
+index = document "Smart design system" $
+  article
+    "Example pages"
+    Nothing
+    content
+    (return ())
+  where
+  content = do
+    H.p $ do
+      "These example pages must match the ones presented on the "
+      H.a ! A.href "https://design.smart.coop/development/getting-started.html" $
+        "original site"
+      "."
+    H.ul $ do
+      H.li $
+        H.a ! A.href "app-form.html" $ "App form"
+      H.li $
+        H.a ! A.href "blog-post.html" $ "Blog post"
+
+
+--------------------------------------------------------------------------------
 -- https://design.smart.coop/blog/2021/10/08/smart-announces-an-open-design-system.html
 page :: Html
 page = document "Smart design system" $
   article
     "Smart announces an open design system"
-    "October 8, 2021"
+    (Just "October 8, 2021")
     post
     avatars
 
@@ -71,11 +93,11 @@ document title body = do
     myHead title
     myBody body
 
-article title date content authors =
+article title mdate content authors =
   H.article ! A.class_ "c-blog-article" $ do
     H.div ! A.class_ "c-blog-article__header" $ do
       H.h1 ! A.class_ "c-d-h1" $ title
-      H.p date
+      maybe (return ()) H.p mdate
     H.div ! A.class_ "c-blog-article__content" $ do
       H.div ! A.class_ "c-display" $
         content
