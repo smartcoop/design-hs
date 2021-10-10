@@ -13,8 +13,8 @@ import qualified Smart.Html.Website as Web
 
 --------------------------------------------------------------------------------
 -- Example usage:
---   runghc -i src/ bin/generate.hs --pretty app-form
---   runghc -i src/ bin/generate.hs --pretty blog-post
+--   runghc -isrc/ bin/generate.hs --pretty app-form
+--   runghc -isrc/ bin/generate.hs --pretty blog-post
 main :: IO ()
 main = do
   args_ <- getArgs
