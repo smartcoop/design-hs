@@ -32,9 +32,23 @@ index = document "Smart design system" $
       "."
     H.ul $ do
       H.li $
-        H.a ! A.href "app-form.html" $ "App form"
+        H.a ! A.href "app-empty.html" $ "Application, empty page"
+      H.li $
+        H.a ! A.href "app-navigation.html" $ "Application, navigation bar"
+      H.li $
+        H.a ! A.href "app-toolbar.html" $ "Application, navigation bar + toolbar"
+      H.li $
+        H.a ! A.href "app-form.html" $ "Application form"
+      H.li $
+        H.a ! A.href "web-empty.html" $ "Website, empty page"
       H.li $
         H.a ! A.href "blog-post.html" $ "Blog post"
+
+
+--------------------------------------------------------------------------------
+empty :: Html
+empty = document "Smart design system" $
+  return ()
 
 
 --------------------------------------------------------------------------------

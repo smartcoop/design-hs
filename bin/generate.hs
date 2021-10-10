@@ -24,7 +24,11 @@ main = do
 
   case args of
     ["index"] -> render Web.index
+    ["app-empty"] -> render App.empty
+    ["app-navigation"] -> render App.navigation
+    ["app-toolbar"] -> render App.navToolbar
     ["app-form"] -> render App.page
+    ["web-empty"] -> render Web.empty
     ["blog-post"] -> render Web.page
     [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."
     _ -> putStrLn "Missing argument: example name"

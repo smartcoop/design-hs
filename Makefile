@@ -1,6 +1,10 @@
 all: \
   _site/index.html \
+  _site/app-empty.html \
+  _site/app-navigation.html \
+  _site/app-toolbar.html \
   _site/app-form.html \
+  _site/web-empty.html \
   _site/blog-post.html
 
 
