@@ -3,6 +3,7 @@ all: \
   _site/app-empty.html \
   _site/app-navigation.html \
   _site/app-toolbar.html \
+  _site/app-titlebar.html \
   _site/app-form.html \
   _site/app-form--banner.html \
   _site/app-form--wizard.html \

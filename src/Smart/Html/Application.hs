@@ -33,6 +33,13 @@ navToolbar = document "Smart design system" $ do
 
 
 --------------------------------------------------------------------------------
+navTitlebar :: Html
+navTitlebar = document "Smart design system" $ do
+  navbar
+  mainContent titlebar (return ())
+
+
+--------------------------------------------------------------------------------
 -- https://design.smart.coop/development/template-examples/app-form.html
 page :: Html
 page = document "Smart design system" $ do
@@ -247,6 +254,22 @@ wizard =
                 H.span ! A.class_ "c-button__label" $ "Next"
                 H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-right  " $
                   svgIconArrowRight
+
+titlebar =
+  H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
+    H.div ! A.class_ "c-toolbar" $ do
+      H.div ! A.class_ "c-toolbar__left" $
+        H.div ! A.class_ "c-toolbar__item" $
+          H.h2 ! A.class_ "c-toolbar__title" $ "Module title"
+      H.div ! A.class_ "c-toolbar__right" $
+        H.div ! A.class_ "c-toolbar__item" $
+          H.div ! A.class_ "c-button-toolbar" $
+            H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $
+              H.span ! A.class_ "c-button__content" $ do
+                H.div ! A.class_ "o-svg-icon o-svg-icon-add  " $
+                  svgIconAdd
+                H.span ! A.class_ "c-button__label" $ "Add item"
+
 
 
 --------------------------------------------------------------------------------

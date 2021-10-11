@@ -38,6 +38,8 @@ index = document "Smart design system" $
       H.li $
         H.a ! A.href "app-toolbar.html" $ "Application, navigation bar + toolbar"
       H.li $
+        H.a ! A.href "app-titlebar.html" $ "Application, navigation bar + titlebar"
+      H.li $
         H.a ! A.href "app-form.html" $ "Application form"
       H.li $
         H.a ! A.href "app-form--banner.html" $ "Application form, with banner"

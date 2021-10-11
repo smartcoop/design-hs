@@ -27,6 +27,7 @@ main = do
     ["app-empty"] -> render App.empty
     ["app-navigation"] -> render App.navigation
     ["app-toolbar"] -> render App.navToolbar
+    ["app-titlebar"] -> render App.navTitlebar
     ["app-form"] -> render App.page
     ["app-form--banner"] -> render App.pageWithBanner
     ["app-form--wizard"] -> render App.pageWithWizard
