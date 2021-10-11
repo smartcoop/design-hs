@@ -52,7 +52,7 @@ index = document "Smart design system" $
       H.li $
         H.a ! A.href "web-empty.html" $ "Website, empty page"
       H.li $
-        H.a ! A.href "blog-post.html" $ "Blog post"
+        H.a ! A.href "blog-post.html" $ "Website, blog post"
 
 
 --------------------------------------------------------------------------------
