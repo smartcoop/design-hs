@@ -5,6 +5,7 @@ all: \
   _site/app-toolbar.html \
   _site/app-form.html \
   _site/app-form--banner.html \
+  _site/app-form--wizard.html \
   _site/web-empty.html \
   _site/blog-post.html
 

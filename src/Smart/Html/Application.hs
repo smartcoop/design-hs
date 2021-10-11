@@ -54,6 +54,15 @@ pageWithBanner = document "Smart design system" $ do
 
 
 --------------------------------------------------------------------------------
+-- https://design.smart.coop/development/template-examples/wizard.html
+pageWithWizard :: Html
+pageWithWizard = document "Smart design system" $ do
+  H.header $
+    navbar
+  mainContent' panels
+
+
+--------------------------------------------------------------------------------
 banner =
   H.div ! A.class_ "c-global-banner c-global-banner--default" $ do
     H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information o-svg-icon--default " $
@@ -153,6 +162,12 @@ mainContent content =
     H.div ! A.class_ "u-scroll-wrapper-body" $
       content
 
+mainContent' content =
+  H.main ! A.class_ "u-scroll-wrapper u-maximize-width" $ do
+    wizard
+    H.div ! A.class_ "u-scroll-wrapper-body" $
+      content
+
 toolbar =
   H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
     H.div ! A.class_ "c-toolbar" $ do
@@ -178,6 +193,47 @@ toolbar =
                 H.div ! A.class_ "o-svg-icon o-svg-icon-save" $ do
                   svgIconSave
                 H.span ! A.class_ "c-button__label" $ "Save"
+
+wizard =
+  H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
+    H.div ! A.class_ "c-toolbar" $ do
+      H.div ! A.class_ "c-toolbar__left" $
+        H.div ! A.class_ "c-toolbar__item" $
+          H.nav ! A.class_ "c-wizard" $
+            H.ul $ do
+              H.li $
+                H.a ! A.class_ "c-wizard__item c-wizard--complete" ! A.href "#" $ do
+                  H.div ! A.class_ "c-wizard__indicator" $ ""
+                  H.div ! A.class_ "c-wizard__label" $ "General info"
+              H.li $
+                H.a ! A.class_ "c-wizard__item c-wizard--active" ! A.href "#" $ do
+                  H.div ! A.class_ "c-wizard__indicator" $ "2"
+                  H.div ! A.class_ "c-wizard__label" $ "Location and dates"
+              H.li $
+                H.a ! A.class_ "c-wizard__item" ! A.href "#" $ do
+                  H.div ! A.class_ "c-wizard__indicator" $ "3"
+                  H.div ! A.class_ "c-wizard__label" $ "Function and risks"
+              H.li $
+                H.a ! A.class_ "c-wizard__item" ! A.href "#" $ do
+                  H.div ! A.class_ "c-wizard__indicator" $ "4"
+                  H.div ! A.class_ "c-wizard__label" $ "Contract type"
+              H.li $
+                H.a ! A.class_ "c-wizard__item" ! A.href "#" $ do
+                  H.div ! A.class_ "c-wizard__indicator" $ "5"
+                  H.div ! A.class_ "c-wizard__label" $ "Confirm"
+      H.div ! A.class_ "c-toolbar__right" $
+        H.div ! A.class_ "c-toolbar__item" $
+          H.div ! A.class_ "c-button-toolbar" $ do
+            H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+              H.span ! A.class_ "c-button__content" $ do
+                H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-left  " $
+                  svgIconArrowLeft
+                H.span ! A.class_ "c-button__label" $ "Back"
+            H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $
+              H.span ! A.class_ "c-button__content" $ do
+                H.span ! A.class_ "c-button__label" $ "Next"
+                H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-right  " $
+                  svgIconArrowRight
 
 
 --------------------------------------------------------------------------------
@@ -367,6 +423,17 @@ svgIconArrowLeft =
     ! SA.fill "none" $
     S.path
       ! SA.d "M11.7071 5.29289C12.0976 5.68342 12.0976 6.31658 11.7071 6.70711L7.41421 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H7.41421L11.7071 17.2929C12.0976 17.6834 12.0976 18.3166 11.7071 18.7071C11.3166 19.0976 10.6834 19.0976 10.2929 18.7071L4.29289 12.7071C4.10536 12.5196 4 12.2652 4 12C4 11.7348 4.10536 11.4804 4.29289 11.2929L10.2929 5.29289C10.6834 4.90237 11.3166 4.90237 11.7071 5.29289Z"
+      ! SA.fill "#595959"
+
+svgIconArrowRight :: Html
+svgIconArrowRight =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z"
       ! SA.fill "#595959"
 
 svgIconClose :: Html

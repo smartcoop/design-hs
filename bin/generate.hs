@@ -29,6 +29,7 @@ main = do
     ["app-toolbar"] -> render App.navToolbar
     ["app-form"] -> render App.page
     ["app-form--banner"] -> render App.pageWithBanner
+    ["app-form--wizard"] -> render App.pageWithWizard
     ["web-empty"] -> render Web.empty
     ["blog-post"] -> render Web.page
     [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."
