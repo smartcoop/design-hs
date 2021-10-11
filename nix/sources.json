@@ -1,10 +1,4 @@
 {
-    "brittany": {
-        "ref": "master",
-        "repo": "git@github.com:lspitzner/brittany.git",
-        "rev": "434f9f8e49b847ef3e648672c5564b6dd0d3be67",
-        "type": "git"
-    },
     "gitignore": {
         "branch": "master",
         "description": "Nix function for filtering local git sources",

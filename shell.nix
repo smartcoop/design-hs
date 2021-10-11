@@ -11,7 +11,7 @@ let
   # Brittany, as the formatter, is just here as an example.
   # I personally prefer to have the formatters pinned to a version and then
   # made available via direnv to avoid unnecessary diff pollution across upgrades.
-  brittany = hp.callCabal2nix "brittany" sources.brittany { };
+  # brittany = hp.callCabal2nix "brittany" sources.brittany { };
 
   # Niv is great at pinning dependencies in sources.json and computing SHA's etc.
   nix-tooling = with hp; [ niv ];
@@ -20,7 +20,7 @@ let
   haskell-tooling = with hp; [ cabal-install ghcid hlint ];
 
   # Add more as we need them.
-  formatters = [ brittany ];
+  formatters = [ ]; # brittany
 
   system-tooling = with nixpkgs; [ inotify-tools # needed for HotExe.sh (filesystem notifs.)
                                    psmisc # needed for HotExe.sh: (kill processes by port.)
