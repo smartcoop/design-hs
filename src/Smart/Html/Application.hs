@@ -31,7 +31,7 @@ navToolbar :: Html
 navToolbar = document "Smart design system" $ do
   H.header $
     navbar
-  mainContent (return ())
+  mainContent toolbar (return ())
 
 
 --------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ page :: Html
 page = document "Smart design system" $ do
   H.header $
     navbar
-  mainContent panels
+  mainContent toolbar panels
 
 
 --------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ pageWithBanner = document "Smart design system" $ do
   banner
   H.header $
     navbar
-  mainContent panels
+  mainContent toolbar panels
 
 
 --------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ pageWithWizard :: Html
 pageWithWizard = document "Smart design system" $ do
   H.header $
     navbar
-  mainContent' panels
+  mainContent wizard panels
 
 
 --------------------------------------------------------------------------------
@@ -68,10 +68,7 @@ pageWithSideMenu :: Html
 pageWithSideMenu = document "Smart design system" $ do
   H.header $
     navbar
-  mainContentSideMenu menu $ do
-    toolbar
-    H.div ! A.class_ "u-scroll-wrapper-body" $
-      panels
+  mainContentSideMenu menu toolbar panels
 
 
 --------------------------------------------------------------------------------
@@ -169,26 +166,22 @@ navbar = do
 
 
 --------------------------------------------------------------------------------
-mainContent content =
+mainContent top content =
   H.main ! A.class_ "u-scroll-wrapper u-maximize-width" $ do
-    toolbar
+    top
     H.div ! A.class_ "u-scroll-wrapper-body" $
       content
 
-mainContent' content =
-  H.main ! A.class_ "u-scroll-wrapper u-maximize-width" $ do
-    wizard
-    H.div ! A.class_ "u-scroll-wrapper-body" $
-      content
-
-mainContentSideMenu menu content =
+mainContentSideMenu menu top content =
   H.main ! A.class_ "u-scroll-wrapper u-maximize-width" $ do
     H.div ! A.class_ "c-app-layout-inner" $ do
       H.div ! A.class_ "c-app-layout-inner__sidebar u-bg-gray-50" $
         menu
       H.div ! A.class_ "c-app-layout-inner__main" $
-        H.div ! A.class_ "u-scroll-wrapper" $
-          content
+        H.div ! A.class_ "u-scroll-wrapper" $ do
+          top
+          H.div ! A.class_ "u-scroll-wrapper-body" $
+            content
 
 
 --------------------------------------------------------------------------------
