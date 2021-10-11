@@ -54,7 +54,7 @@ pageWithBanner = document "Smart design system" $ do
 pageWithWizard :: Html
 pageWithWizard = document "Smart design system" $ do
   navbar
-  mainContent wizard panels
+  mainContent wizard (panels' "Location and dates")
 
 
 --------------------------------------------------------------------------------
@@ -270,9 +270,16 @@ menu =
 
 
 --------------------------------------------------------------------------------
-panels =
+panels = panels_ Nothing
+
+panels' = panels_ . Just
+
+panels_ mtitle =
   H.div ! A.class_ "o-container o-container--large" $ do
     H.div ! A.class_ "o-container-vertical" $ do
+      maybe (return ()) (\t ->
+        H.div ! A.class_ "c-content" $
+          H.h1 t) mtitle
       H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
         H.div ! A.class_ "c-panel__header" $
           H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
