@@ -63,6 +63,18 @@ pageWithWizard = document "Smart design system" $ do
 
 
 --------------------------------------------------------------------------------
+-- https://design.smart.coop/development/template-examples/app-side-menu.html
+pageWithSideMenu :: Html
+pageWithSideMenu = document "Smart design system" $ do
+  H.header $
+    navbar
+  mainContentSideMenu menu $ do
+    toolbar
+    H.div ! A.class_ "u-scroll-wrapper-body" $
+      panels
+
+
+--------------------------------------------------------------------------------
 banner =
   H.div ! A.class_ "c-global-banner c-global-banner--default" $ do
     H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information o-svg-icon--default " $
@@ -169,6 +181,17 @@ mainContent' content =
     H.div ! A.class_ "u-scroll-wrapper-body" $
       content
 
+mainContentSideMenu menu content =
+  H.main ! A.class_ "u-scroll-wrapper u-maximize-width" $ do
+    H.div ! A.class_ "c-app-layout-inner" $ do
+      H.div ! A.class_ "c-app-layout-inner__sidebar u-bg-gray-50" $
+        menu
+      H.div ! A.class_ "c-app-layout-inner__main" $
+        H.div ! A.class_ "u-scroll-wrapper" $
+          content
+
+
+--------------------------------------------------------------------------------
 toolbar =
   H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
     H.div ! A.class_ "c-toolbar" $ do
@@ -235,6 +258,26 @@ wizard =
                 H.span ! A.class_ "c-button__label" $ "Next"
                 H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-right  " $
                   svgIconArrowRight
+
+
+--------------------------------------------------------------------------------
+menu =
+  H.ul ! A.class_ "c-side-menu" $ do
+    H.li ! A.class_ "c-side-menu__item c-side-menu__item--active" $
+      H.a ! A.class_ "c-side-menu__link" ! A.href "#" $ do
+        H.div ! A.class_ "o-svg-icon o-svg-icon-document  " $
+          svgIconDocument
+        H.div ! A.class_ "c-sidebar-item__label" $ "Quotes & invoices"
+    H.li ! A.class_ "c-side-menu__item" $
+      H.a ! A.class_ "c-side-menu__link" ! A.href "#" $ do
+        H.div ! A.class_ "o-svg-icon o-svg-icon-bills  " $
+          svgIconBills
+        H.div ! A.class_ "c-sidebar-item__label" $ "Funding"
+    H.li ! A.class_ "c-side-menu__item" $
+      H.a ! A.class_ "c-side-menu__link" ! A.href "#" $ do
+        H.div ! A.class_ "o-svg-icon o-svg-icon-tag  " $
+          svgIconTag
+        H.div ! A.class_ "c-sidebar-item__label" $ "Expenses"
 
 
 --------------------------------------------------------------------------------
@@ -459,6 +502,7 @@ svgIconSave =
       ! SA.d "M3 5C3 3.89543 3.89543 3 5 3H9H15H16.5858C17.1162 3 17.6249 3.21071 18 3.58579L20.7071 6.29289C20.8946 6.48043 21 6.73478 21 7V19C21 20.1046 20.1046 21 19 21H15H9H5C3.89543 21 3 20.1046 3 19V5ZM9 19H15V13H9V19ZM17 19H19V7.41421L17 5.41421V7C17 8.10457 16.1046 9 15 9H9C7.89543 9 7 8.10457 7 7V5H5V19H7V13C7 11.8954 7.89543 11 9 11H15C16.1046 11 17 11.8954 17 13V19ZM9 5V7H15V5H9Z"
       ! SA.fill "#595959"
 
+svgIconAdd :: Html
 svgIconAdd =
   S.svg
     ! SA.width "24"
@@ -467,4 +511,48 @@ svgIconAdd =
     ! SA.fill "none" $
     S.path
       ! SA.d "M12 4C12.5523 4 13 4.44771 13 5V11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H13V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H11V5C11 4.44771 11.4477 4 12 4Z"
+      ! SA.fill "#595959"
+
+svgIconDocument :: Html
+svgIconDocument =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $ do
+    S.path
+      ! SA.d "M6 2C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8C20 7.73478 19.8946 7.48043 19.7071 7.29289L14.7071 2.29289C14.5196 2.10536 14.2652 2 14 2H6ZM12 4V9C12 9.55228 12.4477 10 13 10H18V20H6V4L12 4ZM17.5858 8H14V4.41421L17.5858 8Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M8 13C8 13.5523 8.44772 14 9 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H9C8.44772 12 8 12.4477 8 13Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M8 17C8 16.4477 8.44772 16 9 16H15C15.5523 16 16 16.4477 16 17C16 17.5523 15.5523 18 15 18H9C8.44772 18 8 17.5523 8 17Z"
+      ! SA.fill "#595959"
+
+svgIconBills :: Html
+svgIconBills =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.fillRule "evenodd"
+      ! SA.clipRule "evenodd"
+      ! SA.d "M2 6C2 4.89543 2.89543 4 4 4H18C19.1046 4 20 4.89543 20 6V8C21.1046 8 22 8.89543 22 10V18C22 19.1046 21.1046 20 20 20H6C4.89543 20 4 19.1046 4 18V16C2.89543 16 2 15.1046 2 14V6ZM18 16C19.1046 16 20 15.1046 20 14V18H6V16H18ZM18 6L4 6V14H18V6ZM10 10C10 9.44772 10.4477 9 11 9C11.5523 9 12 9.44772 12 10C12 10.5523 11.5523 11 11 11C10.4477 11 10 10.5523 10 10ZM11 7C9.34315 7 8 8.34315 8 10C8 11.6569 9.34315 13 11 13C12.6569 13 14 11.6569 14 10C14 8.34315 12.6569 7 11 7Z"
+      ! SA.fill "#595959"
+
+svgIconTag :: Html
+svgIconTag =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $ do
+    S.path
+      ! SA.d "M2 3C2 2.44772 2.44772 2 3 2H11C11.2652 2 11.5196 2.10536 11.7071 2.29289L21.7071 12.2929C22.0976 12.6834 22.0976 13.3166 21.7071 13.7071L13.7071 21.7071C13.3166 22.0976 12.6834 22.0976 12.2929 21.7071L2.29289 11.7071C2.10536 11.5196 2 11.2652 2 11V3ZM4 4V10.5858L13 19.5858L19.5858 13L10.5858 4H4Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M9 7.5C9 8.32843 8.32843 9 7.5 9C6.67157 9 6 8.32843 6 7.5C6 6.67157 6.67157 6 7.5 6C8.32843 6 9 6.67157 9 7.5Z"
       ! SA.fill "#595959"

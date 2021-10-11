@@ -44,6 +44,8 @@ index = document "Smart design system" $
       H.li $
         H.a ! A.href "app-form--wizard.html" $ "Application form, with wizard"
       H.li $
+        H.a ! A.href "app-form--side-menu.html" $ "Application form, with left menu"
+      H.li $
         H.a ! A.href "web-empty.html" $ "Website, empty page"
       H.li $
         H.a ! A.href "blog-post.html" $ "Blog post"
