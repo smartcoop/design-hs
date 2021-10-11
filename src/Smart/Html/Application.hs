@@ -22,15 +22,13 @@ empty = document "Smart design system" $ do
 --------------------------------------------------------------------------------
 navigation :: Html
 navigation = document "Smart design system" $ do
-  H.header $
-    navbar
+  navbar
 
 
 --------------------------------------------------------------------------------
 navToolbar :: Html
 navToolbar = document "Smart design system" $ do
-  H.header $
-    navbar
+  navbar
   mainContent toolbar (return ())
 
 
@@ -38,8 +36,7 @@ navToolbar = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/app-form.html
 page :: Html
 page = document "Smart design system" $ do
-  H.header $
-    navbar
+  navbar
   mainContent toolbar panels
 
 
@@ -48,8 +45,7 @@ page = document "Smart design system" $ do
 pageWithBanner :: Html
 pageWithBanner = document "Smart design system" $ do
   banner
-  H.header $
-    navbar
+  navbar
   mainContent toolbar panels
 
 
@@ -57,8 +53,7 @@ pageWithBanner = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/wizard.html
 pageWithWizard :: Html
 pageWithWizard = document "Smart design system" $ do
-  H.header $
-    navbar
+  navbar
   mainContent wizard panels
 
 
@@ -89,80 +84,81 @@ banner =
 
 --------------------------------------------------------------------------------
 navbar = do
-  H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $ do
-    H.div ! A.class_ "c-toolbar" $ do
-      H.div ! A.class_ "c-toolbar__left" $ do
-        H.div ! A.class_ "c-toolbar__item" $ do
-          H.div ! A.class_ "c-brand c-brand--xsmall" $ do
-            H.a ! A.href "/" $ do
-              H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
-        H.div ! A.class_ "c-toolbar__item" $ do
-          H.nav $ do
-            H.ul ! A.class_ "c-pill-navigation" $ do
-              H.li ! A.class_ "c-pill-navigation__item" $ do
-                H.a ! A.href "#" $ "Activities"
-              H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                H.a ! A.href "#"
-                    ! customAttribute "data-menu" "subMenu-1"
-                    ! customAttribute "data-menu-samewidth" "true"
-                    $ "Management"
-                H.ul ! A.class_ "c-menu c-menu--large" ! A.id "subMenu-1" $ do
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-              H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                H.a ! A.href "#"
-                    ! customAttribute "data-menu" "subMenu-2"
-                    ! customAttribute "data-menu-samewidth" "true"
-                    $ "Documents"
-                H.ul ! A.class_ "c-menu c-menu--large" ! A.id "subMenu-2" $ do
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-              H.li ! A.class_ "c-pill-navigation__item" $ do
-                H.a ! A.href "#" $ "Members"
-              H.li ! A.class_ "c-pill-navigation__item" $ do
-                H.a ! A.href "#" $ "Archive"
-      H.div ! A.class_ "c-toolbar__right" $ do
-        H.div ! A.class_ "c-toolbar__item" $ do
-          H.nav $ do
-            H.ul ! A.class_ "c-pill-navigation" $ do
-              H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                H.a ! A.href "#" ! customAttribute "data-menu" "helpMenu" $ do
-                  H.div ! A.class_ "o-svg-icon o-svg-icon-circle-help  " $ do
-                    svgIconCircleHelp
-                  H.span ! A.class_ "u-sr-accessible" $ "Help"
-                H.ul ! A.class_ "c-menu c-menu--large" ! A.id "helpMenu" $ do
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "About this page"
-                  H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ do
-                      H.span "Documentation"
-                      H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $ do
-                        svgIconExternalLink
-                  H.li ! A.class_ "c-menu__item" $ do
-                    H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Report a bug"
-        H.div ! A.class_ "c-toolbar__item" $ do
-          H.div ! A.class_ "c-input-group" $ do
-            H.div ! A.class_ "c-input-group__prepend" $ do
-              H.div ! A.class_ "o-svg-icon o-svg-icon-search  " $ do
-                svgIconSearch
-            H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "Search ..."
-        H.div ! A.class_ "c-toolbar__item" $ do
-          H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $ do
-            H.div ! A.class_ "c-avatar c-avatar--img c-avatar--regular" $ do
-              H.img ! A.src "https://design.smart.coop/images/avatars/1.jpg" ! A.alt "avatar"
-          H.ul ! A.class_ "c-menu c-menu--large" ! A.id "userMenu" $ do
-            H.li ! A.class_ "c-menu__item" $ do
-              H.a ! A.class_ "c-menu__label" ! A.href "#" $ "My profile"
-            H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-            H.li ! A.class_ "c-menu__item" $ do
-              H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Sign out"
+  H.header $
+    H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $ do
+      H.div ! A.class_ "c-toolbar" $ do
+        H.div ! A.class_ "c-toolbar__left" $ do
+          H.div ! A.class_ "c-toolbar__item" $ do
+            H.div ! A.class_ "c-brand c-brand--xsmall" $ do
+              H.a ! A.href "/" $ do
+                H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
+          H.div ! A.class_ "c-toolbar__item" $ do
+            H.nav $ do
+              H.ul ! A.class_ "c-pill-navigation" $ do
+                H.li ! A.class_ "c-pill-navigation__item" $ do
+                  H.a ! A.href "#" $ "Activities"
+                H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
+                  H.a ! A.href "#"
+                      ! customAttribute "data-menu" "subMenu-1"
+                      ! customAttribute "data-menu-samewidth" "true"
+                      $ "Management"
+                  H.ul ! A.class_ "c-menu c-menu--large" ! A.id "subMenu-1" $ do
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
+                H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
+                  H.a ! A.href "#"
+                      ! customAttribute "data-menu" "subMenu-2"
+                      ! customAttribute "data-menu-samewidth" "true"
+                      $ "Documents"
+                  H.ul ! A.class_ "c-menu c-menu--large" ! A.id "subMenu-2" $ do
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
+                H.li ! A.class_ "c-pill-navigation__item" $ do
+                  H.a ! A.href "#" $ "Members"
+                H.li ! A.class_ "c-pill-navigation__item" $ do
+                  H.a ! A.href "#" $ "Archive"
+        H.div ! A.class_ "c-toolbar__right" $ do
+          H.div ! A.class_ "c-toolbar__item" $ do
+            H.nav $ do
+              H.ul ! A.class_ "c-pill-navigation" $ do
+                H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
+                  H.a ! A.href "#" ! customAttribute "data-menu" "helpMenu" $ do
+                    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-help  " $ do
+                      svgIconCircleHelp
+                    H.span ! A.class_ "u-sr-accessible" $ "Help"
+                  H.ul ! A.class_ "c-menu c-menu--large" ! A.id "helpMenu" $ do
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "About this page"
+                    H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ do
+                        H.span "Documentation"
+                        H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $ do
+                          svgIconExternalLink
+                    H.li ! A.class_ "c-menu__item" $ do
+                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Report a bug"
+          H.div ! A.class_ "c-toolbar__item" $ do
+            H.div ! A.class_ "c-input-group" $ do
+              H.div ! A.class_ "c-input-group__prepend" $ do
+                H.div ! A.class_ "o-svg-icon o-svg-icon-search  " $ do
+                  svgIconSearch
+              H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "Search ..."
+          H.div ! A.class_ "c-toolbar__item" $ do
+            H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $ do
+              H.div ! A.class_ "c-avatar c-avatar--img c-avatar--regular" $ do
+                H.img ! A.src "https://design.smart.coop/images/avatars/1.jpg" ! A.alt "avatar"
+            H.ul ! A.class_ "c-menu c-menu--large" ! A.id "userMenu" $ do
+              H.li ! A.class_ "c-menu__item" $ do
+                H.a ! A.class_ "c-menu__label" ! A.href "#" $ "My profile"
+              H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
+              H.li ! A.class_ "c-menu__item" $ do
+                H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Sign out"
 
 
 --------------------------------------------------------------------------------
