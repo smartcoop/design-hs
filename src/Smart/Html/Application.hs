@@ -2,6 +2,7 @@
 
 module Smart.Html.Application where
 
+import Control.Monad (forM_)
 import Text.Blaze (customAttribute)
 import qualified Text.Blaze.Html.Renderer.Pretty as Pretty (renderHtml)
 import Text.Blaze.Html.Renderer.Text (renderHtml)
@@ -71,6 +72,14 @@ pageWithSideMenu = document "Smart design system" $ do
   H.header $
     navbar
   mainContentSideMenu menu toolbar panels
+
+
+--------------------------------------------------------------------------------
+--https://design.smart.coop/development/template-examples/app-datagrid.html
+datagrid :: Html
+datagrid = document "Smart design system" $ do
+  navbar
+  mainContent titlebar table
 
 
 --------------------------------------------------------------------------------
@@ -389,6 +398,87 @@ panels_ mtitle =
 
 
 --------------------------------------------------------------------------------
+table =
+  H.div ! A.class_ "u-padding-horizontal-s" $ do
+    H.table ! A.class_ "c-table c-table--styled js-data-table" $ do
+      H.thead $
+        H.tr $ do
+          H.th "Data"
+          H.th "Data"
+          H.th "Data"
+          H.th ""
+      H.tbody $
+        forM_ [1..10] $ \_ ->
+          H.tr $ do
+            H.td "Data"
+            H.td "Data"
+            H.td "Data"
+            H.td $
+              rowAction
+    pagination
+
+rowAction =
+  H.div ! A.class_ "c-button-toolbar" $ do
+    H.button
+      ! A.class_ "c-button c-button--borderless c-button--icon"
+      ! A.type_ "button"
+      ! customAttribute "data-menu-placement" "bottom-end"
+      ! customAttribute "data-menu" "dropdownMenu-0" $
+      H.span ! A.class_ "c-button__content" $ do
+        H.div ! A.class_ "o-svg-icon o-svg-icon-options-horizontal" $
+          svgIconOptionsHorizontal
+        H.div ! A.class_ "u-sr-accessible" $ "More options"
+    H.ul ! A.class_ "c-menu" ! A.id "dropdownMenu-0" $ do
+      H.li ! A.class_ "c-menu__item" $
+        H.a ! A.class_ "c-menu__label" ! A.href "#" $ do
+          H.div ! A.class_ "o-svg-icon o-svg-icon-edit" $
+            svgIconEdit
+          H.span $ "Edit"
+      H.li ! A.class_ "c-menu__item" $
+        H.a ! A.class_ "c-menu__label" ! A.href "#" $ do
+          H.div ! A.class_ "o-svg-icon o-svg-icon-delete" $
+            svgIconDelete
+          H.span "Delete"
+    H.button ! A.class_ "c-button c-button--borderless c-button--icon" ! A.type_ "button" $
+      H.span ! A.class_ "c-button__content" $ do
+        H.div ! A.class_ "o-svg-icon o-svg-icon-chevron-right" $
+          svgIconChevronRight
+        H.div ! A.class_ "u-sr-accessible" $ "Go to detail"
+
+pagination =
+  H.div ! A.class_ "u-padding-horizontal" $
+    H.div ! A.class_ "u-spacer-top" $
+      H.div ! A.class_ "c-toolbar c-toolbar--auto" $ do
+        H.div ! A.class_ "c-toolbar__left" $
+          H.div ! A.class_ "c-toolbar__item" $
+            H.div ! A.class_ "c-pagination-simple" $ do
+              H.div ! A.class_ "c-pagination-simple__item" $ "1 of 4"
+              H.div ! A.class_ "c-pagination-simple__item" $
+                H.div ! A.class_ "c-button-toolbar" $ do
+                  H.button ! A.class_ "c-button c-button--icon c-button--borderless" ! A.disabled "disabled" $
+                    H.div ! A.class_ "c-button__content" $ do
+                      H.div ! A.class_ "o-svg-icon o-svg-icon-chevron-left" $
+                        svgIconChevronLeft
+                      H.div ! A.class_ "u-sr-accessible" $ "Previous"
+                  H.button ! A.class_ "c-button c-button--icon c-button--borderless" $
+                    H.div ! A.class_ "c-button__content" $ do
+                      H.div ! A.class_ "o-svg-icon o-svg-icon-chevron-right" $
+                        svgIconChevronRight
+                      H.div ! A.class_ "u-sr-accessible" $ "Next"
+        H.div ! A.class_ "c-toolbar__right" $
+          H.div ! A.class_ "c-toolbar__item" $
+            H.div ! A.class_ "o-form-group-layout o-form-group-layout--horizontal" $
+              H.div ! A.class_ "o-form-group" $ do
+                H.label ! A.class_ "u-spacer-right-s" ! A.for "itemsPerPageId" $ "Items per page"
+                H.div ! A.class_ "o-form-group__controls" $
+                  H.div ! A.class_ "c-select-holder" $
+                    H.select ! A.class_ "c-select" ! A.id "itemsPerPageId" $ do
+                      H.option "10"
+                      H.option "20"
+                      H.option "50"
+
+
+--------------------------------------------------------------------------------
 document title body = do
   H.docType
   H.html
@@ -574,4 +664,65 @@ svgIconTag =
       ! SA.fill "#595959"
     S.path
       ! SA.d "M9 7.5C9 8.32843 8.32843 9 7.5 9C6.67157 9 6 8.32843 6 7.5C6 6.67157 6.67157 6 7.5 6C8.32843 6 9 6.67157 9 7.5Z"
+      ! SA.fill "#595959"
+
+svgIconOptionsHorizontal :: Html
+svgIconOptionsHorizontal =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $ do
+    S.path
+      ! SA.d "M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M6 14C7.10457 14 8 13.1046 8 12C8 10.8954 7.10457 10 6 10C4.89543 10 4 10.8954 4 12C4 13.1046 4.89543 14 6 14Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12C16 13.1046 16.8954 14 18 14Z"
+      ! SA.fill "#595959"
+
+svgIconEdit :: Html
+svgIconEdit =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M16.2929 2.29289C16.6834 1.90237 17.3166 1.90237 17.7071 2.29289L21.7071 6.29289C22.0976 6.68342 22.0976 7.31658 21.7071 7.70711L8.70711 20.7071C8.51957 20.8946 8.26522 21 8 21H4C3.44772 21 3 20.5523 3 20V16C3 15.7348 3.10536 15.4804 3.29289 15.2929L13.2927 5.2931L16.2929 2.29289ZM14 7.41421L5 16.4142V19H7.58579L16.5858 10L14 7.41421ZM18 8.58579L19.5858 7L17 4.41421L15.4142 6L18 8.58579Z"
+      ! SA.fill "#595959"
+
+svgIconDelete :: Html
+svgIconDelete =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M7 4C7 2.89543 7.89543 2 9 2H15C16.1046 2 17 2.89543 17 4V6H18.9897C18.9959 5.99994 19.0021 5.99994 19.0083 6H21C21.5523 6 22 6.44772 22 7C22 7.55228 21.5523 8 21 8H19.9311L19.0638 20.1425C18.989 21.1891 18.1182 22 17.0689 22H6.93112C5.88184 22 5.01096 21.1891 4.9362 20.1425L4.06888 8H3C2.44772 8 2 7.55228 2 7C2 6.44772 2.44772 6 3 6H4.99174C4.99795 5.99994 5.00414 5.99994 5.01032 6H7V4ZM9 6H15V4H9V6ZM6.07398 8L6.93112 20H17.0689L17.926 8H6.07398ZM10 10C10.5523 10 11 10.4477 11 11V17C11 17.5523 10.5523 18 10 18C9.44772 18 9 17.5523 9 17V11C9 10.4477 9.44772 10 10 10ZM14 10C14.5523 10 15 10.4477 15 11V17C15 17.5523 14.5523 18 14 18C13.4477 18 13 17.5523 13 17V11C13 10.4477 13.4477 10 14 10Z"
+      ! SA.fill "#595959"
+
+svgIconChevronRight :: Html
+svgIconChevronRight =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M9.29289 18.7071C8.90237 18.3166 8.90237 17.6834 9.29289 17.2929L14.5858 12L9.29289 6.70711C8.90237 6.31658 8.90237 5.68342 9.29289 5.29289C9.68342 4.90237 10.3166 4.90237 10.7071 5.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L10.7071 18.7071C10.3166 19.0976 9.68342 19.0976 9.29289 18.7071Z"
+      ! SA.fill "#595959"
+
+svgIconChevronLeft :: Html
+svgIconChevronLeft =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $
+    S.path
+      ! SA.d "M14.7071 5.29289C15.0976 5.68342 15.0976 6.31658 14.7071 6.70711L9.41421 12L14.7071 17.2929C15.0976 17.6834 15.0976 18.3166 14.7071 18.7071C14.3166 19.0976 13.6834 19.0976 13.2929 18.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L13.2929 5.29289C13.6834 4.90237 14.3166 4.90237 14.7071 5.29289Z"
       ! SA.fill "#595959"

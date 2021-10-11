@@ -32,6 +32,7 @@ main = do
     ["app-form--banner"] -> render App.pageWithBanner
     ["app-form--wizard"] -> render App.pageWithWizard
     ["app-form--side-menu"] -> render App.pageWithSideMenu
+    ["datagrid"] -> render App.datagrid
     ["web-empty"] -> render Web.empty
     ["blog-post"] -> render Web.page
     [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."
