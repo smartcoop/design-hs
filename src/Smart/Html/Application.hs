@@ -23,20 +23,20 @@ empty = document "Smart design system" $ do
 --------------------------------------------------------------------------------
 navigation :: Html
 navigation = document "Smart design system" $ do
-  navbar
+  navbar exampleTree
 
 
 --------------------------------------------------------------------------------
 navToolbar :: Html
 navToolbar = document "Smart design system" $ do
-  navbar
+  navbar exampleTree
   mainContent toolbar (return ())
 
 
 --------------------------------------------------------------------------------
 navTitlebar :: Html
 navTitlebar = document "Smart design system" $ do
-  navbar
+  navbar exampleTree
   mainContent titlebar (return ())
 
 
@@ -44,7 +44,7 @@ navTitlebar = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/app-form.html
 page :: Html
 page = document "Smart design system" $ do
-  navbar
+  navbar exampleTree
   mainContent toolbar panels
 
 
@@ -53,7 +53,7 @@ page = document "Smart design system" $ do
 pageWithBanner :: Html
 pageWithBanner = document "Smart design system" $ do
   banner
-  navbar
+  navbar exampleTree
   mainContent toolbar panels
 
 
@@ -61,7 +61,7 @@ pageWithBanner = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/wizard.html
 pageWithWizard :: Html
 pageWithWizard = document "Smart design system" $ do
-  navbar
+  navbar exampleTree
   mainContent wizard (panels' "Location and dates")
 
 
@@ -70,7 +70,7 @@ pageWithWizard = document "Smart design system" $ do
 pageWithSideMenu :: Html
 pageWithSideMenu = document "Smart design system" $ do
   H.header $
-    navbar
+    navbar exampleTree
   mainContentSideMenu menu toolbar panels
 
 
@@ -78,7 +78,7 @@ pageWithSideMenu = document "Smart design system" $ do
 --https://design.smart.coop/development/template-examples/app-datagrid.html
 datagrid :: Html
 datagrid = document "Smart design system" $ do
-  navbar
+  navbar exampleTree
   mainContent titlebar table
 
 
@@ -99,7 +99,43 @@ banner =
 
 
 --------------------------------------------------------------------------------
-navbar = do
+exampleTree :: [(String, (String, [(String, String)]))]
+exampleTree =
+  [ ("Activities", ("#", []))
+  , ("Management", ("#",
+      [ ("Nav item", "#")
+      , ("Nav item", "#")
+      , ("Nav item", "#")
+      ]))
+  , ("Documents", ("#",
+      [ ("Nav item", "#")
+      , ("Nav item", "#")
+      ]))
+  , ("Members", ("#", []))
+  , ("Archive", ("#", []))
+  ]
+
+toNavbar tree =
+  mapM_ toplevel (zip tree [1..])
+  where
+  toplevel ((a, (link, [])), _) =
+    H.li ! A.class_ "c-pill-navigation__item" $
+      H.a ! A.href (H.toValue link) $ H.toHtml a
+  toplevel ((a, (link, bs)), n) =
+    H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
+      H.a ! A.href (H.toValue link)
+          ! customAttribute "data-menu" (H.toValue $ "subMenu-" ++ show n)
+          ! customAttribute "data-menu-samewidth" "true"
+          $ H.toHtml a
+      H.ul
+        ! A.class_ "c-menu c-menu--large"
+        ! A.id (H.toValue $ "subMenu-" ++ show n) $
+        mapM_ sublevel bs
+  sublevel (b, link) =
+    H.li ! A.class_ "c-menu__item" $ do
+      H.a ! A.class_ "c-menu__label" ! A.href (H.toValue link) $ H.toHtml b
+
+navbar tree = do
   H.header $
     H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $ do
       H.div ! A.class_ "c-toolbar" $ do
@@ -110,35 +146,8 @@ navbar = do
                 H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
           H.div ! A.class_ "c-toolbar__item" $ do
             H.nav $ do
-              H.ul ! A.class_ "c-pill-navigation" $ do
-                H.li ! A.class_ "c-pill-navigation__item" $ do
-                  H.a ! A.href "#" $ "Activities"
-                H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                  H.a ! A.href "#"
-                      ! customAttribute "data-menu" "subMenu-1"
-                      ! customAttribute "data-menu-samewidth" "true"
-                      $ "Management"
-                  H.ul ! A.class_ "c-menu c-menu--large" ! A.id "subMenu-1" $ do
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                  H.a ! A.href "#"
-                      ! customAttribute "data-menu" "subMenu-2"
-                      ! customAttribute "data-menu-samewidth" "true"
-                      $ "Documents"
-                  H.ul ! A.class_ "c-menu c-menu--large" ! A.id "subMenu-2" $ do
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Nav item"
-                H.li ! A.class_ "c-pill-navigation__item" $ do
-                  H.a ! A.href "#" $ "Members"
-                H.li ! A.class_ "c-pill-navigation__item" $ do
-                  H.a ! A.href "#" $ "Archive"
+              H.ul ! A.class_ "c-pill-navigation" $
+                toNavbar tree
         H.div ! A.class_ "c-toolbar__right" $ do
           H.div ! A.class_ "c-toolbar__item" $ do
             H.nav $ do
