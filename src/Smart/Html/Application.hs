@@ -22,13 +22,15 @@ empty = document "Smart design system" $ do
 --------------------------------------------------------------------------------
 navigation :: Html
 navigation = document "Smart design system" $ do
-  navbar
+  H.header $
+    navbar
 
 
 --------------------------------------------------------------------------------
 navToolbar :: Html
 navToolbar = document "Smart design system" $ do
-  navbar
+  H.header $
+    navbar
   mainContent (return ())
 
 
@@ -36,8 +38,35 @@ navToolbar = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/app-form.html
 page :: Html
 page = document "Smart design system" $ do
-  navbar
+  H.header $
+    navbar
   mainContent panels
+
+
+--------------------------------------------------------------------------------
+-- https://design.smart.coop/development/template-examples/global-banner.html
+pageWithBanner :: Html
+pageWithBanner = document "Smart design system" $ do
+  banner
+  H.header $
+    navbar
+  mainContent panels
+
+
+--------------------------------------------------------------------------------
+banner =
+  H.div ! A.class_ "c-global-banner c-global-banner--default" $ do
+    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information o-svg-icon--default " $
+      svgIconCircleInformation
+    H.div ! A.class_ "c-global-banner__label" $
+      H.p "Nam eget hendrerit massa, a consequat turpis."
+    H.button ! A.class_ "c-button c-button--borderless c-button--icon"
+             ! A.type_ "button"
+             ! customAttribute "data-banner-close" "data-banner-close" $
+      H.span ! A.class_ "c-button__content" $ do
+        H.div ! A.class_ "o-svg-icon o-svg-icon-close  " $
+          svgIconClose
+        H.div ! A.class_ "u-sr-accessible" $ "Close"
 
 
 --------------------------------------------------------------------------------
@@ -289,6 +318,22 @@ svgIconCircleHelp =
       ! SA.fill "#595959"
     S.path
       ! SA.d "M12.3899 7.811C11.4329 7.766 10.6299 8.301 10.4859 9.164C10.4356 9.41907 10.2878 9.6445 10.0741 9.79249C9.86029 9.94047 9.59729 9.99938 9.34081 9.95672C9.08434 9.91406 8.85456 9.77319 8.7002 9.56397C8.54584 9.35476 8.47903 9.09364 8.51394 8.836C8.86994 6.7 10.8169 5.734 12.4849 5.814C13.3389 5.854 14.2179 6.161 14.8939 6.793C15.5869 7.44 15.9999 8.368 15.9999 9.5C15.9999 10.791 15.4919 11.749 14.6169 12.332C13.8139 12.867 12.8289 13 11.9999 13C11.7347 13 11.4804 12.8946 11.2928 12.7071C11.1053 12.5196 10.9999 12.2652 10.9999 12C10.9999 11.7348 11.1053 11.4804 11.2928 11.2929C11.4804 11.1054 11.7347 11 11.9999 11C12.6699 11 13.1859 10.883 13.5079 10.668C13.7579 10.501 13.9999 10.208 13.9999 9.5C13.9999 8.882 13.7879 8.497 13.5279 8.254C13.2509 7.995 12.8479 7.834 12.3899 7.811Z"
+      ! SA.fill "#595959"
+
+svgIconCircleInformation =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none" $ do
+    S.path
+      ! SA.d "M12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M12 10C12.5523 10 13 10.4477 13 11V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V11C11 10.4477 11.4477 10 12 10Z"
+      ! SA.fill "#595959"
+    S.path
+      ! SA.d "M13.5 7.5C13.5 8.32843 12.8284 9 12 9C11.1716 9 10.5 8.32843 10.5 7.5C10.5 6.67157 11.1716 6 12 6C12.8284 6 13.5 6.67157 13.5 7.5Z"
       ! SA.fill "#595959"
 
 svgIconExternalLink :: Html
