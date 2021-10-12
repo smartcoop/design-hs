@@ -9,6 +9,7 @@ all: \
   _site/app-form--wizard.html \
   _site/app-form--side-menu.html \
   _site/datagrid.html \
+  _site/registration.html \
   _site/web-empty.html \
   _site/blog-post.html
 

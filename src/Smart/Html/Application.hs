@@ -83,6 +83,228 @@ datagrid = document "Smart design system" $ do
 
 
 --------------------------------------------------------------------------------
+--https://design.smart.coop/development/template-examples/register-form.html
+registration :: Html
+registration = do
+  let title = "Smart design system"
+  H.docType
+  H.html
+    ! A.class_ "u-maximize-height"
+    ! A.dir "ltr"
+    ! A.lang "en" $ do
+    myHead title
+    H.body ! A.class_ "u-maximize-height" $ do
+      H.div ! A.class_ "u-spacer-l" $
+        H.div ! A.class_ "o-container-vertical" $
+          H.div ! A.class_ "o-container o-container--medium" $ do
+            H.div ! A.class_ "u-spacer-bottom" $
+              H.div ! A.class_ "c-brand c-brand--small" $
+                H.a ! A.href "/" $
+                  H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
+            H.div ! A.class_ "c-hr" $ ""
+            H.h1 ! A.class_ "c-h2" $ "Register your account"
+            H.div ! A.class_ "c-content" $
+              H.p $ do
+                "For optimal use of the Smart services, it is highly recommended to attend a Smart session: view our "
+                H.a ! A.href "#" $ "user manual"
+                "."
+            H.div ! A.class_ "u-spacer-bottom" $ do
+              H.div ! A.class_ "c-alert c-alert--default" $ do
+                H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information  " $ do
+                  svgIconCircleInformation
+                H.div ! A.class_ "c-alert__body" $ do
+                  H.div ! A.class_ "c-alert__text" $ do
+                    H.h4 ! A.class_ "c-alert__title" $ "Important"
+                    H.div ! A.class_ "c-alert__message" $ do
+                      H.div ! A.class_ "c-content" $ do
+                        H.ul $ do
+                          H.li "You will receive your personal codes to access your “Smart account” (and to fill in your contracts) by email within 48 working hours of sending your registration documents. Do not hesitate to contact the nearest Smart office in case of emergency."
+                          H.li "Remember to always declare your working days in advance. It is not allowed to backdate your services."
+            H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+              H.div ! A.class_ "o-grid" $ do
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormName" $ "Name"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormName"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormFirstName" $ "First name"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormFirstName"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormGender" $ "Gender"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.div ! A.class_ "c-select-holder" $ do
+                        H.select ! A.class_ "c-select" ! A.id "registerFormGender" $ do
+                          H.option "Male"
+                          H.option "Female"
+                          H.option "X"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormLangue" $ "Language"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.div ! A.class_ "c-select-holder" $ do
+                        H.select ! A.class_ "c-select" ! A.id "registerFormLangue" $ do
+                          H.option "Français"
+                          H.option "Nederlands"
+                          H.option "Deutsch"
+                          H.option "Espanol"
+              H.div ! A.class_ "c-hr" $ ""
+              H.h3 ! A.class_ "c-h3" $ "Official address"
+              H.div ! A.class_ "o-grid" $ do
+                H.div ! A.class_ "o-grid-col-8" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalStreet" $ "Street"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalStreet"
+                H.div ! A.class_ "o-grid-col-2" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalStreetNo" $ "Number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalStreetNo"
+                H.div ! A.class_ "o-grid-col-2" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalStreetBuildingAddition" $ "Addition"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalStreetBuildingAddition"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalZipCode" $ "Postal code"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalZipCode"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalCountry" $ "Country"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.div ! A.class_ "c-select-holder" $ do
+                        H.select ! A.class_ "c-select" ! A.id "registerFormAddressOfficalCountry" $ do
+                          mapM_ (H.option . H.toHtml) countries
+              H.div ! A.class_ "c-hr" $ ""
+              H.h3 ! A.class_ "c-h3" $ "Mailing address"
+              H.div ! A.class_ "o-grid" $ do
+                H.div ! A.class_ "o-grid-col-8" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalStreet" $ "Street"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalStreet"
+                H.div ! A.class_ "o-grid-col-2" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalStreetNo" $ "Number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalStreetNo"
+                H.div ! A.class_ "o-grid-col-2" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalStreetBuildingAddition" $ "Addition"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalStreetBuildingAddition"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalZipCode" $ "Postal code"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalZipCode"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalCountry" $ "Country"
+                    H.div ! A.class_ "o-form-group__controls" $
+                      H.div ! A.class_ "c-select-holder" $
+                        H.select ! A.class_ "c-select" ! A.id "registerFormAddressPostalCountry" $ do
+                          mapM_ (H.option . H.toHtml) countries
+              H.div ! A.class_ "c-hr" $ ""
+              H.div ! A.class_ "o-grid" $ do
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormCellPhoneNumber" $ "Mobile number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormCellPhoneNumber"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormHomePhoneNumber" $ "Home phone number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormHomePhoneNumber"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldEmail" $ "Email"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "email" ! A.id "registerFormfieldEmail"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldEmail" $ "Birthdate"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "date" ! A.id "registerFormfieldEmail"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormNativeCountry" $ "Native country"
+                    H.div ! A.class_ "o-form-group__controls" $
+                      H.div ! A.class_ "c-select-holder" $
+                        H.select ! A.class_ "c-select" ! A.id "registerFormNativeCountry" $ do
+                          mapM_ (H.option . H.toHtml) countries
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldMaritalStatus" $ "Marital status"
+                    H.div ! A.class_ "o-form-group__controls" $
+                      H.div ! A.class_ "c-select-holder" $
+                        H.select ! A.class_ "c-select" ! A.id "registerFormfieldMaritalStatus" $ do
+                          H.option "Select"
+                          H.option "Single"
+                          H.option "Married"
+                          H.option "Widowed"
+                          H.option "Separated"
+                          H.option "Divorced"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldCityOfBirth" $ "City of birth"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldCityOfBirth"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldNationalRegisterNo" $ "National register number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldNationalRegisterNo"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldIdentityCardNumber" $ "Identity card number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldIdentityCardNumber"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldIbanNo" $ "IBAN number"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldIbanNo"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldProfessionalWithholdingTax" $ "Professional withholding tax"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldProfessionalWithholdingTax"
+                H.div ! A.class_ "o-grid-col-6" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldMainFunction" $ "Main function"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldMainFunction"
+                H.div ! A.class_ "o-grid-col-6 o-grid-col-static" $ do
+                  H.div ! A.class_ "o-form-group" $ do
+                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldOtherFunction" $ "Other function"
+                    H.div ! A.class_ "o-form-group__controls" $ do
+                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldOtherFunction"
+              H.div ! A.class_ "o-form-group" $ do
+                H.div ! A.class_ "c-checkbox" $ do
+                  H.label $ do
+                    H.input ! A.type_ "checkbox" ! A.checked "checked"
+                    H.div $ do
+                      "I authorise Smart to transmit my data to third parties for professional purposes only."
+                      H.a ! A.class_ "o-flex o-flex--vertical-center" ! A.href "#" $ do
+                        "Read more here"
+                        H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $
+                          svgIconExternalLink
+              H.div ! A.class_ "o-form-group" $
+                H.input ! A.class_ "c-button c-button--primary c-button--block" ! A.type_ "submit" ! A.value "Continue"
+
+    js
+
+
+
+--------------------------------------------------------------------------------
 banner =
   H.div ! A.class_ "c-global-banner c-global-banner--default" $ do
     H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information o-svg-icon--default " $
@@ -735,3 +957,257 @@ svgIconChevronLeft =
     S.path
       ! SA.d "M14.7071 5.29289C15.0976 5.68342 15.0976 6.31658 14.7071 6.70711L9.41421 12L14.7071 17.2929C15.0976 17.6834 15.0976 18.3166 14.7071 18.7071C14.3166 19.0976 13.6834 19.0976 13.2929 18.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L13.2929 5.29289C13.6834 4.90237 14.3166 4.90237 14.7071 5.29289Z"
       ! SA.fill "#595959"
+
+--------------------------------------------------------------------------------
+countries :: [String]
+countries =
+  [ "Afghanistan"
+  , "Åland Islands"
+  , "Albania"
+  , "Algeria"
+  , "American Samoa"
+  , "Andorra"
+  , "Angola"
+  , "Anguilla"
+  , "Antarctica"
+  , "Antigua and Barbuda"
+  , "Argentina"
+  , "Armenia"
+  , "Aruba"
+  , "Australia"
+  , "Austria"
+  , "Azerbaijan"
+  , "Bahamas"
+  , "Bahrain"
+  , "Bangladesh"
+  , "Barbados"
+  , "Belarus"
+  , "Belgium"
+  , "Belize"
+  , "Benin"
+  , "Bermuda"
+  , "Bhutan"
+  , "Bolivia (Plurinational State of)"
+  , "Bonaire, Sint Eustatius and Saba[d]"
+  , "Bosnia and Herzegovina"
+  , "Botswana"
+  , "Bouvet Island"
+  , "Brazil"
+  , "British Indian Ocean Territory"
+  , "Brunei Darussalam"
+  , "Bulgaria"
+  , "Burkina Faso"
+  , "Burundi"
+  , "Cabo Verde"
+  , "Cambodia"
+  , "Cameroon"
+  , "Canada"
+  , "Cayman Islands"
+  , "Central African Republic"
+  , "Chad"
+  , "Chile"
+  , "China"
+  , "Christmas Island"
+  , "Cocos (Keeling) Islands"
+  , "Colombia"
+  , "Comoros"
+  , "Congo"
+  , "Congo, Democratic Republic of the"
+  , "Cook Islands"
+  , "Costa Rica"
+  , "Côte d'Ivoire"
+  , "Croatia"
+  , "Cuba"
+  , "Curaçao"
+  , "Cyprus"
+  , "Czechia"
+  , "Denmark"
+  , "Djibouti"
+  , "Dominica"
+  , "Dominican Republic"
+  , "Ecuador"
+  , "Egypt"
+  , "El Salvador"
+  , "Equatorial Guinea"
+  , "Eritrea"
+  , "Estonia"
+  , "Eswatini"
+  , "Ethiopia"
+  , "Falkland Islands (Malvinas)"
+  , "Faroe Islands"
+  , "Fiji"
+  , "Finland"
+  , "France"
+  , "French Guiana"
+  , "French Polynesia"
+  , "French Southern Territories"
+  , "Gabon"
+  , "Gambia"
+  , "Georgia"
+  , "Germany"
+  , "Ghana"
+  , "Gibraltar"
+  , "Greece"
+  , "Greenland"
+  , "Grenada"
+  , "Guadeloupe"
+  , "Guam"
+  , "Guatemala"
+  , "Guernsey"
+  , "Guinea"
+  , "Guinea-Bissau"
+  , "Guyana"
+  , "Haiti"
+  , "Heard Island and McDonald Islands"
+  , "Holy See"
+  , "Honduras"
+  , "Hong Kong"
+  , "Hungary"
+  , "Iceland"
+  , "India"
+  , "Indonesia"
+  , "Iran (Islamic Republic of)"
+  , "Iraq"
+  , "Ireland"
+  , "Isle of Man"
+  , "Israel"
+  , "Italy"
+  , "Jamaica"
+  , "Japan"
+  , "Jersey"
+  , "Jordan"
+  , "Kazakhstan"
+  , "Kenya"
+  , "Kiribati"
+  , "Korea (Democratic People's Republic of)"
+  , "Korea, Republic of"
+  , "Kuwait"
+  , "Kyrgyzstan"
+  , "Lao People's Democratic Republic"
+  , "Latvia"
+  , "Lebanon"
+  , "Lesotho"
+  , "Liberia"
+  , "Libya"
+  , "Liechtenstein"
+  , "Lithuania"
+  , "Luxembourg"
+  , "Macao"
+  , "Madagascar"
+  , "Malawi"
+  , "Malaysia"
+  , "Maldives"
+  , "Mali"
+  , "Malta"
+  , "Marshall Islands"
+  , "Martinique"
+  , "Mauritania"
+  , "Mauritius"
+  , "Mayotte"
+  , "Mexico"
+  , "Micronesia (Federated States of)"
+  , "Moldova, Republic of"
+  , "Monaco"
+  , "Mongolia"
+  , "Montenegro"
+  , "Montserrat"
+  , "Morocco"
+  , "Mozambique"
+  , "Myanmar"
+  , "Namibia"
+  , "Nauru"
+  , "Nepal"
+  , "Netherlands"
+  , "New Caledonia"
+  , "New Zealand"
+  , "Nicaragua"
+  , "Niger"
+  , "Nigeria"
+  , "Niue"
+  , "Norfolk Island"
+  , "North Macedonia"
+  , "Northern Mariana Islands"
+  , "Norway"
+  , "Oman"
+  , "Pakistan"
+  , "Palau"
+  , "Palestine, State of"
+  , "Panama"
+  , "Papua New Guinea"
+  , "Paraguay"
+  , "Peru"
+  , "Philippines"
+  , "Pitcairn"
+  , "Poland"
+  , "Portugal"
+  , "Puerto Rico"
+  , "Qatar"
+  , "Réunion"
+  , "Romania"
+  , "Russian Federation"
+  , "Rwanda"
+  , "Saint Barthélemy"
+  , "Saint Helena, Ascension and Tristan da Cunha[e]"
+  , "Saint Kitts and Nevis"
+  , "Saint Lucia"
+  , "Saint Martin (French part)"
+  , "Saint Pierre and Miquelon"
+  , "Saint Vincent and the Grenadines"
+  , "Samoa"
+  , "San Marino"
+  , "Sao Tome and Principe"
+  , "Saudi Arabia"
+  , "Senegal"
+  , "Serbia"
+  , "Seychelles"
+  , "Sierra Leone"
+  , "Singapore"
+  , "Sint Maarten (Dutch part)"
+  , "Slovakia"
+  , "Slovenia"
+  , "Solomon Islands"
+  , "Somalia"
+  , "South Africa"
+  , "South Georgia and the South Sandwich Islands"
+  , "South Sudan"
+  , "Spain"
+  , "Sri Lanka"
+  , "Sudan"
+  , "Suriname"
+  , "Svalbard and Jan Mayen[f]"
+  , "Sweden"
+  , "Switzerland"
+  , "Syrian Arab Republic"
+  , "Taiwan, Province of China"
+  , "Tajikistan"
+  , "Tanzania, United Republic of"
+  , "Thailand"
+  , "Timor-Leste"
+  , "Togo"
+  , "Tokelau"
+  , "Tonga"
+  , "Trinidad and Tobago"
+  , "Tunisia"
+  , "Turkey"
+  , "Turkmenistan"
+  , "Turks and Caicos Islands"
+  , "Tuvalu"
+  , "Uganda"
+  , "Ukraine"
+  , "United Arab Emirates"
+  , "United Kingdom of Great Britain and Northern Ireland"
+  , "United States of America"
+  , "United States Minor Outlying Islands[h]"
+  , "Uruguay"
+  , "Uzbekistan"
+  , "Vanuatu"
+  , "Venezuela (Bolivarian Republic of)"
+  , "Viet Nam"
+  , "Virgin Islands (British)"
+  , "Virgin Islands (U.S.)"
+  , "Wallis and Futuna"
+  , "Western Sahara"
+  , "Yemen"
+  , "Zambia"
+  , "Zimbabwe"
+  ]

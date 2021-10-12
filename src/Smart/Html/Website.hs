@@ -50,6 +50,8 @@ index = document "Smart design system" $
       H.li $
         H.a ! A.href "datagrid.html" $ "Application datagrid"
       H.li $
+        H.a ! A.href "registration.html" $ "Registration form"
+      H.li $
         H.a ! A.href "web-empty.html" $ "Website, empty page"
       H.li $
         H.a ! A.href "blog-post.html" $ "Website, blog post"
