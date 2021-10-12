@@ -177,6 +177,8 @@ registration = do
 
     js
 
+
+--------------------------------------------------------------------------------
 inputText :: String -> String -> Html
 inputText name label =
   H.div ! A.class_ "o-form-group" $ do

@@ -56,6 +56,12 @@ index = document "Smart design system" $
       H.li $
         H.a ! A.href "blog-post.html" $ "Website, blog post"
 
+    H.h2 "Tools"
+    H.p "This is an attempt at recreating an existing form."
+    H.ul $ do
+      H.li $
+        H.a ! A.href "tools-new-contract.html" $ "Tools, new contract"
+
 
 --------------------------------------------------------------------------------
 empty :: Html

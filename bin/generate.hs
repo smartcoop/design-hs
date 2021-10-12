@@ -8,6 +8,7 @@ import Text.Blaze.Html.Renderer.Text (renderHtml)
 import System.Environment (getArgs)
 
 import qualified Smart.Html.Application as App
+import qualified Smart.Html.Tools as Tools
 import qualified Smart.Html.Website as Web
 
 
@@ -36,5 +37,6 @@ main = do
     ["registration"] -> render App.registration
     ["web-empty"] -> render Web.empty
     ["blog-post"] -> render Web.page
+    ["tools-new-contract"] -> render Tools.toolsNewContract
     [name] -> putStrLn $ "Unknown example page \"" ++ name ++ "\"."
     _ -> putStrLn "Missing argument: example name"

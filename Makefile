@@ -11,7 +11,8 @@ all: \
   _site/datagrid.html \
   _site/registration.html \
   _site/web-empty.html \
-  _site/blog-post.html
+  _site/blog-post.html \
+  _site/tools-new-contract.html
 
 
 _site/%.html: src/Smart/Html/Application.hs src/Smart/Html/Website.hs
