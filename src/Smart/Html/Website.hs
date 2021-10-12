@@ -12,7 +12,8 @@ import qualified Text.Blaze.Svg as S (toSvg)
 import qualified Text.Blaze.Svg11 as S
 import qualified Text.Blaze.Svg11.Attributes as SA
 
-import Smart.Html.Application (js, myHead, svgIconClose)
+import Smart.Html.Application (js, myHead)
+import Smart.Html.Icons (svgIconClose)
 
 
 --------------------------------------------------------------------------------
