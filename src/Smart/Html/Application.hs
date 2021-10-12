@@ -109,184 +109,59 @@ registration = do
                 H.a ! A.href "#" $ "user manual"
                 "."
             H.div ! A.class_ "u-spacer-bottom" $ do
-              H.div ! A.class_ "c-alert c-alert--default" $ do
-                H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information  " $ do
-                  svgIconCircleInformation
-                H.div ! A.class_ "c-alert__body" $ do
-                  H.div ! A.class_ "c-alert__text" $ do
-                    H.h4 ! A.class_ "c-alert__title" $ "Important"
-                    H.div ! A.class_ "c-alert__message" $ do
-                      H.div ! A.class_ "c-content" $ do
-                        H.ul $ do
-                          H.li "You will receive your personal codes to access your “Smart account” (and to fill in your contracts) by email within 48 working hours of sending your registration documents. Do not hesitate to contact the nearest Smart office in case of emergency."
-                          H.li "Remember to always declare your working days in advance. It is not allowed to backdate your services."
+              alertTitleAndContent "Important" $
+                H.ul $ do
+                  H.li "You will receive your personal codes to access your “Smart account” (and to fill in your contracts) by email within 48 working hours of sending your registration documents. Do not hesitate to contact the nearest Smart office in case of emergency."
+                  H.li "Remember to always declare your working days in advance. It is not allowed to backdate your services."
+
             H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
               H.div ! A.class_ "o-grid" $ do
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormName" $ "Name"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormName"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormFirstName" $ "First name"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormFirstName"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormGender" $ "Gender"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.div ! A.class_ "c-select-holder" $ do
-                        H.select ! A.class_ "c-select" ! A.id "registerFormGender" $ do
-                          H.option "Male"
-                          H.option "Female"
-                          H.option "X"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormLangue" $ "Language"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.div ! A.class_ "c-select-holder" $ do
-                        H.select ! A.class_ "c-select" ! A.id "registerFormLangue" $ do
-                          H.option "Français"
-                          H.option "Nederlands"
-                          H.option "Deutsch"
-                          H.option "Espanol"
+                inputText6 "registerFormName" "Name"
+                inputText6 "registerFormFirstName" "First name"
+                inputSelect6 "registerFormGender" "Gender"
+                  [ "Male", "Female", "X" ]
+                inputSelect6 "registerFormLangue" "Language"
+                  [ "Français", "Nederlands", "Deutsch", "Espanol" ]
+
               H.div ! A.class_ "c-hr" $ ""
               H.h3 ! A.class_ "c-h3" $ "Official address"
               H.div ! A.class_ "o-grid" $ do
-                H.div ! A.class_ "o-grid-col-8" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalStreet" $ "Street"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalStreet"
-                H.div ! A.class_ "o-grid-col-2" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalStreetNo" $ "Number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalStreetNo"
-                H.div ! A.class_ "o-grid-col-2" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalStreetBuildingAddition" $ "Addition"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalStreetBuildingAddition"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalZipCode" $ "Postal code"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressOfficalZipCode"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressOfficalCountry" $ "Country"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.div ! A.class_ "c-select-holder" $ do
-                        H.select ! A.class_ "c-select" ! A.id "registerFormAddressOfficalCountry" $ do
-                          mapM_ (H.option . H.toHtml) countries
+                inputText8 "registerFormAddressOfficalStreet" "Street"
+                inputText2 "registerFormAddressOfficalStreetNo" "Number"
+                inputText2 "registerFormAddressOfficalStreetBuildingAddition" "Addition"
+                inputText6 "registerFormAddressOfficalZipCode" "Postal code"
+                inputSelect6 "registerFormAddressOfficalCountry" "Country"
+                  countries
+
               H.div ! A.class_ "c-hr" $ ""
               H.h3 ! A.class_ "c-h3" $ "Mailing address"
               H.div ! A.class_ "o-grid" $ do
-                H.div ! A.class_ "o-grid-col-8" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalStreet" $ "Street"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalStreet"
-                H.div ! A.class_ "o-grid-col-2" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalStreetNo" $ "Number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalStreetNo"
-                H.div ! A.class_ "o-grid-col-2" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalStreetBuildingAddition" $ "Addition"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalStreetBuildingAddition"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalZipCode" $ "Postal code"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormAddressPostalZipCode"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormAddressPostalCountry" $ "Country"
-                    H.div ! A.class_ "o-form-group__controls" $
-                      H.div ! A.class_ "c-select-holder" $
-                        H.select ! A.class_ "c-select" ! A.id "registerFormAddressPostalCountry" $ do
-                          mapM_ (H.option . H.toHtml) countries
+                inputText8 "registerFormAddressPostalStreet" "Street"
+                inputText2 "registerFormAddressPostalStreetNo" "Number"
+                inputText2 "registerFormAddressPostalStreetBuildingAddition" "Addition"
+                inputText6 "registerFormAddressPostalZipCode" "Postal code"
+                inputSelect6 "registerFormAddressPostalCountry" "Country"
+                  countries
+
               H.div ! A.class_ "c-hr" $ ""
               H.div ! A.class_ "o-grid" $ do
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormCellPhoneNumber" $ "Mobile number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormCellPhoneNumber"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormHomePhoneNumber" $ "Home phone number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormHomePhoneNumber"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldEmail" $ "Email"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "email" ! A.id "registerFormfieldEmail"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldEmail" $ "Birthdate"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "date" ! A.id "registerFormfieldEmail"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormNativeCountry" $ "Native country"
-                    H.div ! A.class_ "o-form-group__controls" $
-                      H.div ! A.class_ "c-select-holder" $
-                        H.select ! A.class_ "c-select" ! A.id "registerFormNativeCountry" $ do
-                          mapM_ (H.option . H.toHtml) countries
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldMaritalStatus" $ "Marital status"
-                    H.div ! A.class_ "o-form-group__controls" $
-                      H.div ! A.class_ "c-select-holder" $
-                        H.select ! A.class_ "c-select" ! A.id "registerFormfieldMaritalStatus" $ do
-                          H.option "Select"
-                          H.option "Single"
-                          H.option "Married"
-                          H.option "Widowed"
-                          H.option "Separated"
-                          H.option "Divorced"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldCityOfBirth" $ "City of birth"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldCityOfBirth"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldNationalRegisterNo" $ "National register number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldNationalRegisterNo"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldIdentityCardNumber" $ "Identity card number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldIdentityCardNumber"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldIbanNo" $ "IBAN number"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldIbanNo"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldProfessionalWithholdingTax" $ "Professional withholding tax"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldProfessionalWithholdingTax"
-                H.div ! A.class_ "o-grid-col-6" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldMainFunction" $ "Main function"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldMainFunction"
-                H.div ! A.class_ "o-grid-col-6 o-grid-col-static" $ do
-                  H.div ! A.class_ "o-form-group" $ do
-                    H.label ! A.class_ "o-form-group__label" ! A.for "registerFormfieldOtherFunction" $ "Other function"
-                    H.div ! A.class_ "o-form-group__controls" $ do
-                      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "registerFormfieldOtherFunction"
+                inputText6 "registerFormCellPhoneNumber" "Mobile number"
+                inputText6 "registerFormHomePhoneNumber" "Home phone number"
+                inputEmail "registerFormfieldEmail" "Email"
+                inputDate "registerFormfieldBirthdate" "Birthdate"
+                inputSelect6 "registerFormNativeCountry" "Native country"
+                  countries
+                inputSelect6 "registerFormfieldMaritalStatus" "Marital status"
+                  [ "Select", "Single", "Married"
+                  , "Widowed", "Separated", "Divorced" ]
+                inputText6 "registerFormfieldCityOfBirth" "City of birth"
+                inputText6 "registerFormfieldNationalRegisterNo" "National register number"
+                inputText6 "registerFormfieldIdentityCardNumber" "Identity card number"
+                inputText6 "registerFormfieldIbanNo" "IBAN number"
+                inputText6 "registerFormfieldProfessionalWithholdingTax" "Professional withholding tax"
+                inputText6 "registerFormfieldMainFunction" "Main function"
+                inputText6 "registerFormfieldOtherFunction" "Other function"
+
               H.div ! A.class_ "o-form-group" $ do
                 H.div ! A.class_ "c-checkbox" $ do
                   H.label $ do
@@ -294,7 +169,7 @@ registration = do
                     H.div $ do
                       "I authorise Smart to transmit my data to third parties for professional purposes only."
                       H.a ! A.class_ "o-flex o-flex--vertical-center" ! A.href "#" $ do
-                        "Read more here"
+                        H.div ! A.class_ "u-spacer-right-s" $ "Read more here"
                         H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $
                           svgIconExternalLink
               H.div ! A.class_ "o-form-group" $
@@ -302,6 +177,83 @@ registration = do
 
     js
 
+inputText :: String -> String -> Html
+inputText name label =
+  H.div ! A.class_ "o-form-group" $ do
+    H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+      H.toHtml label
+    H.div ! A.class_ "o-form-group__controls" $ do
+      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id (H.toValue name)
+
+inputText2 :: String -> String -> Html
+inputText2 name label =
+  H.div ! A.class_ "o-grid-col-2" $
+    inputText name label
+
+inputText6 :: String -> String -> Html
+inputText6 name label =
+  H.div ! A.class_ "o-grid-col-6" $
+    inputText name label
+
+inputText8 :: String -> String -> Html
+inputText8 name label =
+  H.div ! A.class_ "o-grid-col-8" $
+    inputText name label
+
+inputEmail :: String -> String -> Html
+inputEmail name label =
+  H.div ! A.class_ "o-grid-col-6" $
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+        H.toHtml label
+      H.div ! A.class_ "o-form-group__controls" $
+        H.input ! A.class_ "c-input" ! A.type_ "email" ! A.id (H.toValue name)
+
+inputDate :: String -> String -> Html
+inputDate name label =
+  H.div ! A.class_ "o-grid-col-6" $
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+        H.toHtml label
+      H.div ! A.class_ "o-form-group__controls" $
+        H.input ! A.class_ "c-input" ! A.type_ "date" ! A.id (H.toValue name)
+
+inputSelect_ :: String -> String -> [String] -> Maybe String -> Html
+inputSelect_ name label values mhelp =
+  H.div ! A.class_ "o-form-group" $ do
+    H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+      H.toHtml label
+    H.div ! A.class_ "o-form-group__controls" $ do
+      H.div ! A.class_ "c-select-holder" $
+        H.select ! A.class_ "c-select" ! A.id (H.toValue name) $
+          mapM_ (H.option . H.toHtml) values
+      maybe (return ()) (\s -> H.p ! A.class_ "c-form-help-text" $ H.toHtml s) mhelp
+
+inputSelect :: String -> String -> [String] -> Html
+inputSelect name label values = inputSelect_ name label values Nothing
+
+inputSelect' :: String -> String -> [String] -> String -> Html
+inputSelect' name label values help = inputSelect_ name label values (Just help)
+
+inputSelect6 :: String -> String -> [String] -> Html
+inputSelect6 name label values =
+  H.div ! A.class_ "o-grid-col-6" $ do
+    inputSelect name label values
+
+
+--------------------------------------------------------------------------------
+-- https://design.smart.coop/development/docs/c-alert.html
+alertTitleAndContent :: String -> Html -> Html
+alertTitleAndContent title content =
+  H.div ! A.class_ "c-alert c-alert--default" $ do
+    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information  " $
+      svgIconCircleInformation
+    H.div ! A.class_ "c-alert__body" $
+      H.div ! A.class_ "c-alert__text" $ do
+        H.h4 ! A.class_ "c-alert__title" $ H.toHtml title
+        H.div ! A.class_ "c-alert__message" $
+          H.div ! A.class_ "c-content" $
+            content
 
 
 --------------------------------------------------------------------------------
@@ -580,20 +532,10 @@ panels_ mtitle =
           H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
         H.div ! A.class_ "c-panel__body" $ do
           H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Input"
-              H.div ! A.class_ "o-form-group__controls" $
-                H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "input"
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "select" $ "Select"
-              H.div ! A.class_ "o-form-group__controls" $ do
-                H.div ! A.class_ "c-select-holder" $
-                  H.select ! A.class_ "c-select" ! A.id "select" $ do
-                    H.option "Choose an item"
-                    H.option "A"
-                    H.option "B"
-                    H.option "C"
-                H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+            inputText "input" "Input"
+            inputSelect' "select" "Select"
+              [ "Choose an item", "A", "B", "C" ]
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
             H.div ! A.class_ "o-form-group" $ do
               H.label ! A.class_ "o-form-group__label" ! A.for "textarea" $ "Textarea"
               H.div ! A.class_ "o-form-group__controls" $ do
