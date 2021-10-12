@@ -495,79 +495,81 @@ panels_ mtitle =
       maybe (return ()) (\t ->
         H.div ! A.class_ "c-content" $
           H.h1 t) mtitle
-      H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
-        H.div ! A.class_ "c-panel__header" $
-          H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
-        H.div ! A.class_ "c-panel__body" $ do
-          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" $ "Add client"
-              H.div ! A.class_ "c-empty-state c-empty-state--bg-alt" $ do
-                H.p ! A.class_ "u-text-muted c-body-1" $ "Please add a client for this quote."
-                H.div ! A.class_ "c-button-toolbar" $ do
-                  H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
-                    H.span ! A.class_ "c-button__content" $ do
-                      H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
-                        svgIconAdd
-                      H.span ! A.class_ "c-button__label" $ "Add new client"
-                  H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
-                    H.span ! A.class_ "c-button__content" $ do
-                      H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
-                        svgIconAdd
-                      H.span ! A.class_ "c-button__label" $ "Add existing client"
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" $ "Radio"
-              H.div ! A.class_ "o-form-group__controls" $
-                H.div ! A.class_ "c-radio-group" $ do
-                  H.div ! A.class_ "c-radio" $
-                    H.label $ do
-                      H.input ! A.type_ "radio" ! A.name "radio1" ! A.checked "checked"
-                      "Lorem ipsum dolor sit amet."
-                  H.div ! A.class_ "c-radio" $
-                    H.label $ do
-                      H.input ! A.type_ "radio" ! A.name "radio1"
-                      "Lorem ipsum dolor sit amet."
-      H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
-        H.div ! A.class_ "c-panel__header" $
-          H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
-        H.div ! A.class_ "c-panel__body" $ do
-          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
-            inputText "input" "Input"
-            inputSelect' "select" "Select"
-              [ "Choose an item", "A", "B", "C" ]
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "textarea" $ "Textarea"
-              H.div ! A.class_ "o-form-group__controls" $ do
-                H.textarea ! A.class_ "c-textarea" ! A.rows "5" ! A.id "textarea" $ ""
-                H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
-      H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
-        H.div ! A.class_ "c-panel__header" $
-          H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
-        H.div ! A.class_ "c-panel__body" $ do
-          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Nr BCE"
-              H.div ! A.class_ "o-form-group__controls" $
-                H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "__/__/__" ! A.id "input"
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "saleAmount" $ "Sale amount"
-              H.div ! A.class_ "c-input-group" $ do
-                H.input ! A.class_ "c-input" ! A.type_ "number" ! A.id "saleAmount"
-                H.div ! A.class_ "c-input-group__append" $ "€"
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "time" $ "Time"
-              H.div ! A.class_ "o-flex o-flex--vertical-center o-flex--spaced" $ do
-                H.span $ do
-                  H.p "From"
-                  H.input ! A.class_ "c-input" ! A.type_ "time" ! A.id "time"
-                H.span $ do
-                  H.p "To"
-                  H.input ! A.class_ "c-input" ! A.type_ "time" ! A.id "time"
-            H.div ! A.class_ "o-form-group" $ do
-              H.label ! A.class_ "o-form-group__label" ! A.for "date" $ "Default label"
-              H.div ! A.class_ "o-form-group__controls" $
-                H.input ! A.class_ "c-input" ! A.type_ "date" ! A.id "date"
+      mapM_ panel [subform1, subform2, subform3]
+
+panel content =
+  H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
+    H.div ! A.class_ "c-panel__header" $
+      H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
+    H.div ! A.class_ "c-panel__body" $ do
+      content
+
+subform1 =
+  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" $ "Add client"
+      H.div ! A.class_ "c-empty-state c-empty-state--bg-alt" $ do
+        H.p ! A.class_ "u-text-muted c-body-1" $ "Please add a client for this quote."
+        H.div ! A.class_ "c-button-toolbar" $ do
+          H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+            H.span ! A.class_ "c-button__content" $ do
+              H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
+                svgIconAdd
+              H.span ! A.class_ "c-button__label" $ "Add new client"
+          H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+            H.span ! A.class_ "c-button__content" $ do
+              H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
+                svgIconAdd
+              H.span ! A.class_ "c-button__label" $ "Add existing client"
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" $ "Radio"
+      H.div ! A.class_ "o-form-group__controls" $
+        H.div ! A.class_ "c-radio-group" $ do
+          H.div ! A.class_ "c-radio" $
+            H.label $ do
+              H.input ! A.type_ "radio" ! A.name "radio1" ! A.checked "checked"
+              "Lorem ipsum dolor sit amet."
+          H.div ! A.class_ "c-radio" $
+            H.label $ do
+              H.input ! A.type_ "radio" ! A.name "radio1"
+              "Lorem ipsum dolor sit amet."
+
+subform2 =
+  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+    inputText "input" "Input"
+    inputSelect' "select" "Select"
+      [ "Choose an item", "A", "B", "C" ]
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for "textarea" $ "Textarea"
+      H.div ! A.class_ "o-form-group__controls" $ do
+        H.textarea ! A.class_ "c-textarea" ! A.rows "5" ! A.id "textarea" $ ""
+        H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+
+subform3 =
+  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Nr BCE"
+      H.div ! A.class_ "o-form-group__controls" $
+        H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "__/__/__" ! A.id "input"
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for "saleAmount" $ "Sale amount"
+      H.div ! A.class_ "c-input-group" $ do
+        H.input ! A.class_ "c-input" ! A.type_ "number" ! A.id "saleAmount"
+        H.div ! A.class_ "c-input-group__append" $ "€"
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for "time" $ "Time"
+      H.div ! A.class_ "o-flex o-flex--vertical-center o-flex--spaced" $ do
+        H.span $ do
+          H.p "From"
+          H.input ! A.class_ "c-input" ! A.type_ "time" ! A.id "time"
+        H.span $ do
+          H.p "To"
+          H.input ! A.class_ "c-input" ! A.type_ "time" ! A.id "time"
+    H.div ! A.class_ "o-form-group" $ do
+      H.label ! A.class_ "o-form-group__label" ! A.for "date" $ "Default label"
+      H.div ! A.class_ "o-form-group__controls" $
+        H.input ! A.class_ "c-input" ! A.type_ "date" ! A.id "date"
 
 
 --------------------------------------------------------------------------------
