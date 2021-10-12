@@ -397,16 +397,8 @@ toolbar =
       H.div ! A.class_ "c-toolbar__right" $ do
         H.div ! A.class_ "c-toolbar__item" $ do
           H.div ! A.class_ "c-button-toolbar" $ do
-            H.button ! A.class_ "c-button c-button--danger-secondary" ! A.type_ "button" $ do
-              H.span ! A.class_ "c-button__content" $ do
-                H.div ! A.class_ "o-svg-icon o-svg-icon-close" $ do
-                  svgIconClose
-                H.span ! A.class_ "c-button__label" $ "Cancel"
-            H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $ do
-              H.span ! A.class_ "c-button__content" $ do
-                H.div ! A.class_ "o-svg-icon o-svg-icon-save" $ do
-                  svgIconSave
-                H.span ! A.class_ "c-button__label" $ "Save"
+            buttonClodeDangerSecondary "Cancel"
+            buttonSave "Save"
 
 wizard =
   H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
@@ -438,16 +430,8 @@ wizard =
       H.div ! A.class_ "c-toolbar__right" $
         H.div ! A.class_ "c-toolbar__item" $
           H.div ! A.class_ "c-button-toolbar" $ do
-            H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
-              H.span ! A.class_ "c-button__content" $ do
-                H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-left  " $
-                  svgIconArrowLeft
-                H.span ! A.class_ "c-button__label" $ "Back"
-            H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $
-              H.span ! A.class_ "c-button__content" $ do
-                H.span ! A.class_ "c-button__label" $ "Next"
-                H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-right  " $
-                  svgIconArrowRight
+            buttonBackSecondary
+            buttonNext
 
 titlebar =
   H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
@@ -458,12 +442,55 @@ titlebar =
       H.div ! A.class_ "c-toolbar__right" $
         H.div ! A.class_ "c-toolbar__item" $
           H.div ! A.class_ "c-button-toolbar" $
-            H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $
-              H.span ! A.class_ "c-button__content" $ do
-                H.div ! A.class_ "o-svg-icon o-svg-icon-add  " $
-                  svgIconAdd
-                H.span ! A.class_ "c-button__label" $ "Add item"
+            buttonAdd "Add item"
 
+
+--------------------------------------------------------------------------------
+buttonBackSecondary =
+  H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+    H.span ! A.class_ "c-button__content" $ do
+      H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-left  " $
+        svgIconArrowLeft
+      H.span ! A.class_ "c-button__label" $ "Back"
+
+buttonNext =
+  H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $
+    H.span ! A.class_ "c-button__content" $ do
+      H.span ! A.class_ "c-button__label" $ "Next"
+      H.div ! A.class_ "o-svg-icon o-svg-icon-arrow-right  " $
+        svgIconArrowRight
+
+buttonAdd :: String -> Html
+buttonAdd label =
+  H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $
+    H.span ! A.class_ "c-button__content" $ do
+      H.div ! A.class_ "o-svg-icon o-svg-icon-add  " $
+        svgIconAdd
+      H.span ! A.class_ "c-button__label" $ H.toHtml label
+
+buttonAddSecondary :: String -> Html
+buttonAddSecondary label =
+  H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
+    H.span ! A.class_ "c-button__content" $ do
+      H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
+        svgIconAdd
+      H.span ! A.class_ "c-button__label" $ H.toHtml label
+
+buttonSave :: String -> Html
+buttonSave label =
+  H.button ! A.class_ "c-button c-button--primary" ! A.type_ "button" $ do
+    H.span ! A.class_ "c-button__content" $ do
+      H.div ! A.class_ "o-svg-icon o-svg-icon-save" $ do
+        svgIconSave
+      H.span ! A.class_ "c-button__label" $ H.toHtml label
+
+buttonClodeDangerSecondary :: String -> Html
+buttonClodeDangerSecondary label =
+  H.button ! A.class_ "c-button c-button--danger-secondary" ! A.type_ "button" $ do
+    H.span ! A.class_ "c-button__content" $ do
+      H.div ! A.class_ "o-svg-icon o-svg-icon-close" $ do
+        svgIconClose
+      H.span ! A.class_ "c-button__label" $ H.toHtml label
 
 
 --------------------------------------------------------------------------------
@@ -513,16 +540,8 @@ subform1 =
       H.div ! A.class_ "c-empty-state c-empty-state--bg-alt" $ do
         H.p ! A.class_ "u-text-muted c-body-1" $ "Please add a client for this quote."
         H.div ! A.class_ "c-button-toolbar" $ do
-          H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
-            H.span ! A.class_ "c-button__content" $ do
-              H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
-                svgIconAdd
-              H.span ! A.class_ "c-button__label" $ "Add new client"
-          H.button ! A.class_ "c-button c-button--secondary" ! A.type_ "button" $
-            H.span ! A.class_ "c-button__content" $ do
-              H.div ! A.class_ "o-svg-icon o-svg-icon-add" $
-                svgIconAdd
-              H.span ! A.class_ "c-button__label" $ "Add existing client"
+          buttonAddSecondary "Add new client"
+          buttonAddSecondary "Add existing client"
     H.div ! A.class_ "o-form-group" $ do
       H.label ! A.class_ "o-form-group__label" $ "Radio"
       H.div ! A.class_ "o-form-group__controls" $
