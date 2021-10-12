@@ -13,6 +13,8 @@ import qualified Text.Blaze.Svg as S (toSvg)
 import qualified Text.Blaze.Svg11 as S
 import qualified Text.Blaze.Svg11.Attributes as SA
 
+import Smart.Html.Alerts
+import Smart.Html.Banners
 import Smart.Html.Data
 import Smart.Html.Buttons
 import Smart.Html.Icons
@@ -245,37 +247,6 @@ inputSelect6 :: String -> String -> [String] -> Html
 inputSelect6 name label values =
   H.div ! A.class_ "o-grid-col-6" $ do
     inputSelect name label values
-
-
---------------------------------------------------------------------------------
--- https://design.smart.coop/development/docs/c-alert.html
-alertTitleAndContent :: String -> Html -> Html
-alertTitleAndContent title content =
-  H.div ! A.class_ "c-alert c-alert--default" $ do
-    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information  " $
-      svgIconCircleInformation
-    H.div ! A.class_ "c-alert__body" $
-      H.div ! A.class_ "c-alert__text" $ do
-        H.h4 ! A.class_ "c-alert__title" $ H.toHtml title
-        H.div ! A.class_ "c-alert__message" $
-          H.div ! A.class_ "c-content" $
-            content
-
-
---------------------------------------------------------------------------------
-banner =
-  H.div ! A.class_ "c-global-banner c-global-banner--default" $ do
-    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-information o-svg-icon--default " $
-      svgIconCircleInformation
-    H.div ! A.class_ "c-global-banner__label" $
-      H.p "Nam eget hendrerit massa, a consequat turpis."
-    H.button ! A.class_ "c-button c-button--borderless c-button--icon"
-             ! A.type_ "button"
-             ! customAttribute "data-banner-close" "data-banner-close" $
-      H.span ! A.class_ "c-button__content" $ do
-        H.div ! A.class_ "o-svg-icon o-svg-icon-close  " $
-          svgIconClose
-        H.div ! A.class_ "u-sr-accessible" $ "Close"
 
 
 --------------------------------------------------------------------------------
