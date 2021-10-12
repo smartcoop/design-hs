@@ -75,8 +75,7 @@ pageWithWizard = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/app-side-menu.html
 pageWithSideMenu :: Html
 pageWithSideMenu = document "Smart design system" $ do
-  H.header $
-    navbar exampleTree
+  navbar exampleTree
   mainContentSideMenu menu toolbar panels
 
 
