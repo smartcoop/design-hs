@@ -13,6 +13,7 @@ import qualified Text.Blaze.Svg11 as S
 import qualified Text.Blaze.Svg11.Attributes as SA
 
 import Smart.Html.Application hiding (subform1)
+import Smart.Html.Data (countries)
 import Smart.Html.Icons
 
 idSelectFunction :: String
@@ -33,9 +34,18 @@ form =
       ]
 
 subform1 =
-  group $ do
-    inputDialog "function" "Your function"
+  groupHorizontal $ do
+    inputDialog "position" "Your position"
+    inputTextarea "description" "Desciption of the contract" 5
+      ""
+    inputSelect "work-country" "Work country"
+      countries
+    inputRadios "has-risks" "Risks"
+      [ ("This position involves risks.", False)
+      , ("This position doesn't involve any risks.", False)
+      ]
 
+-- Same as inputText, but defers the choice to a dialog.
 inputDialog :: String -> String -> Html
 inputDialog name label =
   H.div ! A.class_ "o-form-group" $ do

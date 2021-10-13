@@ -255,6 +255,36 @@ inputSelect6 name label values =
   H.div ! A.class_ "o-grid-col-6" $ do
     inputSelect name label values
 
+inputTextarea :: String -> String -> Int -> String -> Html
+inputTextarea name label rows help =
+  H.div ! A.class_ "o-form-group" $ do
+    H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+      H.toHtml label
+    H.div ! A.class_ "o-form-group__controls" $ do
+      H.textarea ! A.class_ "c-textarea"
+        ! A.rows (H.toValue $ show rows)
+        ! A.id (H.toValue name) $ ""
+      H.p ! A.class_ "c-form-help-text" $
+        H.toHtml help
+
+inputRadios :: String -> String -> [(String, Bool)] -> Html
+inputRadios name label labels =
+  H.div ! A.class_ "o-form-group" $ do
+    H.label ! A.class_ "o-form-group__label" $
+      H.toHtml label
+    H.div ! A.class_ "o-form-group__controls" $
+      H.div ! A.class_ "c-radio-group" $ do
+        mapM_ radio labels
+  where
+  radio (label, checked) =
+    H.div ! A.class_ "c-radio" $
+      H.label $ do
+        if checked
+          then
+            H.input ! A.type_ "radio" ! A.name (H.toValue name) ! A.checked "checked"
+          else
+            H.input ! A.type_ "radio" ! A.name (H.toValue name)
+        H.toHtml label
 
 --------------------------------------------------------------------------------
 exampleTree :: [(String, (String, [(String, String)]))]
@@ -470,6 +500,10 @@ group content =
   H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $
     content
 
+groupHorizontal content =
+  H.div ! A.class_ "o-form-group-layout o-form-group-layout--horizontal" $
+    content
+
 panel :: String -> Html -> Html
 panel title content =
   H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
@@ -488,18 +522,10 @@ subform1 =
         H.div ! A.class_ "c-button-toolbar" $ do
           buttonAddSecondary "Add new client"
           buttonAddSecondary "Add existing client"
-    H.div ! A.class_ "o-form-group" $ do
-      H.label ! A.class_ "o-form-group__label" $ "Radio"
-      H.div ! A.class_ "o-form-group__controls" $
-        H.div ! A.class_ "c-radio-group" $ do
-          H.div ! A.class_ "c-radio" $
-            H.label $ do
-              H.input ! A.type_ "radio" ! A.name "radio1" ! A.checked "checked"
-              "Lorem ipsum dolor sit amet."
-          H.div ! A.class_ "c-radio" $
-            H.label $ do
-              H.input ! A.type_ "radio" ! A.name "radio1"
-              "Lorem ipsum dolor sit amet."
+    inputRadios "radio1" "Radio"
+      [ ("Lorem ipsum dolor sit amet.", True)
+      , ("Lorem ipsum dolor sit amet.", False)
+      ]
 
 subform2 =
   group $ do
@@ -507,11 +533,8 @@ subform2 =
     inputSelect' "select" "Select"
       [ "Choose an item", "A", "B", "C" ]
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
-    H.div ! A.class_ "o-form-group" $ do
-      H.label ! A.class_ "o-form-group__label" ! A.for "textarea" $ "Textarea"
-      H.div ! A.class_ "o-form-group__controls" $ do
-        H.textarea ! A.class_ "c-textarea" ! A.rows "5" ! A.id "textarea" $ ""
-        H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+    inputTextarea "textarea" "Textarea" 5
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
 
 subform3 =
   group $ do
