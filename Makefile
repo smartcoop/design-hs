@@ -8,6 +8,7 @@ all: \
   _site/app-form--banner.html \
   _site/app-form--wizard.html \
   _site/app-form--side-menu.html \
+  _site/app-dialog.html \
   _site/datagrid.html \
   _site/registration.html \
   _site/web-empty.html \

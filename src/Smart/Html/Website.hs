@@ -49,6 +49,8 @@ index = document "Smart design system" $
       H.li $
         H.a ! A.href "app-form--side-menu.html" $ "Application form, with left menu"
       H.li $
+        H.a ! A.href "app-dialog.html" $ "Application form, overlayed with a dialog"
+      H.li $
         H.a ! A.href "datagrid.html" $ "Application datagrid"
       H.li $
         H.a ! A.href "registration.html" $ "Registration form"

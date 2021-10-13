@@ -15,11 +15,16 @@ import qualified Text.Blaze.Svg11.Attributes as SA
 import Smart.Html.Application hiding (subform1)
 import Smart.Html.Icons
 
+idSelectFunction :: String
+idSelectFunction = "select-function"
+
 --------------------------------------------------------------------------------
 toolsNewContract :: Html
 toolsNewContract = document "Smart design system - New contract" $ do
   navbar exampleTree
-  mainContent (titlebar "New contract") form
+  mainContent (titlebar "New contract") $ do
+    form
+    dialogFullscreen idSelectFunction (dialogContent idSelectFunction)
 
 form =
   vertically $
@@ -40,6 +45,7 @@ inputDialog name label =
       H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id (H.toValue name)
         ! A.value "Webmaster"
         ! A.readonly "readonly"
-      H.div ! A.class_ "c-input-group__append" $
+      H.div ! A.class_ "c-input-group__append"
+        ! customAttribute "data-dialog" (H.toValue idSelectFunction) $
         H.div ! A.class_ "o-svg-icon o-svg-icon-edit" $
           svgIconEdit

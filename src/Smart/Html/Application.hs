@@ -80,6 +80,14 @@ pageWithSideMenu = document "Smart design system" $ do
 
 
 --------------------------------------------------------------------------------
+-- https://design.smart.coop/development/template-examples/dialog.html
+pageWithDialog :: Html
+pageWithDialog = document "Smart design system" $ do
+  navbar exampleTree
+  mainContent toolbar (panels >> dialogVisible "dialog" (dialogContent "dialog"))
+
+
+--------------------------------------------------------------------------------
 --https://design.smart.coop/development/template-examples/app-datagrid.html
 datagrid :: Html
 datagrid = document "Smart design system" $ do
@@ -643,3 +651,81 @@ myBody body =
 js = do
   H.script ! A.src "https://design.smart.coop/js/bundle-prototype.js" $ ""
   H.script ! A.src "https://design.smart.coop/js/bundle-client.js" $ ""
+
+
+
+--------------------------------------------------------------------------------
+-- The name can be referenced by `data-dialog` attribute to trigger the dialog.
+-- It is also use to create an id and reference it by aria-labelledby.
+dialogFullscreen name content =
+  H.div ! A.id (H.toValue name) ! A.class_ "c-dialog-context" $ do
+    H.div ! A.class_ "c-dialog-backdrop"
+      ! A.style "position:absolute;z-index:0;" $ ""
+    H.div ! A.class_ "c-dialog c-dialog--fullscreen" ! A.role "dialog"
+      ! customAttribute "aria-labelledby" (H.toValue $ name ++ "-title") $
+      content
+
+dialog name content =
+  H.div ! A.class_ "c-dialog-context c-dialog-context" $ do
+    H.div ! A.class_ "c-dialog-backdrop c-dialog-backdrop" $ ""
+    H.div ! A.class_ "c-dialog c-dialog--medium" ! A.role "dialog"
+      ! customAttribute "aria-labelledby" (H.toValue $ name ++ "-title") $
+      content
+
+dialogVisible name content =
+  H.div ! A.class_ "c-dialog-context c-dialog-context--visible" $ do
+    H.div ! A.class_ "c-dialog-backdrop c-dialog-backdrop--visible" $ ""
+    H.div ! A.class_ "c-dialog c-dialog--medium" ! A.role "dialog"
+      ! customAttribute "aria-labelledby" (H.toValue $ name ++ "-title") $
+      content
+
+dialogContent name = do
+      H.div ! A.class_ "c-dialog__push" $ ""
+      H.div ! A.class_ "c-dialog__header c-dialog__header--bordered" $
+        H.div ! A.class_ "c-toolbar c-toolbar--spaced" $ do
+          H.div ! A.class_ "c-toolbar__left" $
+            H.div ! A.class_ "c-toolbar__item" $
+              H.h2 ! A.class_ "c-dialog__title"
+                ! A.id (H.toValue $ name ++ "-title") $ "Dialog title"
+          H.div ! A.class_ "c-toolbar__item" $
+            H.button ! A.class_ "c-button c-button--borderless c-button--icon"
+              ! customAttribute "data-dialog-close aria-label ""Close dialog" $
+              H.div ! A.class_ "c-button__content" $
+                H.div ! A.class_ "o-svg-icon o-svg-icon-close  " $
+                  svgIconClose
+      H.div ! A.class_ "c-dialog__body" $
+        H.div ! A.class_ "u-spacer-l" $
+          H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Input"
+              H.div ! A.class_ "o-form-group__controls" $
+                H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id "input"
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "select" $ "Select"
+              H.div ! A.class_ "o-form-group__controls" $ do
+                H.div ! A.class_ "c-select-holder" $
+                  H.select ! A.class_ "c-select" ! A.id "select" $
+                    mapM_ (H.option . H.toHtml)
+                      ([ "Choose an item", "A", "B", "C" ] :: [String])
+                H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+            H.div ! A.class_ "o-form-group" $ do
+              H.label ! A.class_ "o-form-group__label" ! A.for "textarea" $ "Textarea"
+              H.div ! A.class_ "o-form-group__controls" $ do
+                H.textarea ! A.class_ "c-textarea" ! A.rows "5" ! A.id "textarea" $ ""
+                H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
+      H.div ! A.class_ "c-dialog__footer c-dialog__footer--bordered" $
+        H.div ! A.class_ "c-toolbar c-toolbar--spaced" $ do
+          H.div ! A.class_ "c-toolbar__left" $
+            H.div ! A.class_ "c-toolbar__item" $ ""
+          H.div ! A.class_ "c-toolbar__right" $
+            H.div ! A.class_ "c-toolbar__item" $
+              H.div ! A.class_ "c-button-toolbar" $ do
+                H.button ! A.class_ "c-button c-button--secondary"
+                  ! customAttribute "data-dialog-close" "close" $
+                  H.div ! A.class_ "c-button__content" $
+                    H.div ! A.class_ "c-button__label" $ "Cancel"
+                H.button ! A.class_ "c-button c-button--primary"
+                  ! customAttribute "data-dialog-close" "close" $
+                  H.div ! A.class_ "c-button__content" $
+                    H.div ! A.class_ "c-button__label" $ "Save"
+      H.div ! A.class_ "c-dialog__push" $ ""

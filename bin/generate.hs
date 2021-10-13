@@ -33,6 +33,7 @@ main = do
     ["app-form--banner"] -> render App.pageWithBanner
     ["app-form--wizard"] -> render App.pageWithWizard
     ["app-form--side-menu"] -> render App.pageWithSideMenu
+    ["app-dialog"] -> render App.pageWithDialog
     ["datagrid"] -> render App.datagrid
     ["registration"] -> render App.registration
     ["web-empty"] -> render Web.empty
