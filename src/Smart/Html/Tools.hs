@@ -12,10 +12,34 @@ import qualified Text.Blaze.Svg as S (toSvg)
 import qualified Text.Blaze.Svg11 as S
 import qualified Text.Blaze.Svg11.Attributes as SA
 
-import Smart.Html.Application
+import Smart.Html.Application hiding (subform1)
+import Smart.Html.Icons
 
 --------------------------------------------------------------------------------
 toolsNewContract :: Html
-toolsNewContract = document "Smart design system" $ do
+toolsNewContract = document "Smart design system - New contract" $ do
   navbar exampleTree
-  mainContent titlebar panels
+  mainContent (titlebar "New contract") form
+
+form =
+  vertically $
+    mapM_ (uncurry panel)
+      [ ("Contract type", subform1)
+      ]
+
+subform1 =
+  group $ do
+    inputDialog "function" "Your function"
+
+inputDialog :: String -> String -> Html
+inputDialog name label =
+  H.div ! A.class_ "o-form-group" $ do
+    H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+      H.toHtml label
+    H.div ! A.class_ "c-input-group" $ do
+      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id (H.toValue name)
+        ! A.value "Webmaster"
+        ! A.readonly "readonly"
+      H.div ! A.class_ "c-input-group__append" $
+        H.div ! A.class_ "o-svg-icon o-svg-icon-edit" $
+          svgIconEdit

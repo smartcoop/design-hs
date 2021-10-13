@@ -43,7 +43,7 @@ navToolbar = document "Smart design system" $ do
 navTitlebar :: Html
 navTitlebar = document "Smart design system" $ do
   navbar exampleTree
-  mainContent titlebar (return ())
+  mainContent (titlebar "Module title") (return ())
 
 
 --------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ pageWithSideMenu = document "Smart design system" $ do
 datagrid :: Html
 datagrid = document "Smart design system" $ do
   navbar exampleTree
-  mainContent titlebar table
+  mainContent (titlebar "Module title") table
 
 
 --------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ inputText name label =
   H.div ! A.class_ "o-form-group" $ do
     H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
       H.toHtml label
-    H.div ! A.class_ "o-form-group__controls" $ do
+    H.div ! A.class_ "o-form-group__controls" $
       H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id (H.toValue name)
 
 inputText2 :: String -> String -> Html
@@ -407,12 +407,14 @@ wizard =
             buttonBackSecondary
             buttonNext
 
-titlebar =
+titlebar :: String -> Html
+titlebar title =
   H.div ! A.class_ "c-navbar c-navbar--bordered-bottom" $
     H.div ! A.class_ "c-toolbar" $ do
       H.div ! A.class_ "c-toolbar__left" $
         H.div ! A.class_ "c-toolbar__item" $
-          H.h2 ! A.class_ "c-toolbar__title" $ "Module title"
+          H.h2 ! A.class_ "c-toolbar__title" $
+            H.toHtml title
       H.div ! A.class_ "c-toolbar__right" $
         H.div ! A.class_ "c-toolbar__item" $
           H.div ! A.class_ "c-button-toolbar" $
@@ -445,22 +447,32 @@ panels = panels_ Nothing
 panels' = panels_ . Just
 
 panels_ mtitle =
-  H.div ! A.class_ "o-container o-container--large" $ do
-    H.div ! A.class_ "o-container-vertical" $ do
-      maybe (return ()) (\t ->
-        H.div ! A.class_ "c-content" $
-          H.h1 t) mtitle
-      mapM_ panel [subform1, subform2, subform3]
+  vertically $ do
+    maybe (return ()) (\t ->
+      H.div ! A.class_ "c-content" $
+        H.h1 t) mtitle
+    mapM_ (panel "Form grouping") [subform1, subform2, subform3]
 
-panel content =
+vertically content =
+  H.div ! A.class_ "o-container o-container--large" $
+    H.div ! A.class_ "o-container-vertical" $
+      content
+
+group content =
+  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $
+    content
+
+panel :: String -> Html -> Html
+panel title content =
   H.div ! A.class_ "c-panel u-spacer-bottom-l" $ do
     H.div ! A.class_ "c-panel__header" $
-      H.h2 ! A.class_ "c-panel__title" $ "Form grouping"
+      H.h2 ! A.class_ "c-panel__title" $
+        H.toHtml title
     H.div ! A.class_ "c-panel__body" $ do
       content
 
 subform1 =
-  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+  group $ do
     H.div ! A.class_ "o-form-group" $ do
       H.label ! A.class_ "o-form-group__label" $ "Add client"
       H.div ! A.class_ "c-empty-state c-empty-state--bg-alt" $ do
@@ -482,7 +494,7 @@ subform1 =
               "Lorem ipsum dolor sit amet."
 
 subform2 =
-  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+  group $ do
     inputText "input" "Input"
     inputSelect' "select" "Select"
       [ "Choose an item", "A", "B", "C" ]
@@ -494,7 +506,7 @@ subform2 =
         H.p ! A.class_ "c-form-help-text" $ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo accumsan risus."
 
 subform3 =
-  H.div ! A.class_ "o-form-group-layout o-form-group-layout--standard" $ do
+  group $ do
     H.div ! A.class_ "o-form-group" $ do
       H.label ! A.class_ "o-form-group__label" ! A.for "input" $ "Nr BCE"
       H.div ! A.class_ "o-form-group__controls" $
