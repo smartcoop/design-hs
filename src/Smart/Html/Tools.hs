@@ -36,7 +36,7 @@ form =
 subform1 =
   groupHorizontal $ do
     inputDialog "position" "Your position"
-    inputTextarea "description" "Desciption of the contract" 5
+    inputTextarea "description" "Description of the contract" 5
       ""
     inputSelect "work-country" "Work country"
       countries
