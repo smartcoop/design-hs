@@ -1,4 +1,4 @@
-module Smart.Html.Class
+module Smart.Html.Dsl.Class
   () where
 
 import qualified Text.Blaze.Html               as B
