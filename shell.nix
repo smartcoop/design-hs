@@ -8,6 +8,10 @@ let
   nixpkgs = import sources.nixpkgs { };
   hp = nixpkgs-overlayed.haskellPackages;
 
+  inherit (nixpkgs.lib.attrsets) getAttrFromPath;
+
+  contents = import ./nix/contents.nix { inherit nixpkgs; };
+
   # Brittany, as the formatter, is just here as an example.
   # I personally prefer to have the formatters pinned to a version and then
   # made available via direnv to avoid unnecessary diff pollution across upgrades.
@@ -27,6 +31,6 @@ let
                                  ] ;
 
 in hp.shellFor {
-  packages = p: with p; [ the-smart-designer ];
+  packages = p: map (contents.getPkg p) (builtins.attrNames contents.pkgList);
   buildInputs = nix-tooling ++ haskell-tooling ++ system-tooling ++ formatters;
 }

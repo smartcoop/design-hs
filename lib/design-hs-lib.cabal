@@ -1,5 +1,5 @@
 cabal-version:      2.2
-name:               the-smart-designer
+name:               design-hs-lib
 version:            0.1.0.0
 category:           web
 extra-source-files:
@@ -63,12 +63,12 @@ library
   build-depends:
   exposed-modules:
 
--- executable the-smart-designer
+-- executable design-hs-lib
 --   import: common-dependencies, lang-settings, common-extensions
 --   main-is:          serve.hs
 --   build-depends:
 --      -- our dependencies
---      the-smart-designer
+--      design-hs-lib
 --      -- Parse cli arguments.
 --    , optparse-applicative
 --   hs-source-dirs:   bin
