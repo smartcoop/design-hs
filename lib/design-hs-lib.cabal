@@ -62,6 +62,7 @@ library
   hs-source-dirs: src
   build-depends:
   exposed-modules:
+    Smart.Html.Class
 
 -- executable design-hs-lib
 --   import: common-dependencies, lang-settings, common-extensions
