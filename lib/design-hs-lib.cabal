@@ -65,6 +65,7 @@ library
   exposed-modules:
     Smart.Html.Dsl.Class
     Smart.Html.Shared.Html.Helpers 
+    Smart.Html.Shared.Html.Icons
 
     Smart.Html.Accordion 
 
