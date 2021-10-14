@@ -22,6 +22,7 @@ common common-extensions
     TypeApplications
     ScopedTypeVariables
     GADTs
+    OverloadedStrings
 
 -- Common language settings
 common lang-settings
@@ -62,7 +63,10 @@ library
   hs-source-dirs: src
   build-depends:
   exposed-modules:
-    Smart.Html.Class
+    Smart.Html.Dsl.Class
+    Smart.Html.Shared.Html.Helpers 
+
+    Smart.Html.Accordion 
 
 -- executable design-hs-lib
 --   import: common-dependencies, lang-settings, common-extensions
