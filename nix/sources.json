@@ -1,7 +1,7 @@
 {
     "brittany": {
         "ref": "master",
-        "repo": "git@github.com:lspitzner/brittany.git",
+        "repo": "https://github.com/lspitzner/brittany",
         "rev": "434f9f8e49b847ef3e648672c5564b6dd0d3be67",
         "type": "git"
     },
