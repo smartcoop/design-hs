@@ -9,7 +9,6 @@ module Smart.Html.Accordion
   , AccordionItem(..)
   ) where
 
-import qualified Smart.Html.Dsl.Class          as Dsl
 import qualified Smart.Html.Shared.Html.Helpers
                                                as Helpers
 import           Smart.Html.Shared.Html.Icons  as Icons
@@ -83,5 +82,4 @@ instance H.ToMarkup AccordionItem where
 
     title   = Helpers.classedElem H.span ["c-accordion__item-title"]
       $ H.toMarkup titleT
-
 
