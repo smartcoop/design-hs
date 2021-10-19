@@ -25,6 +25,7 @@ canvas = accordion ::~ button ::~ EmptyCanvas
 -}
 module Smart.Html.Dsl
   ( Canvas(..)
+  , HtmlCanvas
   ) where
 
 import qualified Text.Blaze.Html5              as H
@@ -36,6 +37,8 @@ data Canvas (markup :: Type -> Constraint) where
   (:~:) ::markup a => Canvas markup -> a -> Canvas markup
   -- | Add a new element to the head of the canvas
   (::~) ::markup a => a -> Canvas markup -> Canvas markup
+  -- | Append 2 canvases
+  (:<>) ::Canvas markup -> Canvas markup -> Canvas markup
   -- | A canvas with a single element.
   SingletonCanvas ::markup a => a -> Canvas markup
   -- | An empty canvas
@@ -44,11 +47,25 @@ data Canvas (markup :: Type -> Constraint) where
 infixr 5 :~:
 infixr 5 ::~
 
+-- | Type alias just for convenience.
+type HtmlCanvas = Canvas H.ToMarkup
+
 instance H.ToMarkup (Canvas H.ToMarkup) where
   toMarkup = \case
     -- draw the canvas first, then the element at the tail.
     canvas :~: elem'      -> H.toMarkup canvas >> H.toMarkup elem'
     -- draw the element at the head first, then the rest of the canvas.
     elem'  ::~ canvas     -> H.toMarkup elem' >> H.toMarkup canvas
+    c0     :<> c1         -> H.toMarkup c0 >> H.toMarkup c1
     SingletonCanvas elem' -> H.toMarkup elem'
     EmptyCanvas           -> mempty
+
+instance Semigroup (Canvas markup) where
+  SingletonCanvas a <> c                 = a ::~ c
+  c                 <> SingletonCanvas a = c :~: a
+  EmptyCanvas       <> c                 = c
+  c                 <> EmptyCanvas       = c
+  c0                <> c1                = c0 :<> c1
+
+instance Monoid (Canvas markup) where
+  mempty = EmptyCanvas
