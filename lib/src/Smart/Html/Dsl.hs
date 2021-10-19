@@ -1,40 +1,54 @@
+{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE ConstraintKinds #-}
+{-|
+Module: Smart.Html.Dsl
+Description: A simple DSL for representing HTML in a more manageable way.
+
+TODO: The fixities are fairly arbitrary at this point and should be fine tuned.
+
+Example:
+
+@
+
+data Button = TodoButton
+
+instance H.ToMarkup Button
+
+accordion = Accordion ["Title 1" :> ("Content 1" :: Text)]
+button = TodoButton
+
+canvas :: Dsl.Canvas H.ToMarkup
+canvas = accordion ::~ button ::~ EmptyCanvas
+
+@
+
+-}
 module Smart.Html.Dsl
-  ( CanvasM(..)
+  ( Canvas(..)
   ) where
 
 import qualified Text.Blaze.Html5              as H
 
-data CanvasM a where
-  (:<>) ::CanvasM a -> a -> CanvasM a
-  (:><) ::a -> CanvasM a -> CanvasM a
-  SingletonCanvasM ::a -> CanvasM a
+-- | A canvas, is essentially a heterogenous list, members of which must satisfy a constraint.
+-- This lets us constrain on `H.ToMarkup` etc. on the elements of this "canvas" list.
+data Canvas (markup :: Type -> Constraint) where
+  -- | Add a new element to the end of the canvas. 
+  (:~:) ::markup a => Canvas markup -> a -> Canvas markup
+  -- | Add a new element to the head of the canvas
+  (::~) ::markup a => a -> Canvas markup -> Canvas markup
+  -- | A canvas with a single element.
+  SingletonCanvas ::markup a => a -> Canvas markup
+  -- | An empty canvas
+  EmptyCanvas ::Canvas markup
 
-instance Semigroup a => Semigroup (CanvasM a) where
-  SingletonCanvasM e <> d0                 = e :>< d0
-  d0                 <> SingletonCanvasM e = d0 :<> e
-  d0                 <> (canvas :<> elem') = (d0 <> canvas) :<> elem'
-  (canvas0 :<> elem0) <> (elem1 :>< canvas1) =
-    (canvas0 :<> (elem0 <> elem1)) <> canvas1
-  (elem0 :>< canvas0) <> d1 = elem0 :>< (canvas0 <> d1)
+infixr 5 :~:
+infixr 5 ::~
 
-instance Monoid a => Monoid (CanvasM a) where
-  mempty = SingletonCanvasM mempty
-
-instance Functor CanvasM where
-  fmap f = \case
-    SingletonCanvasM a -> SingletonCanvasM $ f a
-    (d0 :<> a )        -> fmap f d0 :<> f a
-    (a  :>< d0)        -> f a :>< fmap f d0
-
--- instance Applicative CanvasM where
---   pure = SingletonCanvasM 
---   (SingletonCanvasM f) <*> d0 = fmap f d0
---   (d0 :<> f) <*> (d1 :<> elem0) = d0 <*> ((fmap f d1) :<> f elem0)
-
-instance H.ToMarkup a => H.ToMarkup (CanvasM a) where
+instance H.ToMarkup (Canvas H.ToMarkup) where
   toMarkup = \case
-    SingletonCanvasM _ -> mempty
-    canvas :<> elem'   -> H.toMarkup canvas >> H.toMarkup elem'
-    elem'  :>< canvas  -> H.toMarkup elem' >> H.toMarkup canvas
-
--- instance Applicative CanvasM where
+    -- draw the canvas first, then the element at the tail.
+    canvas :~: elem'      -> H.toMarkup canvas >> H.toMarkup elem'
+    -- draw the element at the head first, then the rest of the canvas.
+    elem'  ::~ canvas     -> H.toMarkup elem' >> H.toMarkup canvas
+    SingletonCanvas elem' -> H.toMarkup elem'
+    EmptyCanvas           -> mempty
