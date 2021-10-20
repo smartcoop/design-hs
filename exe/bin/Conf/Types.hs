@@ -3,5 +3,8 @@ module Conf.Types
   ) where
 
 -- | Run configuration
-newtype Conf = Conf { _cOutputDir :: FilePath }
-             deriving Show
+data Conf = Conf
+  { _cOutputDir      :: FilePath
+  , _cExamplesSubdir :: FilePath
+  }
+  deriving Show

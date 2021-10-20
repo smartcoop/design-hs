@@ -14,7 +14,10 @@ scaffoldFilesystem
   -> m ()
 scaffoldFilesystem Conf {..} subdirs = liftIO $ createParent >> createChildren
  where
-  createParent = Dir.createDirectoryIfMissing True _cOutputDir
+  createParent = mkdir _cOutputDir
+  -- for all child subdirectories, we want to create the ones
+  -- additionally supplied by the user, and the example subdirectory.
   createChildren =
-    let childSubdirs = (_cOutputDir </>) <$> subdirs
-    in  mapM_ (Dir.createDirectoryIfMissing True) childSubdirs
+    let childSubdirs = (_cOutputDir </>) <$> (_cExamplesSubdir : subdirs)
+    in  mapM_ mkdir childSubdirs
+  mkdir = Dir.createDirectoryIfMissing True
