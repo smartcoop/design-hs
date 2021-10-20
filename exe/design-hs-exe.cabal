@@ -1,5 +1,5 @@
 cabal-version:      2.2
-name:               design-hs-lib
+name:               design-hs-exe
 version:            0.1.0.0
 category:           web
 extra-source-files:
@@ -39,14 +39,10 @@ common lang-settings
 common common-dependencies
   build-depends:
       base-noprelude >=4.7 && <5
-    , protolude
 
-    -- servant "core" (& server)
     , blaze-markup
     , blaze-html
     , blaze-svg
-
-    , containers
 
     -- Characters
     , text
@@ -55,27 +51,26 @@ common common-dependencies
     -- Control
     , lens
 
-    -- Default instances for configuration etc.
-   , data-default-class
+    -- File manip.
+    , directory 
+    , filepath
 
-library
+executable design-hs-exe
   import: common-dependencies, lang-settings, common-extensions
-  hs-source-dirs: src
+  main-is: Main.hs
+  
+--   main-is:          serve.hs
   build-depends:
-  exposed-modules:
-    -- custom prelude; this can be used by other
-    -- packages depending on this module.
-    -- However, this might conflict with custom preludes, and may
-    -- therefore require mixins, which will be problemmatic.
-    Prelude
+     -- Parse cli arguments.
+     optparse-applicative
+     , design-hs-lib
+
+  hs-source-dirs: bin
+  other-modules:
+    Examples.Accordion 
+    Examples
     
-    Smart.Html.Dsl
-
-    Smart.Html.Shared.Html.Helpers 
-    Smart.Html.Shared.Types 
-    Smart.Html.Shared.Html.Icons
-
-    Smart.Html.Accordion 
-
-    Smart.Html.Render 
-
+    Conf.Parse
+    Conf.Types
+    Conf 
+    
