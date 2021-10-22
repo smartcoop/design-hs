@@ -7,11 +7,14 @@ module Conf.Parse
 import           Conf.Types
 import           Options.Applicative
 
+filesystemConfParser :: Parser FilesystemConf
+filesystemConfParser = do
+  _fcOutputDir      <- dirParser "output" 'D'
+  _fcExamplesSubdir <- dirParser "examples-sub" 'E'
+  pure FilesystemConf { .. }
+
 confParser :: Parser Conf
-confParser = do
-  _cOutputDir      <- dirParser "output" 'D'
-  _cExamplesSubdir <- dirParser "examples-sub" 'E'
-  pure Conf { .. }
+confParser = Conf <$> filesystemConfParser
 
 dirParser name short' = strOption
   (long long' <> short short' <> help helpText <> metavar "DIRECTORY")

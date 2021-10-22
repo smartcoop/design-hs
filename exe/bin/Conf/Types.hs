@@ -1,10 +1,14 @@
 module Conf.Types
-  ( Conf(..)
+  ( FilesystemConf(..)
+  , Conf(..)
   ) where
 
 -- | Run configuration
-data Conf = Conf
-  { _cOutputDir      :: FilePath
-  , _cExamplesSubdir :: FilePath
+data FilesystemConf = FilesystemConf
+  { _fcOutputDir      :: FilePath
+  , _fcExamplesSubdir :: FilePath
   }
   deriving Show
+
+newtype Conf = Conf { _cFilesystemConf :: FilesystemConf }
+             deriving Show

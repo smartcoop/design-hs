@@ -12,12 +12,13 @@ scaffoldFilesystem
   => Conf -- ^ System configuration 
   -> [FilePath] -- ^ Additional sub. directories to create 
   -> m ()
-scaffoldFilesystem Conf {..} subdirs = liftIO $ createParent >> createChildren
+scaffoldFilesystem (Conf FilesystemConf {..}) subdirs =
+  liftIO $ createParent >> createChildren
  where
-  createParent = mkdir _cOutputDir
+  createParent = mkdir _fcOutputDir
   -- for all child subdirectories, we want to create the ones
   -- additionally supplied by the user, and the example subdirectory.
   createChildren =
-    let childSubdirs = (_cOutputDir </>) <$> (_cExamplesSubdir : subdirs)
+    let childSubdirs = (_fcOutputDir </>) <$> (_fcExamplesSubdir : subdirs)
     in  mapM_ mkdir childSubdirs
   mkdir = Dir.createDirectoryIfMissing True
