@@ -50,7 +50,8 @@ TODO: also implement for AccordionAction
 -}
 instance H.ToMarkup Accordion where
   toMarkup = \case
-    Accordion items -> H.div . mconcat $ H.toMarkup <$> items
+    Accordion items ->
+      Helpers.classedElem H.div ["c-accordion"] (mconcat $ H.toMarkup <$> items)
 
 instance H.ToMarkup AccordionItem where
   toMarkup (titleT :> cnt) =
@@ -77,7 +78,7 @@ instance H.ToMarkup AccordionItem where
         >> chevron
     svgIcon = Helpers.classedElem H.div
                                   ["o-svg-icon", "o-svg-icon-chevron-right"]
-                                  Icons.svgIconChevronLeft -- TODO check if this is correct?
+                                  Icons.svgIconChevronRight -- TODO check if this is correct?
     chevron = Helpers.classedElem H.div ["u-sr-accessible"] "Chevron"
 
     title   = Helpers.classedElem H.span ["c-accordion__item-title"]
