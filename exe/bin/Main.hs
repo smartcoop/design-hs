@@ -10,6 +10,7 @@ import qualified Conf.Types                    as CT
 import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
+import           Examples.Alert                 ( alerts )
 import qualified Options.Applicative           as A
 import qualified Smart.Html.Dsl                as Dsl
 import           Smart.Html.Render             as R
