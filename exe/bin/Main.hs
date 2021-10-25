@@ -23,33 +23,39 @@ main :: IO ExitCode
 main = A.execParser CP.confParserInfo >>= mainWithConf
 
 mainWithConf :: CT.Conf -> IO ExitCode
-mainWithConf cnf@(CT.Conf fsc@CT.FilesystemConf {..}) = do
+mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   Conf.scaffoldFilesystem cnf mempty
 
   let files =
         second R.renderCanvasWithHeadText
-          <$> [(indexF, indexHtml), (accordionF, accordionHtml)]
+          <$> [ (indexF    , indexHtml)
+              , (accordionF, accordionHtml)
+              , (alertF    , alertHtml)
+              ]
 
   mapM_ (uncurry T.writeFile) files
   putStrLn @Text "Done!"
   exitSuccess
  where
-  indexF     = _fcOutputDir </> "index.html"
-  accordionF = examplesF "accordions.html"
   examplesF f = _fcOutputDir </> _fcExamplesSubdir </> f
-  accordionHtml =
-    foldl' ((Dsl.:~:) . Dsl.SingletonCanvas) mempty $ accordions fsc
+  indexF        = _fcOutputDir </> "index.html"
 
-  mkLink name file =
+  accordionF    = examplesF "accordions.html"
+  accordionHtml = foldl' ((Dsl.:~:) . Dsl.SingletonCanvas) mempty accordions
+
+  alertF        = examplesF "alerts.html"
+  alertHtml     = foldl' ((Dsl.:~:) . Dsl.SingletonCanvas) mempty alerts
+
+  mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
     in  H.a name ! A.href href
 
-  accordionsLink = mkLink "Accordions" "accordions.html"
-  indexHtml      = Dsl.SingletonCanvas $ do
+  indexHtml = Dsl.SingletonCanvas $ do
     H.title "Smart design-hs"
     H.h1 "Welcome to SmartCoop's Haskell design system!"
     H.br
     H.h2 "Components:"
-    H.br
-    accordionsLink
-
+    links
+  links = foldl' mappend mempty [ H.br >> link' | link' <- elLinks ]
+  elLinks =
+    mkLink <$> [("Accordions", "accordions.html"), ("Alerts", "alerts.html")]
