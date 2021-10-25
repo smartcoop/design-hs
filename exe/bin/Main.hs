@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main
   ( main
+  , mainWithConf
   ) where
 
 import qualified Conf
