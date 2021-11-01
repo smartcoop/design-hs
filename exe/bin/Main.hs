@@ -42,10 +42,10 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   indexF        = _fcOutputDir </> "index.html"
 
   accordionF    = examplesF "accordions.html"
-  accordionHtml = foldl' ((Dsl.:~:) . Dsl.SingletonCanvas) mempty accordions
+  accordionHtml = Dsl.foldCanvas accordions
 
   alertF        = examplesF "alerts.html"
-  alertHtml     = foldl' ((Dsl.:~:) . Dsl.SingletonCanvas) mempty alerts
+  alertHtml     = Dsl.foldCanvas alerts
 
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file

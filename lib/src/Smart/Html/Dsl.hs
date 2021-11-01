@@ -26,6 +26,7 @@ canvas = accordion ::~ button ::~ EmptyCanvas
 module Smart.Html.Dsl
   ( Canvas(..)
   , HtmlCanvas
+  , foldCanvas
   ) where
 
 import qualified Text.Blaze.Html5              as H
@@ -69,3 +70,8 @@ instance Semigroup (Canvas markup) where
 
 instance Monoid (Canvas markup) where
   mempty = EmptyCanvas
+
+-- | Create a canvas from a foldable structure of smaller canvas elements.
+foldCanvas
+  :: forall a markup f . (markup a, Foldable f) => f a -> Canvas markup
+foldCanvas = foldl' (:~:) mempty
