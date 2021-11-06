@@ -1,5 +1,6 @@
 module Smart.Html.Shared.Html.Icons
-  ( svgIconCircleHelp
+  ( Icon(..)
+  , svgIconCircleHelp
   , svgIconChevronLeft
   , svgIconChevronRight
   , svgIconTag

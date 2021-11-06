@@ -1,5 +1,7 @@
 module Smart.Html.Shared.Types
-  ( Title(..)
+  ( ElemEnabledState(..)
+  , elemEnabledStateAttr
+  , Title(..)
   , Body(..)
   -- Confirmation buttons 
   , ConfirmText(..)
@@ -7,6 +9,17 @@ module Smart.Html.Shared.Types
   ) where
 
 import qualified Text.Blaze.Html5              as H
+import qualified Text.Blaze.Html5.Attributes   as A
+
+-- | Enabled state of an element 
+data ElemEnabledState = Enabled | Disabled
+                      deriving (Eq, Show)
+
+-- | Apply the ElemEnabledState to an actual Html element.
+elemEnabledStateAttr :: ElemEnabledState -> H.Html -> H.Html
+elemEnabledStateAttr en html = case en of
+  Enabled  -> html
+  Disabled -> html H.! A.disabled "disabled"
 
 -- | Title of a newtype, the IsString instance provides us with convenience on using
 -- overloaded string literals as `Title` values on inference.
