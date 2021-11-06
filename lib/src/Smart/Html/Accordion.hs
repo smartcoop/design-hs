@@ -78,7 +78,7 @@ instance H.ToMarkup AccordionItem where
         >> chevron
     svgIcon = Helpers.classedElem H.div
                                   ["o-svg-icon", "o-svg-icon-chevron-right"]
-                                  Icons.svgIconChevronRight -- TODO check if this is correct?
+                                  (H.toMarkup Icons.svgIconChevronRight) -- TODO check if this is correct?
     chevron = Helpers.classedElem H.div ["u-sr-accessible"] "Chevron"
 
     title   = Helpers.classedElem H.span ["c-accordion__item-title"]

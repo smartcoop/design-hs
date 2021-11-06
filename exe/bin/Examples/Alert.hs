@@ -4,6 +4,7 @@ module Examples.Alert
 
 import           Smart.Html.Alert
 import           Smart.Html.Shared.Html.Icons   ( svgIconDelete )
+import qualified Text.Blaze.Html5              as H
 
 alerts :: [Alert]
 alerts =
@@ -11,6 +12,6 @@ alerts =
     CancelConfirmAlert "Delete file"
                        "Are you sure?"
                        "Delete"
-                       (Just svgIconDelete)
+                       (Just $ H.toMarkup svgIconDelete)
                        "Cancel"
   ]
