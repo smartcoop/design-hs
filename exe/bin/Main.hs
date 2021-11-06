@@ -35,6 +35,8 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
               ]
 
   mapM_ (uncurry T.writeFile) files
+  putStrLn @Text "Wrote:"
+  confirmWritten $ fst <$> files
   putStrLn @Text "Done!"
   exitSuccess
  where
@@ -60,3 +62,5 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   links = foldl' mappend mempty [ H.br >> link' | link' <- elLinks ]
   elLinks =
     mkLink <$> [("Accordions", "accordions.html"), ("Alerts", "alerts.html")]
+
+  confirmWritten = putStrLn . T.unlines . fmap T.pack
