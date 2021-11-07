@@ -79,6 +79,7 @@ library
     Smart.Html.Alert 
     Smart.Html.Button 
     Smart.Html.Slate  
+    Smart.Html.Avatar  
 
     Smart.Html.Render 
 

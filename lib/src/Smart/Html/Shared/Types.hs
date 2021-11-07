@@ -8,6 +8,7 @@ module Smart.Html.Shared.Types
   -- Confirmation buttons 
   , ConfirmText(..)
   , CancelText(..)
+  , URI(..)
   ) where
 
 import qualified Text.Blaze.Html5              as H
@@ -45,3 +46,7 @@ newtype ConfirmText = ConfirmText { _unConfirmText :: Text }
 -- | Cancellation text: eg. for use in a dialog aborting an action
 newtype CancelText = CancelText { _unCancelText :: Text }
               deriving (Eq, Show, IsString, H.ToMarkup) via Text
+
+-- | A newtype around a URI, which is, at this stage, just represented by a text.
+newtype URI = URI { _unURI :: Text }
+            deriving (Eq, Show, IsString, H.ToMarkup) via Text
