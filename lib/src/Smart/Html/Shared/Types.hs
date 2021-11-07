@@ -3,6 +3,8 @@ module Smart.Html.Shared.Types
   , elemEnabledStateAttr
   , Title(..)
   , Body(..)
+  , Placeholder'(..)
+  , BodyPlaceholder
   -- Confirmation buttons 
   , ConfirmText(..)
   , CancelText(..)
@@ -30,6 +32,11 @@ newtype Title = Title { _unTitle :: Text }
 -- overloaded string literals as `Body` values on inference.
 newtype Body = Body { _unBody :: Text }
               deriving (Eq, Show, IsString, H.ToMarkup) via Text
+
+newtype Placeholder' body = Placeholder { _unBodyPlaceholder :: body }
+                        deriving (Eq, Show, IsString, H.ToMarkup) via body
+
+type BodyPlaceholder = Placeholder' Body
 
 -- | Confirmation text: eg. for use in a dialog confirming an action
 newtype ConfirmText = ConfirmText { _unConfirmText :: Text }

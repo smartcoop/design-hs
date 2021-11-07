@@ -12,6 +12,7 @@ import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
 import           Examples.Alert                 ( alerts )
 import           Examples.Button                ( buttonCanvases )
+import           Examples.Slate                 ( slates )
 import qualified Options.Applicative           as A
 import qualified Smart.Html.Dsl                as Dsl
 import           Smart.Html.Render             as R
@@ -34,6 +35,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
               , (accordionF, accordionHtml)
               , (alertF    , alertHtml)
               , (buttonF   , buttonHtml)
+              , (slateF    , slateHtml)
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -54,6 +56,9 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   buttonF       = examplesF "buttons.html"
   buttonHtml    = Dsl.foldCanvas buttonCanvases
 
+  slateF        = examplesF "slates.html"
+  slateHtml     = Dsl.foldCanvas slates
+
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
     in  H.a name ! A.href href
@@ -70,6 +75,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
       <$> [ ("Accordions", "accordions.html")
           , ("Alerts"    , "alerts.html")
           , ("Buttons"   , "buttons.html")
+          , ("Slates"    , "slates.html")
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack

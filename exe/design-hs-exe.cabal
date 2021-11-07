@@ -70,6 +70,7 @@ executable design-hs-exe
     Examples.Accordion 
     Examples.Alert 
     Examples.Button 
+    Examples.Slate 
     Examples
     
     Conf.Parse
