@@ -29,6 +29,8 @@ module Smart.Html.Dsl
   , foldCanvas
   ) where
 
+import qualified Data.String                   as String
+import qualified Data.Text                     as T
 import qualified Text.Blaze.Html5              as H
 
 -- | A canvas, is essentially a heterogenous list, members of which must satisfy a constraint.
@@ -50,6 +52,9 @@ infixr 5 ::~
 
 -- | Type alias just for convenience.
 type HtmlCanvas = Canvas H.ToMarkup
+
+instance markup Text => IsString (Canvas markup) where
+  fromString = SingletonCanvas . T.pack
 
 instance H.ToMarkup (Canvas H.ToMarkup) where
   toMarkup = \case
