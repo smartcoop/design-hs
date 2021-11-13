@@ -8,6 +8,7 @@ import qualified Smart.Html.Shared.Html.Icons  as Icons
 import           Smart.Html.Shared.Types        ( Placeholder'(..) )
 import           Smart.Html.Slate
 
+-- | TODO: Add additional examples, see https://design.smart.coop/development/docs/c-blank-slate.html
 slates :: [Slate]
 slates =
   whiteAndAlt "There are no items yet."
