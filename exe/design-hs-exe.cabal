@@ -74,6 +74,7 @@ executable design-hs-exe
     Examples.Slate 
     Examples.Radio 
     Examples.BorderedList 
+    Examples.Brand 
     Examples
     
     Conf.Parse

@@ -83,6 +83,7 @@ library
     Smart.Html.Radio  
     Smart.Html.Avatar  
     Smart.Html.BorderedList  
+    Smart.Html.Brand   
 
     Smart.Html.Render 
 

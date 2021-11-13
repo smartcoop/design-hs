@@ -13,6 +13,7 @@ import           Examples.Accordion             ( accordions )
 import           Examples.Alert                 ( alerts )
 import           Examples.AlertStack            ( alertStacks )
 import           Examples.BorderedList          ( borderedLists )
+import           Examples.Brand                 ( brands )
 import           Examples.Button                ( buttonCanvases )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Slate                 ( slates )
@@ -42,6 +43,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
               , (radioGroupF   , radioGroupHtml)
               , (alertStacksF  , alertStacksHtml)
               , (borderedListsF, borderedListsHtml)
+              , (brandsF       , brandsHtml)
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -74,6 +76,10 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   borderedListsF    = examplesF "bordered-lists.html"
   borderedListsHtml = Dsl.foldCanvas borderedLists
 
+  brandsF           = examplesF "brands.html"
+  brandsHtml        = Dsl.foldCanvas brands
+
+
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
     in  H.a name ! A.href href
@@ -94,6 +100,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
           , ("Radio groups"  , "radio-groups.html")
           , ("Alert stacks"  , "alert-stacks.html")
           , ("Bordered lists", "bordered-lists.html")
+          , ("Brands"        , "brands.html")
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
