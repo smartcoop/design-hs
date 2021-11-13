@@ -80,8 +80,9 @@ library
     Smart.Html.AlertStack 
     Smart.Html.Button 
     Smart.Html.Slate  
-    Smart.Html.Avatar  
     Smart.Html.Radio  
+    Smart.Html.Avatar  
+    Smart.Html.BorderedList  
 
     Smart.Html.Render 
 

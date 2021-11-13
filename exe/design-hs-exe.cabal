@@ -73,6 +73,7 @@ executable design-hs-exe
     Examples.Button 
     Examples.Slate 
     Examples.Radio 
+    Examples.BorderedList 
     Examples
     
     Conf.Parse
