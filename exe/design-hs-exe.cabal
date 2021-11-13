@@ -71,6 +71,7 @@ executable design-hs-exe
     Examples.Alert 
     Examples.Button 
     Examples.Slate 
+    Examples.Radio 
     Examples
     
     Conf.Parse

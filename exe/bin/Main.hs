@@ -12,6 +12,7 @@ import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
 import           Examples.Alert                 ( alerts )
 import           Examples.Button                ( buttonCanvases )
+import           Examples.Radio                 ( radioGroups )
 import           Examples.Slate                 ( slates )
 import qualified Options.Applicative           as A
 import qualified Smart.Html.Dsl                as Dsl
@@ -31,11 +32,12 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
 
   let files =
         second R.renderCanvasWithHeadText
-          <$> [ (indexF    , indexHtml)
-              , (accordionF, accordionHtml)
-              , (alertF    , alertHtml)
-              , (buttonF   , buttonHtml)
-              , (slateF    , slateHtml)
+          <$> [ (indexF     , indexHtml)
+              , (accordionF , accordionHtml)
+              , (alertF     , alertHtml)
+              , (buttonF    , buttonHtml)
+              , (slateF     , slateHtml)
+              , (radioGroupF, radioGroupHtml)
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -45,19 +47,23 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   exitSuccess
  where
   examplesF f = _fcOutputDir </> _fcExamplesSubdir </> f
-  indexF        = _fcOutputDir </> "index.html"
+  indexF         = _fcOutputDir </> "index.html"
 
-  accordionF    = examplesF "accordions.html"
-  accordionHtml = Dsl.foldCanvas accordions
+  accordionF     = examplesF "accordions.html"
+  accordionHtml  = Dsl.foldCanvas accordions
 
-  alertF        = examplesF "alerts.html"
-  alertHtml     = Dsl.foldCanvas alerts
+  alertF         = examplesF "alerts.html"
+  alertHtml      = Dsl.foldCanvas alerts
 
-  buttonF       = examplesF "buttons.html"
-  buttonHtml    = Dsl.foldCanvas buttonCanvases
+  buttonF        = examplesF "buttons.html"
+  buttonHtml     = Dsl.foldCanvas buttonCanvases
 
-  slateF        = examplesF "slates.html"
-  slateHtml     = Dsl.foldCanvas slates
+  slateF         = examplesF "slates.html"
+  slateHtml      = Dsl.foldCanvas slates
+
+  radioGroupF    = examplesF "radio-groups.html"
+  radioGroupHtml = Dsl.foldCanvas radioGroups
+
 
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
@@ -72,10 +78,11 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   links = foldl' mappend mempty [ H.br >> link' | link' <- elLinks ]
   elLinks =
     mkLink
-      <$> [ ("Accordions", "accordions.html")
-          , ("Alerts"    , "alerts.html")
-          , ("Buttons"   , "buttons.html")
-          , ("Slates"    , "slates.html")
+      <$> [ ("Accordions"  , "accordions.html")
+          , ("Alerts"      , "alerts.html")
+          , ("Buttons"     , "buttons.html")
+          , ("Slates"      , "slates.html")
+          , ("Radio Groups", "radio-groups.html")
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack

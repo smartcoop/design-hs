@@ -2,6 +2,7 @@ module Smart.Html.Shared.Types
   ( ElemEnabledState(..)
   , elemEnabledStateAttr
   , Title(..)
+  , Name(..)
   , Body(..)
   , Placeholder'(..)
   , BodyPlaceholder
@@ -28,6 +29,12 @@ elemEnabledStateAttr en html = case en of
 -- overloaded string literals as `Title` values on inference.
 newtype Title = Title { _unTitle :: Text }
               deriving (Eq, Show, IsString, H.ToMarkup) via Text
+
+-- | Name of a newtype, the IsString instance provides us with convenience on using
+-- overloaded string literals as `Name` values on inference.
+newtype Name = Name { _unName :: Text }
+              deriving (Eq, Show, IsString, H.ToMarkup) via Text
+
 
 -- | Body of a newtype, the IsString instance provides us with convenience on using
 -- overloaded string literals as `Body` values on inference.

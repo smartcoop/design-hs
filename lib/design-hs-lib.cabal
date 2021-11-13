@@ -80,6 +80,7 @@ library
     Smart.Html.Button 
     Smart.Html.Slate  
     Smart.Html.Avatar  
+    Smart.Html.Radio  
 
     Smart.Html.Render 
 
