@@ -69,6 +69,7 @@ executable design-hs-exe
   other-modules:
     Examples.Accordion 
     Examples.Alert 
+    Examples.AlertStack 
     Examples.Button 
     Examples.Slate 
     Examples.Radio 

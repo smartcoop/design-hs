@@ -26,6 +26,8 @@ canvas = accordion ::~ button ::~ EmptyCanvas
 module Smart.Html.Dsl
   ( Canvas(..)
   , HtmlCanvas
+  , fromMaybeCanvas
+  , maybeEmptyCanvas
   , foldCanvas
   ) where
 
@@ -49,9 +51,19 @@ data Canvas (markup :: Type -> Constraint) where
 
 infixr 5 :~:
 infixr 5 ::~
+infixr 5 :<>
 
 -- | Type alias just for convenience.
 type HtmlCanvas = Canvas H.ToMarkup
+
+-- | Construct a canvas from a `Maybe` value of a type @a@ that satisfies @markup a@, supplying a default should it be `Nothing`.
+fromMaybeCanvas
+  :: forall markup a . markup a => Canvas markup -> Maybe a -> Canvas markup
+fromMaybeCanvas defaultCanvas = maybe defaultCanvas SingletonCanvas
+
+-- | Construct a canvas from a `Maybe` value of a type @a@ that satisfies @markup a@, using `EmptyCanvas` as the default value.
+maybeEmptyCanvas :: forall markup a . markup a => Maybe a -> Canvas markup
+maybeEmptyCanvas = fromMaybeCanvas EmptyCanvas
 
 instance markup Text => IsString (Canvas markup) where
   fromString = SingletonCanvas . T.pack
