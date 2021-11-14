@@ -1,5 +1,6 @@
 module Smart.Html.Button
   ( Button(..)
+  , ButtonDef(..)
   ) where
 
 import           Smart.Html.Shared.Html.Icons
@@ -7,6 +8,21 @@ import           Smart.Html.Shared.Types
 import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
+
+-- | Sum type to indicate what kind of button to include in the components. 
+data ButtonDef =
+  -- | Use a default close button 
+  CloseButton
+  -- | Use no buttons in the component. 
+  | NoButton
+  -- | Use a custom button in the component. 
+  | CustomButton Button
+
+instance H.ToMarkup ButtonDef where
+  toMarkup = \case
+    CustomButton btn -> H.toMarkup btn
+    CloseButton      -> H.toMarkup $ ButtonIcon svgIconClose
+    NoButton         -> mempty
 
 -- | Buttons are much simpler: some of the button variants can be enabled or disabled.
 data Button =

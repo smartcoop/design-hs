@@ -5,7 +5,7 @@ Description: Stack of alerts
 <https://design.smart.coop/development/docs/c-alert-stack.html Docs & examples>
 -}
 module Smart.Html.AlertStack
-  ( AlertButton(..)
+  ( Btn.ButtonDef(..)
   , Alert(..)
   , AlertStack(..)
   ) where
@@ -20,24 +20,9 @@ import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
--- | Sum type to indicate what kind of button to include in the alerts. 
-data AlertButton =
-  -- | Use a default close button 
-  CloseButton
-  -- | Use no buttons in an alert. 
-  | NoButton
-  -- | Use a custom button in the alert. 
-  | CustomButton Btn.Button
-
-instance H.ToMarkup AlertButton where
-  toMarkup = \case
-    CustomButton btn -> H.toMarkup btn
-    CloseButton      -> H.toMarkup $ Btn.ButtonIcon Icons.svgIconClose
-    NoButton         -> mempty
-
 -- | A single alert. 
-data Alert = Alert (Maybe Icons.Icon) Body AlertButton
-           | AlertDark (Maybe Icons.Icon) Body AlertButton
+data Alert = Alert (Maybe Icons.Icon) Body Btn.ButtonDef
+           | AlertDark (Maybe Icons.Icon) Body Btn.ButtonDef
 
 instance H.ToMarkup Alert where
   toMarkup = \case
