@@ -84,6 +84,8 @@ library
     Smart.Html.Avatar  
     Smart.Html.BorderedList  
     Smart.Html.Brand   
+    Smart.Html.ButtonToolbar    
+    Smart.Html.GlobalBanner 
 
     Smart.Html.Render 
 
