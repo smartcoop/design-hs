@@ -76,6 +76,7 @@ executable design-hs-exe
     Examples.BorderedList 
     Examples.Brand 
     Examples.ButtonToolbar 
+    Examples.GlobalBanner 
     Examples
     
     Conf.Parse

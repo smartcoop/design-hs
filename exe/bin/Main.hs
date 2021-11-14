@@ -16,6 +16,7 @@ import           Examples.BorderedList          ( borderedLists )
 import           Examples.Brand                 ( brands )
 import           Examples.Button                ( buttonCanvases )
 import           Examples.ButtonToolbar         ( buttonToolbars )
+import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Slate                 ( slates )
 import qualified Options.Applicative           as A
@@ -46,6 +47,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
               , (borderedListsF , borderedListsHtml)
               , (brandsF        , brandsHtml)
               , (buttonToolbarsF, buttonToolbarsHtml)
+              , (globalBannersF , globalBannersHtml)
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -84,6 +86,10 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   buttonToolbarsF    = examplesF "button-toolbars.html"
   buttonToolbarsHtml = Dsl.foldCanvas buttonToolbars
 
+  globalBannersF     = examplesF "global-banners.html"
+  globalBannersHtml  = Dsl.foldCanvas globalBanners
+
+
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
     in  H.a name ! A.href href
@@ -106,6 +112,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
           , ("Bordered lists" , "bordered-lists.html")
           , ("Brands"         , "brands.html")
           , ("Button toolbars", "button-toolbars.html")
+          , ("Global banners" , "global-banners.html")
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
