@@ -5,7 +5,6 @@ module Examples.AlertStack
 import           Smart.Html.AlertStack
 import qualified Smart.Html.Shared.Html.Icons  as Icons
 
-
 alertStacks :: [AlertStack]
 alertStacks =
   [ AlertStack [Alert iconDone "This is a single alert!" NoButton]
