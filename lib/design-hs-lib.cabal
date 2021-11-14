@@ -86,6 +86,7 @@ library
     Smart.Html.Brand   
     Smart.Html.ButtonToolbar    
     Smart.Html.GlobalBanner 
+    Smart.Html.Ruler 
 
     Smart.Html.Render 
 

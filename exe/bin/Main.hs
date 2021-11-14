@@ -1,3 +1,4 @@
+{-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Main
   ( main
@@ -18,8 +19,10 @@ import           Examples.Button                ( buttonCanvases )
 import           Examples.ButtonToolbar         ( buttonToolbars )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.Radio                 ( radioGroups )
+import           Examples.Ruler                 ( rulers )
 import           Examples.Slate                 ( slates )
 import qualified Options.Applicative           as A
+                                         hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
 import           Smart.Html.Render             as R
 import           System.FilePath.Posix          ( (</>) )
@@ -48,6 +51,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
               , (brandsF        , brandsHtml)
               , (buttonToolbarsF, buttonToolbarsHtml)
               , (globalBannersF , globalBannersHtml)
+              , (rulersF        , rulersHtml)
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -60,35 +64,38 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   indexF             = _fcOutputDir </> "index.html"
 
   accordionF         = examplesF "accordions.html"
-  accordionHtml      = Dsl.foldCanvas accordions
+  accordionHtml      = sampleContents accordions
 
   alertF             = examplesF "alerts.html"
-  alertHtml          = Dsl.foldCanvas alerts
+  alertHtml          = sampleContents alerts
 
   buttonF            = examplesF "buttons.html"
-  buttonHtml         = Dsl.foldCanvas buttonCanvases
+  buttonHtml         = sampleContents buttonCanvases
 
   slateF             = examplesF "slates.html"
-  slateHtml          = Dsl.foldCanvas slates
+  slateHtml          = sampleContents slates
 
   radioGroupF        = examplesF "radio-groups.html"
-  radioGroupHtml     = Dsl.foldCanvas radioGroups
+  radioGroupHtml     = sampleContents radioGroups
 
   alertStacksF       = examplesF "alert-stacks.html"
-  alertStacksHtml    = Dsl.foldCanvas alertStacks
+  alertStacksHtml    = sampleContents alertStacks
 
   borderedListsF     = examplesF "bordered-lists.html"
-  borderedListsHtml  = Dsl.foldCanvas borderedLists
+  borderedListsHtml  = sampleContents borderedLists
 
   brandsF            = examplesF "brands.html"
-  brandsHtml         = Dsl.foldCanvas brands
+  brandsHtml         = sampleContents brands
 
   buttonToolbarsF    = examplesF "button-toolbars.html"
-  buttonToolbarsHtml = Dsl.foldCanvas buttonToolbars
+  buttonToolbarsHtml = sampleContents buttonToolbars
 
   globalBannersF     = examplesF "global-banners.html"
-  globalBannersHtml  = Dsl.foldCanvas globalBanners
+  globalBannersHtml  = sampleContents globalBanners
 
+  rulersF            = examplesF "rulers.html"
+  rulersHtml         = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
+    Dsl.::~ sampleContents rulers
 
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
@@ -113,6 +120,20 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
           , ("Brands"         , "brands.html")
           , ("Button toolbars", "button-toolbars.html")
           , ("Global banners" , "global-banners.html")
+          , ("Rulers"         , "rulers.html")
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
+
+sampleContents
+  :: forall a f
+   . (Foldable f, Functor f, H.ToMarkup a)
+  => f a
+  -> Dsl.HtmlCanvas
+sampleContents elems = Dsl.foldCanvas $ sampleContent <$> elems
+
+sampleContent :: forall a . H.ToMarkup a => a -> Dsl.HtmlCanvas
+sampleContent elem' =
+  let divContents = Dsl.SingletonCanvas @H.ToMarkup elem'
+  in  Dsl.SingletonCanvas . div' $ H.toMarkup divContents
+  where div' = H.div ! A.class_ "br-sample-content"
