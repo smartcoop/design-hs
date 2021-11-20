@@ -10,6 +10,7 @@ module Smart.Html.Shared.Types
   , ConfirmText(..)
   , CancelText(..)
   , URI(..)
+  , Image(..)
   ) where
 
 import qualified Text.Blaze.Html5              as H
@@ -57,3 +58,7 @@ newtype CancelText = CancelText { _unCancelText :: Text }
 -- | A newtype around a URI, which is, at this stage, just represented by a text.
 newtype URI = URI { _unURI :: Text }
             deriving (Eq, Show, IsString, H.ToMarkup) via Text
+
+-- | A newtype around a Image, which is, at this stage, just represented by a text.
+newtype Image = Image { _unImage :: URI }
+            deriving (Eq, Show, IsString, H.ToMarkup) via URI

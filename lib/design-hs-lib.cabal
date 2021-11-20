@@ -87,6 +87,7 @@ library
     Smart.Html.ButtonToolbar    
     Smart.Html.GlobalBanner 
     Smart.Html.Ruler 
+    Smart.Html.Card 
 
     Smart.Html.Render 
 
