@@ -5,6 +5,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Smart.Html.Avatar
   ( AvatarSize(..)
+  , AvatarImage(..)
   , AvatarAdditionalContent(..)
   , AvatarAdditionalContentType(..)
   , Avatar(..)

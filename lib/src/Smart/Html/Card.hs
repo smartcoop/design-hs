@@ -15,7 +15,7 @@ import qualified Text.Blaze.Html5.Attributes   as A
 data Card =
   -- | A card with just a title and an optional "body" (subtext)
   CardTitle Types.Title (Maybe Types.Body)
-  -- | A card with user avatar. 
+  -- | A card with user avatar: TODO: fix html rendering, currently bugged. 
   | CardUser (Av.Avatar 'Av.WithTitleAndBody)
   -- | A card with an image. 
   | CardImage (Maybe Types.URI) Types.Image Types.Title (Maybe Types.Body)

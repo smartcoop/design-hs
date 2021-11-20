@@ -17,6 +17,7 @@ import           Examples.BorderedList          ( borderedLists )
 import           Examples.Brand                 ( brands )
 import           Examples.Button                ( buttonCanvases )
 import           Examples.ButtonToolbar         ( buttonToolbars )
+import           Examples.Card                  ( cards )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
@@ -52,6 +53,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
               , (buttonToolbarsF, buttonToolbarsHtml)
               , (globalBannersF , globalBannersHtml)
               , (rulersF        , rulersHtml)
+              , (cardsF         , cardsHtml)
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -97,6 +99,10 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   rulersHtml         = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
     Dsl.::~ sampleContents rulers
 
+  cardsF = examplesF "cards.html"
+  cardsHtml =
+    Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Cards") Dsl.::~ sampleContents cards
+
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
     in  H.a name ! A.href href
@@ -121,6 +127,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
           , ("Button toolbars", "button-toolbars.html")
           , ("Global banners" , "global-banners.html")
           , ("Rulers"         , "rulers.html")
+          , ("Cards"          , "cards.html")
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
