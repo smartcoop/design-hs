@@ -14,7 +14,7 @@ CMD=$1
 BUILD_DIR=dist-$TARGET-$CMD
 ADDITIONAL_WATCH=""
 
-HTML_OUTDIR=/home/ashesh/tmp/design-hs/
+HTML_OUTDIR=$2
 HTML_EXAMPLES_OUTDIR=examples
 
 while true; do
