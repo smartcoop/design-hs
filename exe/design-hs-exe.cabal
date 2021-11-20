@@ -81,6 +81,7 @@ executable design-hs-exe
     Examples.GlobalBanner 
     Examples.Ruler 
     Examples.Card 
+    Examples.Form 
     Examples
     
     Conf.Parse

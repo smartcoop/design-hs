@@ -19,6 +19,7 @@ import           Examples.Brand                 ( brands )
 import           Examples.Button                ( buttonCanvases )
 import           Examples.ButtonToolbar         ( buttonToolbars )
 import           Examples.Card                  ( cards )
+import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
@@ -54,6 +55,7 @@ rendered = M.fromList
       )
     )
   , ("cards.html", ("Cards", sampleContents cards))
+  , ("forms.html", ("Form Groups", sampleContents formGroups))
   ]
 
 -- | Parse the configuration from the cli and run.
@@ -64,9 +66,10 @@ mainWithConf :: CT.Conf -> IO ExitCode
 mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   Conf.scaffoldFilesystem cnf mempty
 
-  let files =
+  let indexFile = (indexF, indexHtml)
+      files =
         second R.renderCanvasWithHeadText
-          <$> (indexF, indexHtml)
+          <$> indexFile
           :   [ (examplesF fileName, canvas)
               | (fileName, (_, canvas)) <- M.toList rendered
               ]

@@ -88,6 +88,8 @@ library
     Smart.Html.GlobalBanner 
     Smart.Html.Ruler 
     Smart.Html.Card 
+    Smart.Html.Checkbox 
+    Smart.Html.Form 
 
     Smart.Html.Render 
 

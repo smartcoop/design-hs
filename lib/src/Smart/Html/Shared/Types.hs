@@ -2,6 +2,8 @@ module Smart.Html.Shared.Types
   ( ElemEnabledState(..)
   , elemEnabledStateAttr
   , Title(..)
+  , Id(..)
+  , id
   , Name(..)
   , Body(..)
   , Placeholder'(..)
@@ -15,6 +17,13 @@ module Smart.Html.Shared.Types
 
 import qualified Text.Blaze.Html5              as H
 import qualified Text.Blaze.Html5.Attributes   as A
+
+-- | ID of an HTML element.
+newtype Id = Id { _unId :: Text }
+           deriving (Eq, Show, IsString, Semigroup, Monoid) via Text
+
+id :: Id -> H.Attribute
+id = H.customAttribute "id" . H.textValue . _unId
 
 -- | Enabled state of an element 
 data ElemEnabledState = Enabled | Disabled
