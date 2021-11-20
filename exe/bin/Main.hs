@@ -8,6 +8,7 @@ module Main
 import qualified Conf
 import qualified Conf.Parse                    as CP
 import qualified Conf.Types                    as CT
+import qualified Data.Map                      as M
 import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
@@ -26,10 +27,34 @@ import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
 import           Smart.Html.Render             as R
+import qualified Smart.Html.Shared.Types       as Types
 import           System.FilePath.Posix          ( (</>) )
 import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
+
+-- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
+-- and the canvas it represents.
+rendered :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
+rendered = M.fromList
+  [ ("accordions.html"     , ("Accordions", sampleContents accordions))
+  , ("alerts.html"         , ("Alerts", sampleContents alerts))
+  , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
+  , ("slates.html"         , ("Slates", sampleContents slates))
+  , ("radio-groups.html"   , ("Radio Groups", sampleContents radioGroups))
+  , ("alert-stacks.html"   , ("Alert Stacks", sampleContents alertStacks))
+  , ("bordered-lists.html" , ("Bordered Lists", sampleContents borderedLists))
+  , ("brands.html"         , ("Brands", sampleContents brands))
+  , ("button-toolbars.html", ("Button Toolbars", sampleContents buttonToolbars))
+  , ("global-banners.html" , ("Global Banners", sampleContents globalBanners))
+  , ( "rulers.html"
+    , ( "Rulers"
+      , Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
+        Dsl.::~ sampleContents rulers
+      )
+    )
+  , ("cards.html", ("Cards", sampleContents cards))
+  ]
 
 -- | Parse the configuration from the cli and run.
 main :: IO ExitCode
@@ -41,19 +66,9 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
 
   let files =
         second R.renderCanvasWithHeadText
-          <$> [ (indexF         , indexHtml)
-              , (accordionF     , accordionHtml)
-              , (alertF         , alertHtml)
-              , (buttonF        , buttonHtml)
-              , (slateF         , slateHtml)
-              , (radioGroupF    , radioGroupHtml)
-              , (alertStacksF   , alertStacksHtml)
-              , (borderedListsF , borderedListsHtml)
-              , (brandsF        , brandsHtml)
-              , (buttonToolbarsF, buttonToolbarsHtml)
-              , (globalBannersF , globalBannersHtml)
-              , (rulersF        , rulersHtml)
-              , (cardsF         , cardsHtml)
+          <$> (indexF, indexHtml)
+          :   [ (examplesF fileName, canvas)
+              | (fileName, (_, canvas)) <- M.toList rendered
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -63,45 +78,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   exitSuccess
  where
   examplesF f = _fcOutputDir </> _fcExamplesSubdir </> f
-  indexF             = _fcOutputDir </> "index.html"
-
-  accordionF         = examplesF "accordions.html"
-  accordionHtml      = sampleContents accordions
-
-  alertF             = examplesF "alerts.html"
-  alertHtml          = sampleContents alerts
-
-  buttonF            = examplesF "buttons.html"
-  buttonHtml         = sampleContents buttonCanvases
-
-  slateF             = examplesF "slates.html"
-  slateHtml          = sampleContents slates
-
-  radioGroupF        = examplesF "radio-groups.html"
-  radioGroupHtml     = sampleContents radioGroups
-
-  alertStacksF       = examplesF "alert-stacks.html"
-  alertStacksHtml    = sampleContents alertStacks
-
-  borderedListsF     = examplesF "bordered-lists.html"
-  borderedListsHtml  = sampleContents borderedLists
-
-  brandsF            = examplesF "brands.html"
-  brandsHtml         = sampleContents brands
-
-  buttonToolbarsF    = examplesF "button-toolbars.html"
-  buttonToolbarsHtml = sampleContents buttonToolbars
-
-  globalBannersF     = examplesF "global-banners.html"
-  globalBannersHtml  = sampleContents globalBanners
-
-  rulersF            = examplesF "rulers.html"
-  rulersHtml         = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
-    Dsl.::~ sampleContents rulers
-
-  cardsF = examplesF "cards.html"
-  cardsHtml =
-    Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Cards") Dsl.::~ sampleContents cards
+  indexF = _fcOutputDir </> "index.html"
 
   mkLink (name, file) =
     let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
@@ -116,18 +93,8 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   links = foldl' mappend mempty [ H.br >> link' | link' <- elLinks ]
   elLinks =
     mkLink
-      <$> [ ("Accordions"     , "accordions.html")
-          , ("Alerts"         , "alerts.html")
-          , ("Buttons"        , "buttons.html")
-          , ("Slates"         , "slates.html")
-          , ("Radio groups"   , "radio-groups.html")
-          , ("Alert stacks"   , "alert-stacks.html")
-          , ("Bordered lists" , "bordered-lists.html")
-          , ("Brands"         , "brands.html")
-          , ("Button toolbars", "button-toolbars.html")
-          , ("Global banners" , "global-banners.html")
-          , ("Rulers"         , "rulers.html")
-          , ("Cards"          , "cards.html")
+      <$> [ (H.toMarkup title, fileName)
+          | (fileName, (title, _)) <- M.toList rendered
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack

@@ -55,6 +55,8 @@ common common-dependencies
     , directory 
     , filepath
 
+    , containers 
+
 executable design-hs-exe
   import: common-dependencies, lang-settings, common-extensions
   main-is: Main.hs
