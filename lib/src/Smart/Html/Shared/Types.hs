@@ -13,6 +13,8 @@ module Smart.Html.Shared.Types
   , CancelText(..)
   , URI(..)
   , Image(..)
+  , Rows(..)
+  , rows
   ) where
 
 import qualified Text.Blaze.Html5              as H
@@ -22,6 +24,7 @@ import qualified Text.Blaze.Html5.Attributes   as A
 newtype Id = Id { _unId :: Text }
            deriving (Eq, Show, IsString, Semigroup, Monoid) via Text
 
+-- | Attach an @id@ attribute using our @Id@ newtype 
 id :: Id -> H.Attribute
 id = H.customAttribute "id" . H.textValue . _unId
 
@@ -71,3 +74,11 @@ newtype URI = URI { _unURI :: Text }
 -- | A newtype around a Image, which is, at this stage, just represented by a text.
 newtype Image = Image { _unImage :: URI }
             deriving (Eq, Show, IsString, H.ToMarkup) via URI
+
+-- | A @rows@ attribute, can be used in a @textarea@.
+newtype Rows = Rows { _unRows :: Int }
+             deriving (Eq, Show, Ord, Real, Enum, Integral, Num) via Int
+
+-- | Attach a @rows@ attribute using our @Rows@ newtype.
+rows :: Rows -> H.Attribute
+rows = A.rows . H.textValue . show . _unRows
