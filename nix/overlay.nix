@@ -9,8 +9,12 @@ let
   inherit (import sources.gitignore { inherit lib; }) gitignoreSource;
 
   ourOverrides = selfh: superh:
-    mapAttrs (name: dir:
-      selfh.callCabal2nix "${name}" (gitignoreSource dir) { }) contents.pkgList;
+    let
+
+      callCabalOn = name: dir:
+        selfh.callCabal2nix "${name}" (gitignoreSource dir) { };
+
+    in mapAttrs callCabalOn contents.pkgList;
 
 in {
   haskellPackages = super.haskellPackages.override (old: {
