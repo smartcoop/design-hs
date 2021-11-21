@@ -92,6 +92,7 @@ library
     Smart.Html.Form 
     Smart.Html.Textarea  
     Smart.Html.Loader  
+    Smart.Html.Wizard   
 
     Smart.Html.Render 
 
