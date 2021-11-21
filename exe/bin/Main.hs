@@ -21,6 +21,7 @@ import           Examples.ButtonToolbar         ( buttonToolbars )
 import           Examples.Card                  ( cards )
 import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
+import           Examples.Loader                ( loaders )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
 import           Examples.Slate                 ( slates )
@@ -48,6 +49,7 @@ rendered = M.fromList
   , ("brands.html"         , ("Brands", sampleContents brands))
   , ("button-toolbars.html", ("Button Toolbars", sampleContents buttonToolbars))
   , ("global-banners.html" , ("Global Banners", sampleContents globalBanners))
+  , ("loaders.html"        , ("Loaders", sampleContents loaders))
   , ( "rulers.html"
     , ( "Rulers"
       , Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
