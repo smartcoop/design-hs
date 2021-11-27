@@ -12,5 +12,9 @@ iconLists =
       [ IconListElem (Icons.IconDiv @"bills" Icons.svgIconBills)
                      "Here are your bills"
       , IconListElem (Icons.IconDiv @"add" Icons.svgIconAdd) "Add pending bills"
+      , IconListElem (Icons.IconDiv @"email" Icons.svgIconEmail)
+                     "contact@bills.com"
+      , IconListElem (Icons.IconDiv @"phone" Icons.svgIconPhone)
+                     "+32 488 40 5001"
       ]
   ]
