@@ -19,6 +19,9 @@ import           Examples.Brand                 ( brands )
 import           Examples.Button                ( buttonCanvases )
 import           Examples.ButtonToolbar         ( buttonToolbars )
 import           Examples.Card                  ( cards )
+import           Examples.FileUpload            ( fileUploadResults
+                                                , fileUploads
+                                                )
 import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.IconList              ( iconLists )
@@ -48,6 +51,7 @@ rendered = M.fromList
   , ("button-toolbars.html", ("Button Toolbars", sampleContents buttonToolbars))
   , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
   , ("cards.html"          , ("Cards", sampleContents cards))
+  , ("file-uploads.html"   , ("File uploads", fileUploadsC))
   , ("forms.html"          , ("Form Groups", sampleContents formGroups))
   , ("global-banners.html" , ("Global Banners", sampleContents globalBanners))
   , ("icon-lists.html"     , ("Icon Lists", sampleContents iconLists))
@@ -59,6 +63,11 @@ rendered = M.fromList
  where
   rulersC = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
     Dsl.::~ sampleContents rulers
+  fileUploadsC =
+    Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Pending file uploads")
+      Dsl.::~ sampleContents fileUploads
+      Dsl.::~ Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Done file uploads")
+      Dsl.::~ sampleContents fileUploadResults
 
 -- | Parse the configuration from the cli and run.
 main :: IO ExitCode

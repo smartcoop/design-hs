@@ -94,6 +94,7 @@ library
     Smart.Html.Loader  
     Smart.Html.Wizard   
     Smart.Html.IconList   
+    Smart.Html.FileUpload    
 
     Smart.Html.Render 
 
