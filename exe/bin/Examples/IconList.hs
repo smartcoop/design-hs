@@ -1,3 +1,4 @@
+{-# LANGUAGE DataKinds #-}
 module Examples.IconList
   ( iconLists
   ) where
@@ -8,7 +9,8 @@ import qualified Smart.Html.Shared.Html.Icons  as Icons
 iconLists :: [IconList]
 iconLists =
   [ IconList
-      [ IconListElem Icons.svgIconBills "Here are your bills"
-      , IconListElem Icons.svgIconAdd   "Add pending bills"
+      [ IconListElem (Icons.IconDiv @"bills" Icons.svgIconBills)
+                     "Here are your bills"
+      , IconListElem (Icons.IconDiv @"add" Icons.svgIconAdd) "Add pending bills"
       ]
   ]

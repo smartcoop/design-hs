@@ -1,5 +1,8 @@
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE KindSignatures #-}
 module Smart.Html.Shared.Html.Icons
   ( Icon(..)
+  , IconDiv(..)
   , svgIconChevronLeft
   , svgIconChevronRight
   , svgIconTag
@@ -20,20 +23,32 @@ module Smart.Html.Shared.Html.Icons
   , svgIconCircleCheck
   , svgIconCircleInformation
   , svgIconCircleHelp
+  -- * Contact related icons
+  , svgIconEmail
+  , svgIconPhone
   ) where
 
 
-import           Text.Blaze.Html5               ( (!)
-                                                , Html
-                                                , ToMarkup
-                                                )
+import qualified Data.Text                     as T
+import qualified Text.Blaze.Html5              as H
+import           Text.Blaze.Html5               ( (!) )
+import qualified Text.Blaze.Html5.Attributes   as A
 import qualified Text.Blaze.Svg11              as S
 import qualified Text.Blaze.Svg11.Attributes   as SA
 
+-- | An Svg icon wrapped up in a div. 
+newtype IconDiv (iconType :: Symbol) = IconDiv Icon
+
+instance KnownSymbol iconType => H.ToMarkup (IconDiv iconType) where
+  toMarkup (IconDiv icon) =
+    let iconSpecificClass =
+          mappend "o-svg-icon-" . T.pack $ symbolVal (Proxy @iconType)
+        iconDivClass = H.textValue $ "o-svg-icon " <> iconSpecificClass
+    in  (H.div ! A.class_ iconDivClass) $ H.toMarkup icon
 
 -- | Newtype wrapper over all icons for safety.
-newtype Icon = Icon Html
-             deriving ToMarkup via Html
+newtype Icon = Icon H.Html
+             deriving H.ToMarkup via H.Html
 
 --------------------------------------------------------------------------------
 svgIconCircleHelp :: Icon
@@ -329,4 +344,26 @@ svgIconCircleCheck =
         "M12 4C9.87827 4 7.84344 4.84285 6.34315 6.34315C4.84285 7.84344 4 9.87827 4 12C4 14.1217 4.84285 16.1566 6.34315 17.6569C7.84344 19.1571 9.87827 20 12 20C14.1217 20 16.1566 19.1571 17.6569 17.6569C19.1571 16.1566 20 14.1217 20 12C20 9.87827 19.1571 7.84344 17.6569 6.34315C16.1566 4.84285 14.1217 4 12 4ZM2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22C6.477 22 2 17.523 2 12ZM16.664 8.753C16.862 8.92918 16.9819 9.17675 16.9975 9.44132C17.0131 9.70589 16.923 9.96582 16.747 10.164L11.414 16.164C11.3202 16.2696 11.2051 16.3541 11.0762 16.412C10.9474 16.4698 10.8077 16.4997 10.6665 16.4997C10.5253 16.4997 10.3856 16.4698 10.2568 16.412C10.1279 16.3541 10.0128 16.2696 9.919 16.164L7.253 13.164C7.08712 12.9645 7.0053 12.7083 7.02482 12.4495C7.04434 12.1907 7.16368 11.9497 7.35762 11.7773C7.55156 11.6049 7.80492 11.5147 8.06418 11.5256C8.32344 11.5366 8.56828 11.6479 8.747 11.836L10.667 13.995L15.253 8.835C15.4293 8.63716 15.677 8.51739 15.9415 8.50202C16.2061 8.48664 16.4659 8.57691 16.664 8.753Z"
     ! SA.fill "#595959"
 
+svgIconEmail :: Icon
+svgIconEmail = mkViewbox
+  [ ( "M2 6C2 4.89543 2.89543 4 4 4H20C21.1046 4 22 4.89543 22 6V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6ZM5.51859 6L12 11.6712L18.4814 6H5.51859ZM20 7.32877L12.6585 13.7526C12.2815 14.0825 11.7185 14.0825 11.3415 13.7526L4 7.32877V18H20V7.32877Z"
+    , "#595959"
+    )
+  ]
 
+svgIconPhone :: Icon
+svgIconPhone = mkViewbox
+  [ ( "M3.83319 4H8.32313L9.77034 7.61803L7.44546 9.16795C7.16727 9.35342 7.00016 9.66565 7.00016 10C7.0027 10.0936 7.00017 10.001 7.00017 10.001L7.00017 10.002L7.00017 10.0043L7.0002 10.0093L7.00035 10.0217C7.0005 10.0309 7.00075 10.0421 7.00117 10.0552C7.00202 10.0814 7.00355 10.1153 7.00629 10.1564C7.01176 10.2385 7.02208 10.3494 7.04147 10.4852C7.08022 10.7565 7.15544 11.1281 7.30148 11.5662C7.59472 12.4459 8.1709 13.5849 9.29306 14.7071C10.4152 15.8293 11.5542 16.4054 12.4339 16.6987C12.8721 16.8447 13.2437 16.9199 13.515 16.9587C13.6507 16.9781 13.7617 16.9884 13.8438 16.9939C13.8849 16.9966 13.9188 16.9981 13.945 16.999C13.9581 16.9994 13.9693 16.9997 13.9785 16.9998L13.9908 17L13.9959 17L13.9981 17L13.9992 17C13.9992 17 14.1108 16.9939 14.0002 17C14.3789 17 14.7252 16.786 14.8946 16.4472L15.5643 15.1078L20.0002 15.8471V20.167C17.8891 20.4723 12.1876 20.7732 7.70727 16.2929C3.22697 11.8126 3.52788 6.1111 3.83319 4ZM9.07381 10.4861L10.8797 9.28213C11.6667 8.75751 11.9785 7.75338 11.6273 6.87525L10.1801 3.25722C9.87636 2.4979 9.14094 2 8.32313 2H3.78094C2.87243 2 2.01725 2.63116 1.86811 3.6169C1.5288 5.8595 1.06695 12.481 6.29306 17.7071C11.5192 22.9332 18.1407 22.4714 20.3833 22.1321C21.369 21.9829 22.0002 21.1277 22.0002 20.2192V15.8471C22.0002 14.8694 21.2933 14.0351 20.329 13.8743L15.8931 13.135C15.027 12.9907 14.1681 13.4281 13.7754 14.2134L13.4289 14.9064C13.32 14.8796 13.1985 14.8453 13.0664 14.8013C12.4461 14.5946 11.5851 14.1707 10.7073 13.2929C9.82943 12.4151 9.40561 11.5541 9.19885 10.9338C9.14298 10.7662 9.10275 10.6154 9.07381 10.4861Z"
+    , "#595959"
+    )
+  ]
+
+mkViewbox pathDAndFills =
+  Icon
+    . (S.svg ! SA.width "24" ! SA.height "24" ! SA.viewbox "0 0 24 24" ! SA.fill
+        "none"
+      )
+    $   mconcat
+    $   mkPathD
+    <$> pathDAndFills
+  where mkPathD (d, fill) = S.path ! SA.d d ! SA.fill fill
