@@ -83,6 +83,7 @@ executable design-hs-exe
     Examples.Card 
     Examples.Form 
     Examples.Loader 
+    Examples.IconList 
     Examples
     
     Conf.Parse
