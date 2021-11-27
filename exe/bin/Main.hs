@@ -41,26 +41,24 @@ import qualified Text.Blaze.Html5.Attributes   as A
 rendered :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
 rendered = M.fromList
   [ ("accordions.html"     , ("Accordions", sampleContents accordions))
-  , ("alerts.html"         , ("Alerts", sampleContents alerts))
-  , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
-  , ("slates.html"         , ("Slates", sampleContents slates))
-  , ("radio-groups.html"   , ("Radio Groups", sampleContents radioGroups))
   , ("alert-stacks.html"   , ("Alert Stacks", sampleContents alertStacks))
+  , ("alerts.html"         , ("Alerts", sampleContents alerts))
   , ("bordered-lists.html" , ("Bordered Lists", sampleContents borderedLists))
   , ("brands.html"         , ("Brands", sampleContents brands))
   , ("button-toolbars.html", ("Button Toolbars", sampleContents buttonToolbars))
+  , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
+  , ("cards.html"          , ("Cards", sampleContents cards))
+  , ("forms.html"          , ("Form Groups", sampleContents formGroups))
   , ("global-banners.html" , ("Global Banners", sampleContents globalBanners))
-  , ("loaders.html"        , ("Loaders", sampleContents loaders))
   , ("icon-lists.html"     , ("Icon Lists", sampleContents iconLists))
-  , ( "rulers.html"
-    , ( "Rulers"
-      , Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
-        Dsl.::~ sampleContents rulers
-      )
-    )
-  , ("cards.html", ("Cards", sampleContents cards))
-  , ("forms.html", ("Form Groups", sampleContents formGroups))
+  , ("loaders.html"        , ("Loaders", sampleContents loaders))
+  , ("radio-groups.html"   , ("Radio Groups", sampleContents radioGroups))
+  , ("rulers.html"         , ("Rulesrs", rulersC))
+  , ("slates.html"         , ("Slates", sampleContents slates))
   ]
+ where
+  rulersC = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
+    Dsl.::~ sampleContents rulers
 
 -- | Parse the configuration from the cli and run.
 main :: IO ExitCode
