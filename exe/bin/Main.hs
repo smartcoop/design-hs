@@ -26,6 +26,7 @@ import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.IconList              ( iconLists )
 import           Examples.Loader                ( loaders )
+import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
 import           Examples.Slate                 ( slates )
@@ -56,8 +57,9 @@ rendered = M.fromList
   , ("global-banners.html" , ("Global Banners", sampleContents globalBanners))
   , ("icon-lists.html"     , ("Icon Lists", sampleContents iconLists))
   , ("loaders.html"        , ("Loaders", sampleContents loaders))
+  , ("panels.html"         , ("Panels", sampleContents panels))
   , ("radio-groups.html"   , ("Radio Groups", sampleContents radioGroups))
-  , ("rulers.html"         , ("Rulesrs", rulersC))
+  , ("rulers.html"         , ("Rulers", rulersC))
   , ("slates.html"         , ("Slates", sampleContents slates))
   ]
  where
