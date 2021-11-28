@@ -30,6 +30,7 @@ import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
 import           Examples.Slate                 ( slates )
+import           Examples.StatusPill            ( statusPills )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
@@ -61,6 +62,7 @@ rendered = M.fromList
   , ("radio-groups.html"   , ("Radio Groups", sampleContents radioGroups))
   , ("rulers.html"         , ("Rulers", rulersC))
   , ("slates.html"         , ("Slates", sampleContents slates))
+  , ("status-pills.html"   , ("Status Pills", sampleContents statusPills))
   ]
  where
   rulersC = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
