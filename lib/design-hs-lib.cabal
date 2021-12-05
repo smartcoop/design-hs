@@ -97,6 +97,7 @@ library
     Smart.Html.FileUpload    
     Smart.Html.Panel    
     Smart.Html.StatusPill    
+    Smart.Html.FileAttachment
 
     Smart.Html.Render 
 

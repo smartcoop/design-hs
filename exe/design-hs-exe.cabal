@@ -87,6 +87,7 @@ executable design-hs-exe
     Examples.FileUpload 
     Examples.Panel 
     Examples.StatusPill 
+    Examples.FileAttachment 
     Examples
     
     Conf.Parse

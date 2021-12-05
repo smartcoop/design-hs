@@ -4,6 +4,7 @@
 module Smart.Html.Shared.Html.Icons
   ( Icon(..)
   , OSvgIconDiv(..)
+  , IconDiv(..)
   , svgIconChevronLeft
   , svgIconChevronRight
   , svgIconTag
@@ -47,9 +48,25 @@ instance KnownSymbol iconType => H.ToMarkup (OSvgIconDiv iconType) where
     let iconSpecificClass =
           mappend "o-svg-icon-" . T.pack $ symbolVal (Proxy @iconType)
         iconDivClass = H.textValue $ "o-svg-icon " <> iconSpecificClass
-    in  (H.div ! A.class_ iconDivClass) $ H.toMarkup icon
+    in  H.div ! A.class_ iconDivClass $ H.toMarkup icon
+
+{- | An icon enclosed in a div that just contains an icon specific class, of the form @<specificName>__icon@.
+For example, for file-attachment icons, we can use @IconDiv \@"c-file-attachment" svgIconFileAttachment@; the resulting div will contain
+
+@
+<div class="c-file-attachment__icon" ..> icon html </div> 
+@ 
+-}
+newtype IconDiv (iconType :: Symbol) = IconDiv Icon
+
+instance KnownSymbol iconType => H.ToMarkup (IconDiv iconType) where
+  toMarkup (IconDiv icon) =
+    let divClass =
+          H.textValue $ (T.pack . symbolVal $ Proxy @iconType) <> "__icon"
+    in  H.div ! A.class_ divClass $ H.toMarkup icon
 
 -- | Newtype wrapper over all icons for safety.
+-- FIXME: rename to svg icon.
 newtype Icon = Icon H.Html
              deriving H.ToMarkup via H.Html
 
