@@ -30,6 +30,7 @@ import           Examples.Loader                ( loaders )
 import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
+import           Examples.SideMenu              ( sideMenus )
 import           Examples.Slate                 ( slates )
 import           Examples.StatusPill            ( statusPills )
 import qualified Options.Applicative           as A
@@ -66,6 +67,7 @@ rendered = M.fromList
   , ("radio-groups.html"  , ("Radio Groups", sampleContents radioGroups))
   , ("rulers.html"        , ("Rulers", rulersC))
   , ("slates.html"        , ("Slates", sampleContents slates))
+  , ("side-menus.html"    , ("Side Menus", sampleContents sideMenus))
   , ("status-pills.html"  , ("Status Pills", sampleContents statusPills))
   ]
  where

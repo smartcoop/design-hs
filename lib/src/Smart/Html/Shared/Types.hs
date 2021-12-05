@@ -1,6 +1,7 @@
 module Smart.Html.Shared.Types
   ( ElemEnabledState(..)
   , elemEnabledStateAttr
+  , ElemActiveState(..)
   , Title(..)
   , Id(..)
   , id
@@ -37,6 +38,9 @@ elemEnabledStateAttr :: ElemEnabledState -> H.Html -> H.Html
 elemEnabledStateAttr en html = case en of
   Enabled  -> html
   Disabled -> html H.! A.disabled "disabled"
+
+data ElemActiveState = Active | Inactive
+                     deriving (Eq, Show)
 
 -- | Title of a newtype, the IsString instance provides us with convenience on using
 -- overloaded string literals as `Title` values on inference.
