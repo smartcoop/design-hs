@@ -3,7 +3,7 @@
 {-# LANGUAGE KindSignatures #-}
 module Smart.Html.Shared.Html.Icons
   ( Icon(..)
-  , IconDiv(..)
+  , OSvgIconDiv(..)
   , svgIconChevronLeft
   , svgIconChevronRight
   , svgIconTag
@@ -37,11 +37,11 @@ import qualified Text.Blaze.Html5.Attributes   as A
 import qualified Text.Blaze.Svg11              as S
 import qualified Text.Blaze.Svg11.Attributes   as SA
 
--- | An Svg icon wrapped up in a div. 
-newtype IconDiv (iconType :: Symbol) = IconDiv Icon
+-- | An Svg icon wrapped up in a div with @o-svg-icon@ and @o-svg-icon-<specific>@ classes.
+newtype OSvgIconDiv (iconType :: Symbol) = OSvgIconDiv Icon
 
-instance KnownSymbol iconType => H.ToMarkup (IconDiv iconType) where
-  toMarkup (IconDiv icon) =
+instance KnownSymbol iconType => H.ToMarkup (OSvgIconDiv iconType) where
+  toMarkup (OSvgIconDiv icon) =
     let iconSpecificClass =
           mappend "o-svg-icon-" . T.pack $ symbolVal (Proxy @iconType)
         iconDivClass = H.textValue $ "o-svg-icon " <> iconSpecificClass
@@ -166,8 +166,6 @@ svgIconUser :: Icon
 svgIconUser = mkSvgIconStdFill
   [ "M12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4ZM6 8C6 4.68629 8.68629 2 12 2C15.3137 2 18 4.68629 18 8C18 11.3137 15.3137 14 12 14C8.68629 14 6 11.3137 6 8ZM8 18C6.34315 18 5 19.3431 5 21C5 21.5523 4.55228 22 4 22C3.44772 22 3 21.5523 3 21C3 18.2386 5.23858 16 8 16H16C18.7614 16 21 18.2386 21 21C21 21.5523 20.5523 22 20 22C19.4477 22 19 21.5523 19 21C19 19.3431 17.6569 18 16 18H8Z"
   ]
-
-
 
 svgIconCircleCheck :: Icon
 svgIconCircleCheck = mkSvgIconStdFill
