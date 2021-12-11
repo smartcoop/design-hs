@@ -99,6 +99,7 @@ library
     Smart.Html.StatusPill    
     Smart.Html.FileAttachment
     Smart.Html.SideMenu
+    Smart.Html.KeyValue
 
     Smart.Html.Render 
 
