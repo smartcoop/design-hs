@@ -2,12 +2,15 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE DataKinds #-}
-module Smart.Html.CardGrid
+module Smart.Html.Grid
   ( GridElem(..)
-  , CardGrid(..)
-  , ElemLowerRight
+  , Grid(..)
   , XY(..)
   , WH(..)
+  -- * Type level functions
+  , ElemLowerRight
+  , NormaliseCoordsToOrigin
+  , XYOutOfGrid
   ) where
 
 import           Data.Type.Bool
@@ -31,8 +34,8 @@ type family XYInGridC (gridWH :: WH) (elemXY :: XY) :: Constraint where
 
 -- | A boolean that indicates whether a given XY cartesians lie outside a grid. 
 type family XYOutOfGrid (gridWH :: WH) (elemXY :: XY) :: Bool where
-  XYOutOfGrid ('WH gCols gRows) ('XY ulX ulY) = (ulX <=? (0 - 1)
-                                                 || gCols <=? ulX) && (ulY <=? (0 - 1) || gRows <=? ulY)
+  XYOutOfGrid ('WH gCols gRows) ('XY ulX ulY) = ((ulX + 1) <=? 0
+                                                 || gCols <=? ulX) && ((ulY + 1) <=? 0 || gRows <=? ulY)
 
 -- | Same as `XYOutOfGrid` but as a constraint rather than a boolean. 
 type family XYOutOfGridC (gridWH :: WH) (elemXY :: XY) :: Constraint where
@@ -43,7 +46,20 @@ type family XYOutOfGridC (gridWH :: WH) (elemXY :: XY) :: Constraint where
 type family NormaliseCoordsToOrigin (elemXY :: XY) (newOrigin :: XY) :: XY where
   NormaliseCoordsToOrigin ('XY elemX elemY) ('XY newOriginX newOriginY) = 'XY (elemX - newOriginX) (elemY - newOriginY)
 
--- | A type level computation to compute the lower right corner coordinates of an element.
+{- | A type level computation to compute the lower right corner coordinates of an element.
+Examples:
+
+@
+λ> :kind! ElemLowerRight ('XY 10 10) ('WH 1 1)
+ElemLowerRight ('XY 10 10) ('WH 1 1) :: XY
+= 'XY 10 10
+*Prelude Smart.Html.Grid
+λ> :kind! ElemLowerRight ('XY 10 10) ('WH 1 2)
+ElemLowerRight ('XY 10 10) ('WH 1 2) :: XY
+= 'XY 10 11
+@
+
+-}
 type family ElemLowerRight (elemXY :: XY) (elemWH :: WH) :: XY where
   ElemLowerRight ('XY x y) ('WH w h) =  'XY (x + (w - 1)) (y + (h - 1))
 
@@ -65,10 +81,9 @@ That ensures that N doesn't lie within any of the @[E]@ elements already in the 
 -}
 type family NewElemNotOverlappingWithExisting (newElemXY :: XY) (newElemWH :: WH) (gridElems :: [(XY, WH)]) :: Bool where
   NewElemNotOverlappingWithExisting newElemXY newElemWH ('(existingElemXY, existingElemWH) ': rest) =
-    ( XYOutOfGrid existingElemWH (NormaliseCoordsToOrigin newElemXY existingElemXY) -- Upper left of elem should not lie within existing elem
+       XYOutOfGrid existingElemWH (NormaliseCoordsToOrigin newElemXY existingElemXY) -- Upper left of elem should not lie within existing elem
     && XYOutOfGrid existingElemWH (NormaliseCoordsToOrigin (ElemLowerRight newElemXY newElemWH) existingElemXY) --- Lower right shouldn't lie within existing elem
     && NewElemNotOverlappingWithExisting newElemXY newElemWH rest
-    )
   NewElemNotOverlappingWithExisting _newElemXY _newElemWH '[] = 'True
 
 -- | Same as `NewElemNotOverlappingWithExisting` but as a `Constraint`. 
@@ -98,14 +113,16 @@ With the following properties held:
 2. h > 0
 
 -}
-data CardGrid (gWH :: WH) (elems :: [(XY, WH)]) where
-  CardGridElem ::( XYInGridC gWH elemXY
+data Grid (gWH :: WH) (elems :: [(XY, WH)]) where
+  (:++) ::( XYInGridC gWH elemXY
                  , XYInGridC gWH (ElemLowerRight elemXY elemWH)
                  , NewElemNotOverlappingWithExistingC elemXY elemWH elems
                  )
                => GridElem elemXY elemWH
-               -> CardGrid gWH elems
-               -> CardGrid gWH ('(elemXY, elemWH) ': elems)
+               -> Grid gWH elems
+               -> Grid gWH ('(elemXY, elemWH) ': elems)
 
--- cg :: CardGrid ( 'WH 10 10)
+  EmptyGrid ::Grid gWH '[]
+
+-- cg :: Grid ( 'WH 10 10)
 -- cg = undefined
