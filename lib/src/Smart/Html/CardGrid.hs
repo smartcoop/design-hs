@@ -10,21 +10,71 @@ module Smart.Html.CardGrid
   , WH(..)
   ) where
 
+import           Data.Type.Bool
 import           GHC.TypeNats
 
+-- | @(X, Y)@ coordinates. 
 data XY = XY Nat Nat
 
+-- | @W x H@ dimensions. 
 data WH = WH Nat Nat
 
 data GridElem (xy :: XY) (hw :: WH) = GridElem
 
 -- | A constraint that indicates whether a given XY cartesians lie within a grid. 
 type family XYInGridC (gridWH :: WH) (elemXY :: XY) :: Constraint where
-  XYInGridC (_hwG gRows gCols) (_xyE ulX ulY) = (0 <= ulX, CmpNat ulX gRows ~ 'LT, 0 <= ulY, CmpNat ulY gCols ~ 'LT)
+  XYInGridC ('WH gRows gCols) ('XY ulX ulY) = ( -- on the X axis
+                                                0 <= ulX, CmpNat ulX gRows ~ 'LT
+                                              -- on the Y axis
+                                              , 0 <= ulY, CmpNat ulY gCols ~ 'LT
+                                              )
+
+-- | A boolean that indicates whether a given XY cartesians lie outside a grid. 
+type family XYOutOfGrid (gridWH :: WH) (elemXY :: XY) :: Bool where
+  XYOutOfGrid ('WH gCols gRows) ('XY ulX ulY) = (ulX <=? (0 - 1)
+                                                 || gCols <=? ulX) && (ulY <=? (0 - 1) || gRows <=? ulY)
+
+-- | Same as `XYOutOfGrid` but as a constraint rather than a boolean. 
+type family XYOutOfGridC (gridWH :: WH) (elemXY :: XY) :: Constraint where
+  XYOutOfGridC wh xy = XYOutOfGrid wh xy ~ 'True
+
+-- | Normalise coordinates to a new origin (gridXY)
+-- Here the coordinate @elemXY@ is a point on the original cartesian plane, and @gridXY@ is the new origin on the cartesian plane. 
+type family NormaliseCoordsToOrigin (elemXY :: XY) (newOrigin :: XY) :: XY where
+  NormaliseCoordsToOrigin ('XY elemX elemY) ('XY newOriginX newOriginY) = 'XY (elemX - newOriginX) (elemY - newOriginY)
 
 -- | A type level computation to compute the lower right corner coordinates of an element.
 type family ElemLowerRight (elemXY :: XY) (elemWH :: WH) :: XY where
-  ElemLowerRight (_xy x y) (_hw h w) =  'XY (x + (w - 1)) (y + (h - 1))
+  ElemLowerRight ('XY x y) ('WH w h) =  'XY (x + (w - 1)) (y + (h - 1))
+
+{- | Ensure that a new element doesn't overlap with existing elements of a grid. 
+
+To evaluate this constraint, we check (iteratively) through the list of existing elements
+
+- (we denote each existing element with E)
+
+- (we call the new element N)
+
+For each E:
+
+1. Normalise N to the new origin: the Upper-left corner of E, forming a grid of width & height: WH(E) 
+
+2. Ensure that N doesn't lie within this new "grid" of size WH(E)
+
+That ensures that N doesn't lie within any of the @[E]@ elements already in the grid. 
+-}
+type family NewElemNotOverlappingWithExisting (newElemXY :: XY) (newElemWH :: WH) (gridElems :: [(XY, WH)]) :: Bool where
+  NewElemNotOverlappingWithExisting newElemXY newElemWH ('(existingElemXY, existingElemWH) ': rest) =
+    ( XYOutOfGrid existingElemWH (NormaliseCoordsToOrigin newElemXY existingElemXY) -- Upper left of elem should not lie within existing elem
+    && XYOutOfGrid existingElemWH (NormaliseCoordsToOrigin (ElemLowerRight newElemXY newElemWH) existingElemXY) --- Lower right shouldn't lie within existing elem
+    && NewElemNotOverlappingWithExisting newElemXY newElemWH rest
+    )
+  NewElemNotOverlappingWithExisting _newElemXY _newElemWH '[] = 'True
+
+-- | Same as `NewElemNotOverlappingWithExisting` but as a `Constraint`. 
+type family NewElemNotOverlappingWithExistingC (newElemXY :: XY) (newElemWH :: WH) (existingElems :: [(XY, WH)]) :: Constraint where
+  NewElemNotOverlappingWithExistingC newElemXY newElemWH existingElems =
+    NewElemNotOverlappingWithExisting newElemXY newElemWH existingElems ~ 'True
 
 {- | A Card grid, with type-level proofs that ensure elements within it, lie within its dimensions.
 
@@ -32,15 +82,14 @@ A grid is a coordinate plane with (0, 0) lying on the top-left corner:
 
 @
 (0, 0)
-^
-|
-----------------------
-|
+↑
+.---------------------
 |
 |
 |
 |
-|--------------------- ( w - 1, h - 1)
+|
+|--------------------. → (w - 1, h - 1)
 @
 
 With the following properties held:
@@ -49,12 +98,14 @@ With the following properties held:
 2. h > 0
 
 -}
-data CardGrid (gWH :: WH) where
+data CardGrid (gWH :: WH) (elems :: [(XY, WH)]) where
   CardGridElem ::( XYInGridC gWH elemXY
                  , XYInGridC gWH (ElemLowerRight elemXY elemWH)
+                 , NewElemNotOverlappingWithExistingC elemXY elemWH elems
                  )
-               => GridElem elemXY elemWH -> CardGrid gWH
-
+               => GridElem elemXY elemWH
+               -> CardGrid gWH elems
+               -> CardGrid gWH ('(elemXY, elemWH) ': elems)
 
 -- cg :: CardGrid ( 'WH 10 10)
 -- cg = undefined
