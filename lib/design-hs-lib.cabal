@@ -58,6 +58,9 @@ common common-dependencies
     -- Default instances for configuration etc.
    , data-default-class
 
+   -- Custom type-level errors, for example
+   , type-errors
+
 library
   import: common-dependencies, lang-settings, common-extensions
   hs-source-dirs: src
