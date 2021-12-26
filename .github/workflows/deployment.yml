@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - main
+    - asheshambasta/feature/initial-ideas-and-setup
 jobs:
   build:
     runs-on: ubuntu-latest
