@@ -1,16 +1,18 @@
+# Like the design-hs-haskell expression, but only for static HTML files that are generated from th exe.
 let sources = import ./nix/sources.nix;
-    # Index is built under outputDir
-    # Examples are built under a subdirectory of outputDir
-in { outputDir ? "html"
-   , examplesSubDir ? "examples"
-   , pkgs ? import sources.nixpkgs { }
+in { pkgs ? import sources.nixpkgs { }
    , system ? builtins.currentSystem
    }:
 let
   # build the static executables first.
   exe =
-    with (import ./.);
+    with (import ./design-hs-haskell.nix);
     pkgs.haskell.lib.justStaticExecutables(design-hs-exe);
+
+  # Index is built under outputDir
+  # Examples are built under a subdirectory of outputDir
+  outputDir = "html";
+  examplesSubDir = "examples";
 
 in pkgs.stdenv.mkDerivation {
 
