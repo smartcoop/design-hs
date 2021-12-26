@@ -27,6 +27,7 @@ dirParser name short' = strOption
 confParserInfo :: ParserInfo Conf
 confParserInfo = info
   (confParser <**> helper)
-  (fullDesc <> progDesc "design-hs: SmartCoop design examples" <> header
-    "SmartCoop Design"
+  (  fullDesc
+  <> progDesc "design-hs: Smart Design System examples & documentation."
+  <> header "Smart Design System"
   )
