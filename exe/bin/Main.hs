@@ -107,8 +107,13 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   indexF = _fcOutputDir </> "index.html"
 
   mkLink (name, file) =
-    let href = H.textValue . T.pack $ "./" </> _fcExamplesSubdir </> file
-    in  H.a name ! A.href href
+
+    let
+        -- A file-uri is generated relative to the root directory. 
+        fileURI = "./" </> CT.relativeToParentSubdir
+          _fcOutputDir
+          (_fcExamplesSubdir </> file)
+    in  H.a name ! A.href (H.stringValue fileURI)
 
   indexHtml = Dsl.SingletonCanvas $ do
     H.title "Smart design-hs"
