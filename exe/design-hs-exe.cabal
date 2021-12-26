@@ -1,5 +1,5 @@
 cabal-version:      2.2
-name:               the-smart-designer
+name:               design-hs-exe
 version:            0.1.0.0
 category:           web
 extra-source-files:
@@ -22,6 +22,7 @@ common common-extensions
     TypeApplications
     ScopedTypeVariables
     GADTs
+    OverloadedStrings
 
 -- Common language settings
 common lang-settings
@@ -38,14 +39,10 @@ common lang-settings
 common common-dependencies
   build-depends:
       base-noprelude >=4.7 && <5
-    , protolude
 
-    -- servant "core" (& server)
     , blaze-markup
     , blaze-html
     , blaze-svg
-
-    , containers
 
     -- Characters
     , text
@@ -54,23 +51,48 @@ common common-dependencies
     -- Control
     , lens
 
-    -- Default instances for configuration etc.
-   , data-default-class
+    -- File manip.
+    , directory 
+    , filepath
 
-library
+    , containers 
+
+executable design-hs-exe
   import: common-dependencies, lang-settings, common-extensions
-  hs-source-dirs: src
-  build-depends:
-  exposed-modules:
-
--- executable the-smart-designer
---   import: common-dependencies, lang-settings, common-extensions
+  main-is: Main.hs
+  
 --   main-is:          serve.hs
---   build-depends:
---      -- our dependencies
---      the-smart-designer
---      -- Parse cli arguments.
---    , optparse-applicative
---   hs-source-dirs:   bin
---   other-modules:
---       Parse
+  build-depends:
+     -- Parse cli arguments.
+     optparse-applicative
+     , design-hs-lib
+
+  hs-source-dirs: bin
+  other-modules:
+    Examples.Accordion 
+    Examples.Alert 
+    Examples.AlertStack 
+    Examples.Button 
+    Examples.Slate 
+    Examples.Radio 
+    Examples.BorderedList 
+    Examples.Brand 
+    Examples.ButtonToolbar 
+    Examples.GlobalBanner 
+    Examples.Ruler 
+    Examples.Card 
+    Examples.Form 
+    Examples.Loader 
+    Examples.IconList 
+    Examples.FileUpload 
+    Examples.Panel 
+    Examples.StatusPill 
+    Examples.FileAttachment 
+    Examples.SideMenu 
+    Examples.KeyValue 
+    Examples
+    
+    Conf.Parse
+    Conf.Types
+    Conf 
+    

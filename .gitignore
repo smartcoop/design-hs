@@ -2,3 +2,9 @@
 /cabal.project.local
 /dist-newstyle/cache/*.json
 /dist-newstyle/
+/lib/TAGS
+/dist/
+/exe/TAGS
+/dist-design-hs-exe-run/
+/exe/~/
+/result*
