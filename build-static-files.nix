@@ -12,10 +12,7 @@ let
     with (import ./.);
     pkgs.haskell.lib.justStaticExecutables(design-hs-exe);
 
-  # things from nixpkgs.
-  inherit (pkgs) stdenv bash coreutils;
-
-in stdenv.mkDerivation {
+in pkgs.stdenv.mkDerivation {
 
   inherit system;
 

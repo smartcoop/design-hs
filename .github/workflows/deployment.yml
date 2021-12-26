@@ -14,7 +14,9 @@ jobs:
     - name: Checkout this repository
       uses: actions/checkout@v2
     - name: Build the static site
-      run: nix-build build-static-files.nix 
+      run: nix-build build-static-files.nix --argstr outputDir "_site"
+    - name: Copy nix build results
+      run: cp -r result/_site _site 
     - name: Add CNAME
       run: echo design-hs.smartcoop.xyz > _site/CNAME
     - name: Deploy to GitHub Pages
