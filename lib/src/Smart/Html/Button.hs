@@ -1,3 +1,10 @@
+{- |
+Module: Smart.Html.Button
+Description: Buttons
+
+FIXME: Add support for dynamic behaviour attributes like "data-alert-close" etc.
+
+-}
 module Smart.Html.Button
   ( Button(..)
   , ButtonDef(..)
@@ -25,55 +32,94 @@ instance H.ToMarkup ButtonDef where
     NoButton         -> mempty
 
 -- | Buttons are much simpler: some of the button variants can be enabled or disabled.
-data Button =
+data Button where
   -- | A primary button with a title, can be disabled.
-  ButtonPrimary Title ElemEnabledState
+  ButtonPrimary ::Title -> ElemEnabledState -> Button
   -- | A secondary button with a title, can be disabled.
-  | ButtonSecondary Title ElemEnabledState
+  ButtonSecondary ::Title -> ElemEnabledState -> Button
   -- | A danger secondary-button, cannot be disabled.
-  | ButtonDangerSecondary Title
+  ButtonDangerSecondary ::Title -> Button
   -- | A danger button, cannot be disabled.
-  | ButtonDanger Title
+  ButtonDanger ::Title -> Button
   -- | Borderless button (just has text)
-  | ButtonBorderless Title
+  ButtonBorderless ::Title -> Button
   -- | A button with an icon and text, the icon is on the left. 
-  | ButtonSecondaryIconAndText Icon Title
+  ButtonSecondaryIconAndText ::Icon -> Title -> Button
   -- | A button with text and an icon, the icon is on the right.
-  | ButtonSecondaryTextAndIcon Title Icon
+  ButtonSecondaryTextAndIcon ::Title -> Icon -> Button
   -- | A button with just an icon.
-  | ButtonIcon Icon
+  ButtonIcon ::Icon -> Button
+  ButtonIconBorderless ::KnownSymbol iconType
+                       => OSvgIconDiv iconType -- ^ Button Icon 
+                       -> Maybe Title -- ^ Maybe the button text for accessiblity.
+                       -> Button
 
 instance H.ToMarkup Button where
 
   toMarkup = \case
-    ButtonPrimary title en ->
-      mkButton (Just en) Nothing (Just title) Nothing "c-button--primary"
-    ButtonSecondary title en ->
-      mkButton (Just en) Nothing (Just title) Nothing "c-button--secondary"
-    ButtonDangerSecondary title ->
-      mkButton Nothing Nothing (Just title) Nothing "c-button--danger-secondary"
-    ButtonDanger title ->
-      mkButton Nothing Nothing (Just title) Nothing "c-button--danger"
-    ButtonBorderless title ->
-      mkButton Nothing Nothing (Just title) Nothing "c-button--borderless"
-    ButtonSecondaryIconAndText icon title ->
-      mkButton Nothing (Just icon) (Just title) Nothing "c-button--secondary"
-    ButtonSecondaryTextAndIcon title icon ->
-      mkButton Nothing Nothing (Just title) (Just icon) "c-button--secondary"
-    ButtonIcon icon ->
-      mkButton Nothing Nothing Nothing (Just icon) "c-button--secondary"
+    ButtonPrimary title en -> mkButton @Icon (Just en)
+                                             Nothing
+                                             (Just title)
+                                             Nothing
+                                             "c-button c-button--primary"
+    ButtonSecondary title en -> mkButton @Icon (Just en)
+                                               Nothing
+                                               (Just title)
+                                               Nothing
+                                               "c-button c-button--secondary"
+    ButtonDangerSecondary title -> mkButton @Icon
+      Nothing
+      Nothing
+      (Just title)
+      Nothing
+      "c-button c-button--danger-secondary"
+    ButtonDanger title -> mkButton @Icon Nothing
+                                         Nothing
+                                         (Just title)
+                                         Nothing
+                                         "c-button c-button--danger"
+    ButtonBorderless title -> mkButton @Icon Nothing
+                                             Nothing
+                                             (Just title)
+                                             Nothing
+                                             "c-button c-button--borderless"
+    ButtonSecondaryIconAndText icon title -> mkButton @Icon
+      Nothing
+      (Just icon)
+      (Just title)
+      Nothing
+      "c-button c-button--secondary"
+    ButtonSecondaryTextAndIcon title icon -> mkButton @Icon
+      Nothing
+      Nothing
+      (Just title)
+      (Just icon)
+      "c-button c-button--secondary"
+    ButtonIcon icon -> mkButton @Icon Nothing
+                                      Nothing
+                                      Nothing
+                                      (Just icon)
+                                      "c-button c-button--secondary"
+    ButtonIconBorderless icon mTitle -> mkButton
+      Nothing
+      (Just icon)
+      mTitle
+      Nothing
+      "c-button-link c-button--borderless-muted c-button--icon"
 
 -- | A generalised mkButton, since most buttons have the same HTML.
 mkButton
-  :: Maybe ElemEnabledState
-  -> Maybe Icon
+  :: forall icon
+   . H.ToMarkup icon
+  => Maybe ElemEnabledState
+  -> Maybe icon
   -> Maybe Title
   -> Maybe Icon
-  -> H.AttributeValue
+  -> H.AttributeValue -- ^ Button class. 
   -> H.Html
-mkButton mEnabled mIconL mTitle mIconR specificClass =
+mkButton mEnabled mIconL mTitle mIconR buttonClass =
   maybe identity elemEnabledStateAttr mEnabled
-    .  (H.button ! A.class_ ("c-button " <> specificClass) ! A.type_ "button")
+    .  (H.button ! A.class_ buttonClass ! A.type_ "button")
     $  iconL
     *> span
     <* iconR
