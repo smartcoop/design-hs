@@ -15,3 +15,10 @@ This is a cabal project, with two packages:
 To keep the compilation and test costs low at this point; I'll take the liberty to put the exe into the library package and we'll split this out as things mature. 
 
 All the packages made available via this package are listed in contents.nix.
+
+## Building the static site
+
+```
+$ nix-build -A design-hs-html
+$ nix-shell -p busybox --run 'httpd -f -p 8000 -h result/html'
+```
