@@ -12,7 +12,7 @@ import qualified Data.Map                      as M
 import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
-import           Examples.Alert                 ( alerts )
+import           Examples.AlertDialog           ( alertDialogs )
 import           Examples.AlertStack            ( alertStacks )
 import           Examples.BorderedList          ( borderedLists )
 import           Examples.Brand                 ( brands )
@@ -50,7 +50,7 @@ rendered :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
 rendered = M.fromList
   [ ("accordions.html"     , ("Accordions", sampleContents accordions))
   , ("alert-stacks.html"   , ("Alert Stacks", sampleContents alertStacks))
-  , ("alerts.html"         , ("Alerts", sampleContents alerts))
+  , ("alerts.html"         , ("Alerts", sampleContents alertDialogs))
   , ("bordered-lists.html" , ("Bordered Lists", sampleContents borderedLists))
   , ("brands.html"         , ("Brands", sampleContents brands))
   , ("button-toolbars.html", ("Button Toolbars", sampleContents buttonToolbars))
