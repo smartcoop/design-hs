@@ -8,7 +8,9 @@ This repository contains both a library and an executable. The library presents
 is written with `blaze-html`. The executable is used to recreate components and
 example pages.
 
-You can see the generated pages at
+A [GitHub
+Action](https://github.com/smartcoop/design-hs/blob/main/.github/workflows/deployment.yml)
+is setup to generate pages and serve them at
 [design-hs.smartcoop.xyz](https://design-hs.smartcoop.xyz/).
 
 ## The structure
