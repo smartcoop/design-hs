@@ -1,3 +1,8 @@
+{-|
+Module: Smart.Html.Render
+Description: Functions to render a Canvas to Html or Text.
+
+-}
 module Smart.Html.Render
   ( renderCanvasWithHead
   , renderCanvasWithHeadText
@@ -12,7 +17,7 @@ import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
--- | Render a Smart canvas ensuring the CSS etc. are properly imported, as Text 
+-- | Render a Smart canvas ensuring the CSS etc. are properly imported, as Text
 renderCanvasWithHeadText :: Dsl.HtmlCanvas -> T.Text
 renderCanvasWithHeadText = T.pack . R.renderHtml . renderCanvasWithHead
 

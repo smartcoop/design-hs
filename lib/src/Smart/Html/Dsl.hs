@@ -2,7 +2,7 @@
 {-# LANGUAGE ConstraintKinds #-}
 {-|
 Module: Smart.Html.Dsl
-Description: A simple DSL for representing HTML in a more manageable way.
+Description: A simple DSL for representing HTML in a more manageable way. Use the `Render` module to convert a Canvas to Text.
 
 TODO: The fixities are fairly arbitrary at this point and should be fine tuned.
 
@@ -38,7 +38,7 @@ import qualified Text.Blaze.Html5              as H
 -- | A canvas, is essentially a heterogenous list, members of which must satisfy a constraint.
 -- This lets us constrain on `H.ToMarkup` etc. on the elements of this "canvas" list.
 data Canvas (markup :: Type -> Constraint) where
-  -- | Add a new element to the end of the canvas. 
+  -- | Add a new element to the end of the canvas.
   (:~:) ::markup a => Canvas markup -> a -> Canvas markup
   -- | Add a new element to the head of the canvas
   (::~) ::markup a => a -> Canvas markup -> Canvas markup
