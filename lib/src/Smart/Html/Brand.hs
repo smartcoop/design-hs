@@ -16,12 +16,14 @@ newtype BrandImage = BrandImage { _unBrandImage :: URI }
 data Brand =
   Brand URI BrandImage Title
   | BrandSmall URI BrandImage Title
+  | BrandXSmall URI BrandImage Title
   deriving Show
 
 instance H.ToMarkup Brand where
   toMarkup = \case
-    Brand      uri img title -> mkWithClass "c-brand--medium" uri img title
-    BrandSmall uri img title -> mkWithClass "c-brand--small" uri img title
+    Brand       uri img title -> mkWithClass "c-brand--medium" uri img title
+    BrandSmall  uri img title -> mkWithClass "c-brand--small" uri img title
+    BrandXSmall uri img title -> mkWithClass "c-brand--xsmall" uri img title
    where
     mkWithClass (mappend "c-brand " -> class_) (URI uri) (BrandImage (URI img)) (Title title)
       = (H.div ! A.class_ class_)

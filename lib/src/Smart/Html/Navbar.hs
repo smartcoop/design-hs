@@ -61,9 +61,8 @@ navbar tree = do
       H.div ! A.class_ "c-toolbar" $ do
         H.div ! A.class_ "c-toolbar__left" $ do
           H.div ! A.class_ "c-toolbar__item" $ do
-            H.div ! A.class_ "c-brand c-brand--xsmall" $ do
-              H.a ! A.href "/" $ do
-                H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
+            H.toMarkup $
+              BrandXSmall "/" "https://design.smart.coop/images/logo.svg" "Smart"
           H.div ! A.class_ "c-toolbar__item" $ do
             H.nav $ do
               H.ul ! A.class_ "c-pill-navigation" $
