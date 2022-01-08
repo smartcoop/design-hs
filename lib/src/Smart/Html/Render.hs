@@ -4,7 +4,9 @@ Description: Functions to render a Canvas to Html or Text.
 
 -}
 module Smart.Html.Render
-  ( renderCanvasWithHead
+  ( renderCanvas
+  , renderCanvasText
+  , renderCanvasWithHead
   , renderCanvasWithHeadText
   , smartDesignHead
   ) where
@@ -17,7 +19,18 @@ import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
--- | Render a Smart canvas ensuring the CSS etc. are properly imported, as Text
+-- | Render a Smart canvas as a complete HTML document.
+renderCanvasText = T.pack . R.renderHtml . renderCanvas
+
+-- | Render a Smart canvas as a complete HTML document, as Text.
+renderCanvas canvas = do
+  H.docType
+  H.html
+    ! A.class_ "u-maximize-height"
+    ! A.dir "ltr"
+    ! A.lang "en" $ renderCanvasWithHead canvas
+
+-- | Render a Smart canvas ensuring the CSS etc. are properly imported, as Text.
 renderCanvasWithHeadText :: Dsl.HtmlCanvas -> T.Text
 renderCanvasWithHeadText = T.pack . R.renderHtml . renderCanvasWithHead
 

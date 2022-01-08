@@ -91,7 +91,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
 
   let indexFile = (indexF, indexHtml)
       files =
-        second R.renderCanvasWithHeadText
+        second R.renderCanvasText
           <$> indexFile
           :   [ (examplesF fileName, canvas)
               | (fileName, (_, canvas)) <- M.toList rendered
