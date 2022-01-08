@@ -95,8 +95,9 @@ navbar tree = do
               H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "Search ..."
           H.div ! A.class_ "c-toolbar__item" $ do
             H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $ do
-              H.div ! A.class_ "c-avatar c-avatar--img c-avatar--regular" $ do
-                H.img ! A.src "https://design.smart.coop/images/avatars/1.jpg" ! A.alt "avatar"
+              H.toMarkup $
+                Avatar (AvatarImage "https://design.smart.coop/images/avatars/1.jpg")
+                  Regular AvNoAdditionalContent
             H.ul ! A.class_ "c-menu c-menu--large" ! A.id "userMenu" $ do
               H.li ! A.class_ "c-menu__item" $ do
                 H.a ! A.class_ "c-menu__label" ! A.href "#" $ "My profile"
