@@ -42,15 +42,13 @@ renderCanvasWithHead canvas = smartDesignHead >> body
 -- | Markup for the smart CSS head etc.
 smartDesignHead :: H.Html
 smartDesignHead =
-  H.head $ maincss >> protocss >> custscss >> charset >> viewport
+  H.head $ charset >> viewport >> maincss >> protocss >> custscss
  where
-  maincss  = stylesheet "main.css"
-  protocss = stylesheet "prototype.css"
-  custscss = stylesheet "styleguide-customizations.css"
-
-  stylesheet file = H.link ! A.rel "stylesheet" ! A.href
-    ("https://design.smart.coop/css/" <> file)
   charset = H.meta ! A.charset "utf-8"
   viewport =
     H.meta ! A.name "viewport" ! A.content "width=device-width, initial-scale=1"
-
+  maincss  = stylesheet "main.css"
+  protocss = stylesheet "prototype.css"
+  custscss = stylesheet "styleguide-customizations.css"
+  stylesheet file = H.link ! A.rel "stylesheet" ! A.href
+    ("https://design.smart.coop/css/" <> file)
