@@ -37,9 +37,9 @@ renderCanvasWithHeadText = T.pack . R.renderHtml . renderCanvasWithHead
 -- | Render a Smart canvas ensuring the CSS etc. are properly imported.
 renderCanvasWithHead :: Dsl.HtmlCanvas -> H.Html
 renderCanvasWithHead canvas = smartDesignHead >> body
-  where body = H.body (H.toMarkup canvas) ! A.class_ "u-maximize-height"
+  where body = H.body (H.toMarkup canvas >> js) ! A.class_ "u-maximize-height"
 
--- | Markup for the smart CSS head etc.
+-- | Markup for the Smart CSS head etc.
 smartDesignHead :: H.Html
 smartDesignHead =
   H.head $ charset >> viewport >> maincss >> protocss >> custscss
@@ -52,3 +52,8 @@ smartDesignHead =
   custscss = stylesheet "styleguide-customizations.css"
   stylesheet file = H.link ! A.rel "stylesheet" ! A.href
     ("https://design.smart.coop/css/" <> file)
+
+-- | Markup for the Smart JS scripts.
+js = do
+  H.script ! A.src "https://design.smart.coop/js/bundle-prototype.js" $ mempty
+  H.script ! A.src "https://design.smart.coop/js/bundle-client.js" $ mempty
