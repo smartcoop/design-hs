@@ -33,3 +33,9 @@ All the packages made available via this package are listed in `contents.nix`.
 $ nix-build -A design-hs-html
 $ nix-shell -p busybox --run 'httpd -f -p 8000 -h result/html'
 ```
+
+## Formatting with Brittany
+
+```
+$ scripts/brittany.sh
+```
