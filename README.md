@@ -39,3 +39,9 @@ $ nix-shell -p busybox --run 'httpd -f -p 8000 -h result/html'
 ```
 $ scripts/brittany.sh
 ```
+
+## Linting with HLint
+
+```
+$ scripts/hlint.sh
+```
