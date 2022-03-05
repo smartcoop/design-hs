@@ -3,11 +3,11 @@ module Examples.Layouts.MainHeader
   ) where
 
 import           Smart.Html.Dsl
-import           Smart.Html.Navbar
 import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
+import Examples.Navbar (exampleNavbar)
 
 mainHeader :: HtmlCanvas
-mainHeader = SingletonCanvas . div' $ H.toMarkup Navbar
+mainHeader = SingletonCanvas . div' $ H.toMarkup exampleNavbar
   where div' = H.div ! A.class_ "c-app-layout"

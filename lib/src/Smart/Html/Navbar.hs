@@ -11,13 +11,12 @@ import Text.Blaze.Html5 ((!), Html)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
-data Navbar = Navbar
-  deriving Show
+data Navbar = Navbar [Entry]
 
 instance H.ToMarkup Navbar where
   toMarkup = mkNavbar
 
-mkNavbar _ = navbar exampleTree
+mkNavbar (Navbar entries) = navbar entries
 
 -- An entry has a name, then either a link or subentries.
 data Entry = Entry Title Action
@@ -27,22 +26,6 @@ data Action = Link Link | SubEntries [SubEntry]
 
 -- A subentry is just a pair name, link.
 data SubEntry = SubEntry Title Link
-
-exampleTree :: [Entry]
-exampleTree =
-  [ Entry "Activities" (Link "#")
-  , Entry "Management" (SubEntries
-      [ SubEntry "Nav item" "#"
-      , SubEntry "Nav item" "#"
-      , SubEntry "Nav item" "#"
-      ])
-  , Entry "Documents" (SubEntries
-      [ SubEntry "Nav item" "#"
-      , SubEntry "Nav item" "#"
-      ])
-  , Entry "Members" (Link "#")
-  , Entry "Archive" (Link "#")
-  ]
 
 toNavbar tree =
   mapM_ toplevel (zip tree [1..])
