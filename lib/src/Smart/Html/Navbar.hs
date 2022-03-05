@@ -5,6 +5,7 @@ module Smart.Html.Navbar where
 import           Smart.Html.Avatar
 import           Smart.Html.Brand
 import           Smart.Html.Shared.Html.Icons
+import           Smart.Html.Shared.Types (Link, Title)
 import Text.Blaze (customAttribute)
 import Text.Blaze.Html5 ((!), Html)
 import qualified Text.Blaze.Html5 as H
@@ -18,30 +19,39 @@ instance H.ToMarkup Navbar where
 
 mkNavbar _ = navbar exampleTree
 
-exampleTree :: [(Text, Text, [(Text, Text)])]
+-- An entry has a name, then either a link or subentries.
+data Entry = Entry Title Action
+
+-- This represents either a link or subentries (associated to an entry).
+data Action = Link Link | SubEntries [SubEntry]
+
+-- A subentry is just a pair name, link.
+data SubEntry = SubEntry Title Link
+
+exampleTree :: [Entry]
 exampleTree =
-  [ ("Activities", "#", [])
-  , ("Management", "#",
-      [ ("Nav item", "#")
-      , ("Nav item", "#")
-      , ("Nav item", "#")
+  [ Entry "Activities" (Link "#")
+  , Entry "Management" (SubEntries
+      [ SubEntry "Nav item" "#"
+      , SubEntry "Nav item" "#"
+      , SubEntry "Nav item" "#"
       ])
-  , ("Documents", "#",
-      [ ("Nav item", "#")
-      , ("Nav item", "#")
+  , Entry "Documents" (SubEntries
+      [ SubEntry "Nav item" "#"
+      , SubEntry "Nav item" "#"
       ])
-  , ("Members", "#", [])
-  , ("Archive", "#", [])
+  , Entry "Members" (Link "#")
+  , Entry "Archive" (Link "#")
   ]
 
 toNavbar tree =
   mapM_ toplevel (zip tree [1..])
   where
-  toplevel :: ((Text, Text, [(Text, Text)]), Int) -> Html
-  toplevel ((a, lnk, []), _) =
+  toplevel :: (Entry, Int) -> Html
+  toplevel (Entry a (Link lnk), _) =
     H.li ! A.class_ "c-pill-navigation__item" $
       H.a ! A.href (H.toValue lnk) $ H.toHtml a
-  toplevel ((a, _, bs), n) =
+  toplevel (Entry a (SubEntries bs), n) =
     H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
       H.button ! A.type_ "button"
                ! customAttribute "data-menu" (H.toValue $ "subMenu-" ++ show n)
@@ -51,7 +61,7 @@ toNavbar tree =
         ! A.class_ "c-menu c-menu--large"
         ! A.id (H.toValue $ "subMenu-" ++ show n) $
         mapM_ sublevel bs
-  sublevel (b, lnk) =
+  sublevel (SubEntry b lnk) =
     H.li ! A.class_ "c-menu__item" $ do
       H.a ! A.class_ "c-menu__label" ! A.href (H.toValue lnk) $ H.toHtml b
 

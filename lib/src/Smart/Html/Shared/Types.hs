@@ -7,6 +7,7 @@ module Smart.Html.Shared.Types
   , id
   , Name(..)
   , Body(..)
+  , Link(..)
   , Placeholder'(..)
   , BodyPlaceholder
   -- Confirmation buttons 
@@ -57,6 +58,11 @@ newtype Name = Name { _unName :: Text }
 -- overloaded string literals as `Body` values on inference.
 newtype Body = Body { _unBody :: Text }
               deriving (Eq, Show, IsString, H.ToMarkup) via Text
+
+-- | Link as a newtype, the IsString instance provides us with convenience on using
+-- overloaded string literals as `Body` values on inference.
+newtype Link = Link { _unLink :: Text }
+              deriving (Eq, Show, IsString, H.ToMarkup, H.ToValue) via Text
 
 newtype Placeholder' body = Placeholder { _unBodyPlaceholder :: body }
                         deriving (Eq, Show, IsString, H.ToMarkup) via body
