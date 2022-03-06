@@ -106,7 +106,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
         second R.renderCanvasText
           <$> indexFile
           :   [ (examplesF fileName, canvas)
-              | (fileName, (_, canvas)) <- M.toList components ++ M.toList layouts
+              | (fileName, (_, canvas)) <- M.toList $ components <> layouts
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -121,7 +121,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   mkLink (name, file) =
 
     let
-        -- A file-uri is generated relative to the root directory. 
+        -- A file-uri is generated relative to the root directory.
         fileURI = "./" </> CT.relativeToParentSubdir
           _fcOutputDir
           (_fcExamplesSubdir </> file)
@@ -142,13 +142,13 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
     H.h2 "Components"
     componentLinks
   -- TODO Remove duplication.
-  layoutLinks = foldl' mappend mempty [ H.br >> link' | link' <- layoutLinks' ]
+  layoutLinks = mapM_ (H.br >>) layoutLinks'
   layoutLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
           | (fileName, (title, _)) <- M.toList layouts
           ]
-  componentLinks = foldl' mappend mempty [ H.br >> link' | link' <- componentLinks' ]
+  componentLinks = mapM_ (H.br >>) componentLinks'
   componentLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
