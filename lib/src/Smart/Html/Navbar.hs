@@ -11,7 +11,7 @@ import Text.Blaze.Html5 ((!), Html)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
-data Navbar = Navbar [Entry]
+newtype Navbar = Navbar [Entry]
 
 instance H.ToMarkup Navbar where
   toMarkup = mkNavbar
@@ -45,54 +45,54 @@ toNavbar tree =
         ! A.id (H.toValue $ "subMenu-" ++ show n) $
         mapM_ sublevel bs
   sublevel (SubEntry b lnk) =
-    H.li ! A.class_ "c-menu__item" $ do
+    H.li ! A.class_ "c-menu__item" $
       H.a ! A.class_ "c-menu__label" ! A.href (H.toValue lnk) $ H.toHtml b
 
-navbar tree = do
+navbar tree =
   H.header $
-    H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $ do
+    H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $
       H.div ! A.class_ "c-toolbar" $ do
         H.div ! A.class_ "c-toolbar__left" $ do
-          H.div ! A.class_ "c-toolbar__item" $ do
+          H.div ! A.class_ "c-toolbar__item" $
             H.toMarkup $
               BrandXSmall "/" "https://design.smart.coop/images/logo.svg" "Smart"
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.nav $ do
+          H.div ! A.class_ "c-toolbar__item" $
+            H.nav $
               H.ul ! A.class_ "c-pill-navigation" $
                 toNavbar tree
         H.div ! A.class_ "c-toolbar__right" $ do
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.nav $ do
-              H.ul ! A.class_ "c-pill-navigation" $ do
+          H.div ! A.class_ "c-toolbar__item" $
+            H.nav $
+              H.ul ! A.class_ "c-pill-navigation" $
                 H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
                   H.button ! A.type_ "button" ! customAttribute "data-menu" "helpMenu" $ do
-                    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-help  " $ do
+                    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-help  " $
                       H.toMarkup svgIconCircleHelp
                     H.span ! A.class_ "u-sr-accessible" $ "Help"
                   H.ul ! A.class_ "c-menu c-menu--large" ! A.id "helpMenu" $ do
-                    H.li ! A.class_ "c-menu__item" $ do
+                    H.li ! A.class_ "c-menu__item" $
                       H.a ! A.class_ "c-menu__label" ! A.href "#" $ "About this page"
                     H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-                    H.li ! A.class_ "c-menu__item" $ do
+                    H.li ! A.class_ "c-menu__item" $
                       H.a ! A.class_ "c-menu__label" ! A.href "#" $ do
                         H.span "Documentation"
-                        H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $ do
+                        H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $
                           H.toMarkup svgIconExternalLink
-                    H.li ! A.class_ "c-menu__item" $ do
+                    H.li ! A.class_ "c-menu__item" $
                       H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Report a bug"
-          H.div ! A.class_ "c-toolbar__item" $ do
+          H.div ! A.class_ "c-toolbar__item" $
             H.div ! A.class_ "c-input-with-icon" $ do
-              H.div ! A.class_ "o-svg-icon o-svg-icon-search  " $ do
+              H.div ! A.class_ "o-svg-icon o-svg-icon-search  " $
                 H.toMarkup svgIconSearch
               H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "Search ..."
           H.div ! A.class_ "c-toolbar__item" $ do
-            H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $ do
+            H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $
               H.toMarkup $
                 Avatar (AvatarImage "https://design.smart.coop/images/avatars/1.jpg")
                   Regular AvNoAdditionalContent
             H.ul ! A.class_ "c-menu c-menu--large" ! A.id "userMenu" $ do
-              H.li ! A.class_ "c-menu__item" $ do
+              H.li ! A.class_ "c-menu__item" $
                 H.a ! A.class_ "c-menu__label" ! A.href "#" $ "My profile"
               H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-              H.li ! A.class_ "c-menu__item" $ do
+              H.li ! A.class_ "c-menu__item" $
                 H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Sign out"
