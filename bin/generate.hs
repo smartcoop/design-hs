@@ -26,7 +26,6 @@ main = do
   case args of
     ["index"] -> render Web.index
     ["app-empty"] -> render App.empty
-    ["app-navigation"] -> render App.navigation
     ["app-toolbar"] -> render App.navToolbar
     ["app-titlebar"] -> render App.navTitlebar
     ["app-form"] -> render App.page

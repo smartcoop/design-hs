@@ -27,22 +27,14 @@ empty = document "Smart design system" $ do
 
 
 --------------------------------------------------------------------------------
-navigation :: Html
-navigation = document "Smart design system" $ do
-  navbar exampleTree
-
-
---------------------------------------------------------------------------------
 navToolbar :: Html
 navToolbar = document "Smart design system" $ do
-  navbar exampleTree
   mainContent toolbar (return ())
 
 
 --------------------------------------------------------------------------------
 navTitlebar :: Html
 navTitlebar = document "Smart design system" $ do
-  navbar exampleTree
   mainContent (titlebar "Module title") (return ())
 
 
@@ -50,7 +42,6 @@ navTitlebar = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/app-form.html
 page :: Html
 page = document "Smart design system" $ do
-  navbar exampleTree
   mainContent toolbar panels
 
 
@@ -59,7 +50,6 @@ page = document "Smart design system" $ do
 pageWithBanner :: Html
 pageWithBanner = document "Smart design system" $ do
   banner
-  navbar exampleTree
   mainContent toolbar panels
 
 
@@ -67,7 +57,6 @@ pageWithBanner = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/wizard.html
 pageWithWizard :: Html
 pageWithWizard = document "Smart design system" $ do
-  navbar exampleTree
   mainContent wizard (panels' "Location and dates")
 
 
@@ -75,7 +64,6 @@ pageWithWizard = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/app-side-menu.html
 pageWithSideMenu :: Html
 pageWithSideMenu = document "Smart design system" $ do
-  navbar exampleTree
   mainContentSideMenu menu toolbar panels
 
 
@@ -83,7 +71,6 @@ pageWithSideMenu = document "Smart design system" $ do
 -- https://design.smart.coop/development/template-examples/dialog.html
 pageWithDialog :: Html
 pageWithDialog = document "Smart design system" $ do
-  navbar exampleTree
   mainContent toolbar (panels >> dialogVisible "dialog" (dialogContent "dialog"))
 
 
@@ -91,7 +78,6 @@ pageWithDialog = document "Smart design system" $ do
 --https://design.smart.coop/development/template-examples/app-datagrid.html
 datagrid :: Html
 datagrid = document "Smart design system" $ do
-  navbar exampleTree
   mainContent (titlebar "Module title") table
 
 
@@ -285,93 +271,6 @@ inputRadios name label labels =
           else
             H.input ! A.type_ "radio" ! A.name (H.toValue name)
         H.toHtml label
-
---------------------------------------------------------------------------------
-exampleTree :: [(String, (String, [(String, String)]))]
-exampleTree =
-  [ ("Activities", ("#", []))
-  , ("Management", ("#",
-      [ ("Nav item", "#")
-      , ("Nav item", "#")
-      , ("Nav item", "#")
-      ]))
-  , ("Documents", ("#",
-      [ ("Nav item", "#")
-      , ("Nav item", "#")
-      ]))
-  , ("Members", ("#", []))
-  , ("Archive", ("#", []))
-  ]
-
-toNavbar tree =
-  mapM_ toplevel (zip tree [1..])
-  where
-  toplevel ((a, (link, [])), _) =
-    H.li ! A.class_ "c-pill-navigation__item" $
-      H.a ! A.href (H.toValue link) $ H.toHtml a
-  toplevel ((a, (link, bs)), n) =
-    H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-      H.a ! A.href (H.toValue link)
-          ! customAttribute "data-menu" (H.toValue $ "subMenu-" ++ show n)
-          ! customAttribute "data-menu-samewidth" "true"
-          $ H.toHtml a
-      H.ul
-        ! A.class_ "c-menu c-menu--large"
-        ! A.id (H.toValue $ "subMenu-" ++ show n) $
-        mapM_ sublevel bs
-  sublevel (b, link) =
-    H.li ! A.class_ "c-menu__item" $ do
-      H.a ! A.class_ "c-menu__label" ! A.href (H.toValue link) $ H.toHtml b
-
-navbar tree = do
-  H.header $
-    H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $ do
-      H.div ! A.class_ "c-toolbar" $ do
-        H.div ! A.class_ "c-toolbar__left" $ do
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.div ! A.class_ "c-brand c-brand--xsmall" $ do
-              H.a ! A.href "/" $ do
-                H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.nav $ do
-              H.ul ! A.class_ "c-pill-navigation" $
-                toNavbar tree
-        H.div ! A.class_ "c-toolbar__right" $ do
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.nav $ do
-              H.ul ! A.class_ "c-pill-navigation" $ do
-                H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                  H.a ! A.href "#" ! customAttribute "data-menu" "helpMenu" $ do
-                    H.div ! A.class_ "o-svg-icon o-svg-icon-circle-help  " $ do
-                      svgIconCircleHelp
-                    H.span ! A.class_ "u-sr-accessible" $ "Help"
-                  H.ul ! A.class_ "c-menu c-menu--large" ! A.id "helpMenu" $ do
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "About this page"
-                    H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ do
-                        H.span "Documentation"
-                        H.div ! A.class_ "o-svg-icon o-svg-icon-external-link  " $ do
-                          svgIconExternalLink
-                    H.li ! A.class_ "c-menu__item" $ do
-                      H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Report a bug"
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.div ! A.class_ "c-input-group" $ do
-              H.div ! A.class_ "c-input-group__prepend" $ do
-                H.div ! A.class_ "o-svg-icon o-svg-icon-search  " $ do
-                  svgIconSearch
-              H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "Search ..."
-          H.div ! A.class_ "c-toolbar__item" $ do
-            H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $ do
-              H.div ! A.class_ "c-avatar c-avatar--img c-avatar--regular" $ do
-                H.img ! A.src "https://design.smart.coop/images/avatars/1.jpg" ! A.alt "avatar"
-            H.ul ! A.class_ "c-menu c-menu--large" ! A.id "userMenu" $ do
-              H.li ! A.class_ "c-menu__item" $ do
-                H.a ! A.class_ "c-menu__label" ! A.href "#" $ "My profile"
-              H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-              H.li ! A.class_ "c-menu__item" $ do
-                H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Sign out"
 
 
 --------------------------------------------------------------------------------
