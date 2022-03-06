@@ -8,4 +8,5 @@ brands :: [Brand]
 brands =
   [ Brand "#" "https://design.smart.coop/images/logo.svg" "Smart"
   , BrandSmall "#" "https://design.smart.coop/images/logo.svg" "Smart"
+  , BrandXSmall "#" "https://design.smart.coop/images/logo.svg" "Smart"
   ]

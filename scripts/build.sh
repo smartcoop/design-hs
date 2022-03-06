@@ -2,4 +2,4 @@
 #! nix-shell -i bash ../shell.nix
 
 mkdir -p _site
-make
+make -f Makefile.old

@@ -85,11 +85,14 @@ executable design-hs-exe
     Examples.Loader 
     Examples.IconList 
     Examples.FileUpload 
+    Examples.Navbar
     Examples.Panel 
     Examples.StatusPill 
     Examples.FileAttachment 
     Examples.SideMenu 
     Examples.KeyValue 
+    Examples.Layouts.EmptyPage
+    Examples.Layouts.MainHeader
     Examples
     
     Conf.Parse

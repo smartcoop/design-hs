@@ -28,12 +28,15 @@ import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.IconList              ( iconLists )
 import           Examples.KeyValue              ( keyValueGroups )
 import           Examples.Loader                ( loaders )
+import           Examples.Navbar                ( navbars )
 import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
 import           Examples.SideMenu              ( sideMenus )
 import           Examples.Slate                 ( slates )
 import           Examples.StatusPill            ( statusPills )
+import           Examples.Layouts.EmptyPage     ( emptyPage )
+import           Examples.Layouts.MainHeader    ( mainHeader )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
@@ -46,8 +49,16 @@ import qualified Text.Blaze.Html5.Attributes   as A
 
 -- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
 -- and the canvas it represents.
-rendered :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-rendered = M.fromList
+-- TODO Prefix these with layouts/.
+layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
+layouts = M.fromList
+  [ ("empty.html"          , ("Empty page", emptyPage))
+  , ("main-header.html"    , ("Main header", mainHeader))
+  ]
+
+-- TODO Prefix these with components/.
+components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
+components = M.fromList
   [ ("accordions.html"     , ("Accordions", sampleContents accordions))
   , ("alert-stacks.html"   , ("Alert stacks", sampleContents alertStacks))
   , ("alerts.html"         , ("Alerts", sampleContents alerts))
@@ -65,6 +76,7 @@ rendered = M.fromList
   , ("icon-lists.html"    , ("Icon lists", sampleContents iconLists))
   , ("key-values.html"    , ("Key values", sampleContents keyValueGroups))
   , ("loaders.html"       , ("Loaders", sampleContents loaders))
+  , ("navbars.html"       , ("Navbars", sampleContents navbars))
   , ("panels.html"        , ("Panels", sampleContents panels))
   , ("radio-groups.html"  , ("Radio groups", sampleContents radioGroups))
   , ("rulers.html"        , ("Rulers", rulersC))
@@ -94,7 +106,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
         second R.renderCanvasText
           <$> indexFile
           :   [ (examplesF fileName, canvas)
-              | (fileName, (_, canvas)) <- M.toList rendered
+              | (fileName, (_, canvas)) <- M.toList $ components <> layouts
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -109,7 +121,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   mkLink (name, file) =
 
     let
-        -- A file-uri is generated relative to the root directory. 
+        -- A file-uri is generated relative to the root directory.
         fileURI = "./" </> CT.relativeToParentSubdir
           _fcOutputDir
           (_fcExamplesSubdir </> file)
@@ -119,13 +131,28 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
     H.title "Smart design-hs"
     H.h1 "Welcome to SmartCoop's Haskell design system!"
     H.br
-    H.h2 "Components:"
-    links
-  links = foldl' mappend mempty [ H.br >> link' | link' <- elLinks ]
-  elLinks =
+    H.p $ do
+      "See also the old examples "
+      H.a ! A.href "/old/" $ "old example pages"
+      "."
+    H.br
+    H.h2 "Layouts"
+    layoutLinks
+    H.br
+    H.h2 "Components"
+    componentLinks
+  -- TODO Remove duplication.
+  layoutLinks = mapM_ (H.br >>) layoutLinks'
+  layoutLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
-          | (fileName, (title, _)) <- M.toList rendered
+          | (fileName, (title, _)) <- M.toList layouts
+          ]
+  componentLinks = mapM_ (H.br >>) componentLinks'
+  componentLinks' =
+    mkLink
+      <$> [ (H.toMarkup title, fileName)
+          | (fileName, (title, _)) <- M.toList components
           ]
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack

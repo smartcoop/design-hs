@@ -22,7 +22,6 @@ idSelectFunction = "select-function"
 --------------------------------------------------------------------------------
 toolsNewContract :: Html
 toolsNewContract = document "Smart design system - New contract" $ do
-  navbar exampleTree
   mainContent (titlebar "New contract") $ do
     form
     dialogFullscreen idSelectFunction (dialogContent idSelectFunction)
