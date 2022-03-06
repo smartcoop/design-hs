@@ -16,7 +16,7 @@ jobs:
     - name: Build the static site
       run: nix-build -A design-hs-html
     - name: Create the webdir.
-      run: mkdir _site 
+      run: scripts/build.sh
     - name: Copy nix build results
       run: cp -r result/html/* _site/
     - name: Add CNAME

@@ -131,6 +131,11 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
     H.title "Smart design-hs"
     H.h1 "Welcome to SmartCoop's Haskell design system!"
     H.br
+    H.p $ do
+      "See also the old examples "
+      H.a ! A.href "/old/" $ "old example pages"
+      "."
+    H.br
     H.h2 "Layouts"
     layoutLinks
     H.br

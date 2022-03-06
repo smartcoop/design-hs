@@ -1,25 +1,25 @@
 all: \
-  _site/index.html \
-  _site/app-empty.html \
-  _site/app-navigation.html \
-  _site/app-toolbar.html \
-  _site/app-titlebar.html \
-  _site/app-form.html \
-  _site/app-form--banner.html \
-  _site/app-form--wizard.html \
-  _site/app-form--side-menu.html \
-  _site/app-dialog.html \
-  _site/datagrid.html \
-  _site/registration.html \
-  _site/web-empty.html \
-  _site/blog-post.html \
-  _site/tools-new-contract.html
+  _site/old/index.html \
+  _site/old/app-empty.html \
+  _site/old/app-navigation.html \
+  _site/old/app-toolbar.html \
+  _site/old/app-titlebar.html \
+  _site/old/app-form.html \
+  _site/old/app-form--banner.html \
+  _site/old/app-form--wizard.html \
+  _site/old/app-form--side-menu.html \
+  _site/old/app-dialog.html \
+  _site/old/datagrid.html \
+  _site/old/registration.html \
+  _site/old/web-empty.html \
+  _site/old/blog-post.html \
+  _site/old/tools-new-contract.html
 
 
-_site/tools-new-contract.html: src/Smart/Html/Application.hs src/Smart/Html/Tools.hs
+_site/old/tools-new-contract.html: src/Smart/Html/Application.hs src/Smart/Html/Tools.hs
 	mkdir -p $(dir $@)
 	runghc -isrc/ bin/generate.hs --pretty tools-new-contract > $@
 
-_site/%.html: src/Smart/Html/Application.hs src/Smart/Html/Website.hs
+_site/old/%.html: src/Smart/Html/Application.hs src/Smart/Html/Website.hs
 	mkdir -p $(dir $@)
 	runghc -isrc/ bin/generate.hs --pretty $* > $@

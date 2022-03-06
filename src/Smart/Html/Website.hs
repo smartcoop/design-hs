@@ -20,7 +20,7 @@ import Smart.Html.Icons (svgIconClose)
 index :: Html
 index = document "Smart design system" $
   article
-    "Example pages"
+    "Old example pages"
     Nothing
     content
     (return ())
@@ -31,11 +31,11 @@ index = document "Smart design system" $
       H.a ! A.href "https://design.smart.coop/development/getting-started.html" $
         "original site"
       "."
+    H.p $ do
+      "They will be replaced by the newer code."
     H.ul $ do
       H.li $
         H.a ! A.href "app-empty.html" $ "Application, empty page"
-      H.li $
-        H.a ! A.href "app-navigation.html" $ "Application, navigation bar"
       H.li $
         H.a ! A.href "app-toolbar.html" $ "Application, navigation bar + toolbar"
       H.li $
