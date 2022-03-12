@@ -12,7 +12,6 @@ let
   # Index is built under outputDir
   # Examples are built under a subdirectory of outputDir
   outputDir = "html";
-  examplesSubDir = "examples";
 
 in pkgs.stdenv.mkDerivation {
 
@@ -24,7 +23,7 @@ in pkgs.stdenv.mkDerivation {
   installPhase = '' 
     mkdir -p $out/${outputDir} # create the output directory. 
     # The haskell side ensures all subdirectories are created on the fly. 
-    ${exe}/bin/design-hs-exe --output-dir $out/${outputDir} --examples-sub-dir $out/${outputDir}/${examplesSubDir}
+    ${exe}/bin/design-hs-exe --output-dir $out/${outputDir}
   '';             
 
 }

@@ -10,7 +10,6 @@ import           Options.Applicative
 filesystemConfParser :: Parser FilesystemConf
 filesystemConfParser = do
   _fcOutputDir      <- dirParser "output" 'D'
-  _fcExamplesSubdir <- dirParser "examples-sub" 'E'
   pure FilesystemConf { .. }
 
 confParser :: Parser Conf

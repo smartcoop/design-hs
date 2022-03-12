@@ -53,7 +53,6 @@ main = A.execParser CP.confParserInfo >>= mainWithConf
 
 mainWithConf :: CT.Conf -> IO ExitCode
 mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
-  -- TODO I think that having _fcExamplesSubdir in cnf is overkill.
   Conf.scaffoldFilesystem cnf ["components", "layouts"]
 
   let indexFile = (indexF, indexHtml)

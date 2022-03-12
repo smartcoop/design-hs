@@ -19,7 +19,7 @@ scaffoldFilesystem (Conf FilesystemConf {..}) subdirs =
   -- for all child subdirectories, we want to create the ones
   -- additionally supplied by the user, and the example subdirectory.
   createChildren =
-    let childSubdirs = (_fcOutputDir </>) <$> (_fcExamplesSubdir : subdirs)
+    let childSubdirs = (_fcOutputDir </>) <$> subdirs
     in  mapM_ mkdir childSubdirs
   mkdir path =
     putStrLn ("Creating directory " <> path <> "...")

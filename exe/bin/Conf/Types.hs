@@ -22,7 +22,6 @@ For example: if we have:
 @
 FilesystemConf
 { _fcOutputDir      = "/foo/bar"
-, _fcExamplesSubdir = "baz"
 }
 @
 
@@ -31,7 +30,9 @@ We'll end up with the following tree:
 @
 foo
 └── bar
-    ├── examples
+    ├── components
+    │   └── some-example0.html
+    ├── layouts
     │   └── some-example0.html
     └── index.html
 @
@@ -40,7 +41,6 @@ The examples subdirectory will be created if it doesn't exist yet; and existing 
 -}
 data FilesystemConf = FilesystemConf
   { _fcOutputDir      :: FilePath -- ^ The output directory: the index.html file is placed here. 
-  , _fcExamplesSubdir :: FilePath -- ^ The examples subdirectory /under/ the output directory. This /must not/ be absolute. 
   }
   deriving Show
 
