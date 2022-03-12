@@ -47,50 +47,6 @@ import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
--- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
--- and the canvas it represents.
-components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-components = M.fromList $ first ("components" </>) <$>
-  [ ("accordions.html"     , ("Accordions", sampleContents accordions))
-  , ("alert-stacks.html"   , ("Alert stacks", sampleContents alertStacks))
-  , ("alerts.html"         , ("Alerts", sampleContents alerts))
-  , ("bordered-lists.html" , ("Bordered lists", sampleContents borderedLists))
-  , ("brands.html"         , ("Brands", sampleContents brands))
-  , ("button-toolbars.html", ("Button toolbars", sampleContents buttonToolbars))
-  , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
-  , ("cards.html"          , ("Cards", sampleContents cards))
-  , ( "file-attachments.html"
-    , ("File attachments", sampleContents fileAttachments)
-    )
-  , ("file-uploads.html"  , ("File uploads", fileUploadsC))
-  , ("forms.html"         , ("Form groups", sampleContents formGroups))
-  , ("global-banners.html", ("Global banners", sampleContents globalBanners))
-  , ("icon-lists.html"    , ("Icon lists", sampleContents iconLists))
-  , ("key-values.html"    , ("Key values", sampleContents keyValueGroups))
-  , ("loaders.html"       , ("Loaders", sampleContents loaders))
-  , ("navbars.html"       , ("Navbars", sampleContents navbars))
-  , ("panels.html"        , ("Panels", sampleContents panels))
-  , ("radio-groups.html"  , ("Radio groups", sampleContents radioGroups))
-  , ("rulers.html"        , ("Rulers", rulersC))
-  , ("slates.html"        , ("Slates", sampleContents slates))
-  , ("side-menus.html"    , ("Side menus", sampleContents sideMenus))
-  , ("status-pills.html"  , ("Status pills", sampleContents statusPills))
-  ]
- where
-  rulersC = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
-    Dsl.::~ sampleContents rulers
-  fileUploadsC =
-    Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Pending file uploads")
-      Dsl.::~ sampleContents fileUploads
-      Dsl.::~ Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Done file uploads")
-      Dsl.::~ sampleContents fileUploadResults
-
-layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-layouts = M.fromList $ first ("layouts" </>) <$>
-  [ ("empty.html"          , ("Empty page", emptyPage))
-  , ("main-header.html"    , ("Main header", mainHeader))
-  ]
-
 -- | Parse the configuration from the cli and run.
 main :: IO ExitCode
 main = A.execParser CP.confParserInfo >>= mainWithConf
@@ -172,6 +128,50 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
     in  H.a name ! A.href (H.stringValue fileURI)
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
+
+-- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
+-- and the canvas it represents.
+components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
+components = M.fromList $ first ("components" </>) <$>
+  [ ("accordions.html"     , ("Accordions", sampleContents accordions))
+  , ("alert-stacks.html"   , ("Alert stacks", sampleContents alertStacks))
+  , ("alerts.html"         , ("Alerts", sampleContents alerts))
+  , ("bordered-lists.html" , ("Bordered lists", sampleContents borderedLists))
+  , ("brands.html"         , ("Brands", sampleContents brands))
+  , ("button-toolbars.html", ("Button toolbars", sampleContents buttonToolbars))
+  , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
+  , ("cards.html"          , ("Cards", sampleContents cards))
+  , ( "file-attachments.html"
+    , ("File attachments", sampleContents fileAttachments)
+    )
+  , ("file-uploads.html"  , ("File uploads", fileUploadsC))
+  , ("forms.html"         , ("Form groups", sampleContents formGroups))
+  , ("global-banners.html", ("Global banners", sampleContents globalBanners))
+  , ("icon-lists.html"    , ("Icon lists", sampleContents iconLists))
+  , ("key-values.html"    , ("Key values", sampleContents keyValueGroups))
+  , ("loaders.html"       , ("Loaders", sampleContents loaders))
+  , ("navbars.html"       , ("Navbars", sampleContents navbars))
+  , ("panels.html"        , ("Panels", sampleContents panels))
+  , ("radio-groups.html"  , ("Radio groups", sampleContents radioGroups))
+  , ("rulers.html"        , ("Rulers", rulersC))
+  , ("slates.html"        , ("Slates", sampleContents slates))
+  , ("side-menus.html"    , ("Side menus", sampleContents sideMenus))
+  , ("status-pills.html"  , ("Status pills", sampleContents statusPills))
+  ]
+ where
+  rulersC = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
+    Dsl.::~ sampleContents rulers
+  fileUploadsC =
+    Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Pending file uploads")
+      Dsl.::~ sampleContents fileUploads
+      Dsl.::~ Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Done file uploads")
+      Dsl.::~ sampleContents fileUploadResults
+
+layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
+layouts = M.fromList $ first ("layouts" </>) <$>
+  [ ("empty.html"          , ("Empty page", emptyPage))
+  , ("main-header.html"    , ("Main header", mainHeader))
+  ]
 
 sampleContents
   :: forall a f
