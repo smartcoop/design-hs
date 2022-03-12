@@ -49,12 +49,6 @@ import qualified Text.Blaze.Html5.Attributes   as A
 
 -- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
 -- and the canvas it represents.
-layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-layouts = M.fromList $ first ("layouts" </>) <$>
-  [ ("empty.html"          , ("Empty page", emptyPage))
-  , ("main-header.html"    , ("Main header", mainHeader))
-  ]
-
 components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
 components = M.fromList $ first ("components" </>) <$>
   [ ("accordions.html"     , ("Accordions", sampleContents accordions))
@@ -90,6 +84,12 @@ components = M.fromList $ first ("components" </>) <$>
       Dsl.::~ sampleContents fileUploads
       Dsl.::~ Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Done file uploads")
       Dsl.::~ sampleContents fileUploadResults
+
+layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
+layouts = M.fromList $ first ("layouts" </>) <$>
+  [ ("empty.html"          , ("Empty page", emptyPage))
+  , ("main-header.html"    , ("Main header", mainHeader))
+  ]
 
 -- | Parse the configuration from the cli and run.
 main :: IO ExitCode
