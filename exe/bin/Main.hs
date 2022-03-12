@@ -41,7 +41,10 @@ import           Examples.Layouts.MainHeader    ( mainHeaderWebsite )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
+import           Smart.Html.Navbar
 import           Smart.Html.Render             as R
+import qualified Smart.Html.Shared.Html.Helpers
+                                               as Helpers
 import qualified Smart.Html.Shared.Types       as Types
 import           System.FilePath.Posix          ( (</>) )
 import qualified Text.Blaze.Html5              as H
@@ -79,43 +82,49 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   layoutsF = _fcOutputDir </> "layouts" </> "index.html"
 
   indexHtml = Dsl.SingletonCanvas $ do
-    H.title "Smart design-hs"
-    H.h1 "Welcome to SmartCoop's Haskell design system!"
-    H.br
-    H.p $ do
-      "See the "
-      H.a ! A.href "/components/" $ "components"
-      "."
-    H.br
-    H.p $ do
-      "See the "
-      H.a ! A.href "/layouts/" $ "layouts"
-      "."
-    H.br
-    H.p $ do
-      "See the "
-      H.a ! A.href "/old/" $ "old examples"
-      "."
-    H.br
+    H.toMarkup navigation
+    mainDisplay $ do
+      H.h1 "Smart's design system, implemented in Haskell"
+      H.p $ do
+        "See the "
+        H.a ! A.href "/components/" $ "components"
+        "."
+      H.p $ do
+        "See the "
+        H.a ! A.href "/layouts/" $ "layouts"
+        "."
+      H.p $ do
+        "See the "
+        H.a ! A.href "/old/" $ "old examples"
+        "."
 
   componentsHtml = Dsl.SingletonCanvas $ do
-    H.title "Smart design-hs"
-    H.h1 "Components"
-    componentLinks
+    H.toMarkup navigation
+    mainDisplay $ do
+      H.h1 "Components"
+      componentLinks
 
   layoutsHtml = Dsl.SingletonCanvas $ do
-    H.title "Smart design-hs"
-    H.h1 "Layouts"
-    layoutLinks
+    H.toMarkup navigation
+    mainDisplay $ do
+      H.h1 "Layouts"
+      layoutLinks
+
+  mainDisplay content =
+    H.main $
+      H.div ! A.class_ "o-container o-container--medium" $
+        H.div ! A.class_ "o-container-vertical" $
+          H.div ! A.class_ "c-display" $
+            content
 
   -- TODO Remove duplication.
-  componentLinks = mapM_ (H.br >>) componentLinks'
+  componentLinks = Helpers.unorderedList componentLinks'
   componentLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
           | (fileName, (title, _)) <- M.toList components
           ]
-  layoutLinks = mapM_ (H.br >>) layoutLinks'
+  layoutLinks = Helpers.unorderedList layoutLinks'
   layoutLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
@@ -186,3 +195,10 @@ sampleContent elem' =
   let divContents = Dsl.SingletonCanvas @H.ToMarkup elem'
   in  Dsl.SingletonCanvas . div' $ H.toMarkup divContents
   where div' = H.div ! A.class_ "br-sample-content"
+
+navigation :: NavbarWebsite
+navigation = NavbarWebsite
+  [ Entry "Components" (Link "/components/")
+  , Entry "Layouts" (Link "/layouts/")
+  , Entry "Old" (Link "/old/")
+  ]
