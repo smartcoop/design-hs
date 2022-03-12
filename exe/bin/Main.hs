@@ -45,6 +45,7 @@ import           Smart.Html.Navbar
 import           Smart.Html.Render             as R
 import qualified Smart.Html.Shared.Html.Helpers
                                                as Helpers
+import           Smart.Html.Shared.Html.Icons
 import qualified Smart.Html.Shared.Types       as Types
 import           System.FilePath.Posix          ( (</>) )
 import qualified Text.Blaze.Html5              as H
@@ -83,20 +84,8 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
 
   indexHtml = Dsl.SingletonCanvas $ do
     H.toMarkup navigation
-    mainDisplay $ do
-      H.h1 "Smart's design system, implemented in Haskell"
-      H.p $ do
-        "See the "
-        H.a ! A.href "/components/" $ "components"
-        "."
-      H.p $ do
-        "See the "
-        H.a ! A.href "/layouts/" $ "layouts"
-        "."
-      H.p $ do
-        "See the "
-        H.a ! A.href "/old/" $ "old examples"
-        "."
+    landing
+    footer
 
   componentsHtml = Dsl.SingletonCanvas $ do
     H.toMarkup navigation
@@ -202,3 +191,52 @@ navigation = NavbarWebsite
   , Entry "Layouts" (Link "/layouts/")
   , Entry "Old" (Link "/old/")
   ]
+
+landing =
+  H.main ! A.class_ "o-container o-container--flex" $ do
+    H.div ! A.class_ "c-design-system-home-hero u-padding-vertical-xl" $
+      H.div ! A.class_ "o-grid" $ do
+        H.div ! A.class_ "o-grid-col-bp3-6" $
+          H.div ! A.class_ "o-flex o-flex o-flex--vertical-center"
+                ! A.style "height: 100%;" $
+            H.div ! A.class_ "c-display" $ do
+              H.h1 "Smart's design system, implemented in Haskell"
+              H.p $ do
+                "This site presents a Haskell implementation of the "
+                H.a ! A.href "http://design.smart.coop" $ "Smart design system"
+                "."
+        H.div ! A.class_ "o-grid-col-bp3-6" $
+          H.div ! A.class_ "c-design-system-home-illustration" $
+            H.img ! A.src "https://design.smart.coop/images/illustration-form.png"
+                  ! A.alt ""
+    H.div ! A.class_ "o-grid" $ do
+      H.div ! A.class_ "o-grid-col-bp3-6" $
+        H.div ! A.class_ "c-panel u-spacer-bottom" $
+          H.div ! A.class_ "c-panel__body" $
+            H.div ! A.class_ "c-display" $ do
+              H.h3 "Open source"
+              H.p $ do
+                "Just like the reference implementation, this project is open source "
+                "and available "
+                H.a ! A.href "https://github.com/smartcoop/design-hs" $ "on GitHub"
+                "."
+      H.div ! A.class_ "o-grid-col-bp3-6" $
+        H.div ! A.class_ "c-panel u-spacer-bottom" $
+          H.div ! A.class_ "c-panel__body" $ do
+            H.div ! A.class_ "c-display" $ do
+              H.h3 "Experimental"
+              H.p "Haskell is not used in production at Smart. Instead an experiment is in progress to see if using it to write prototypes is useful."
+
+footer =
+  H.footer ! A.id "footer" $
+    H.div ! A.class_ "o-container-vertical" $
+      H.div ! A.class_ "o-container" $ do
+        H.hr ! A.class_ "c-hr"
+        H.ul ! A.class_ "c-bordered-list-horizontal c-bordered-list-horizontal--muted" $
+          H.li $
+            H.a ! A.href "https://github.com/smartcoop/design" $
+              H.div ! A.class_ "o-flex" $ do
+                H.div ! A.class_ "u-spacer-right-s" $
+                  H.div ! A.class_ "o-svg-icon o-svg-icon-github" $
+                    H.toMarkup svgIconGitHub
+                "Share feedback on GitHub"
