@@ -37,6 +37,7 @@ import           Examples.Slate                 ( slates )
 import           Examples.StatusPill            ( statusPills )
 import           Examples.Layouts.EmptyPage     ( emptyPage )
 import           Examples.Layouts.MainHeader    ( mainHeader )
+import           Examples.Layouts.MainHeader    ( mainHeaderWebsite )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
@@ -168,8 +169,9 @@ components = M.fromList $ first ("components" </>) <$>
 
 layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
 layouts = M.fromList $ first ("layouts" </>) <$>
-  [ ("empty.html"          , ("Empty page", emptyPage))
-  , ("main-header.html"    , ("Main header", mainHeader))
+  [ ("empty.html"              , ("Empty page", emptyPage))
+  , ("main-header-website.html", ("Main header (website)", mainHeaderWebsite))
+  , ("main-header.html"        , ("Main header", mainHeader))
   ]
 
 sampleContents
