@@ -176,52 +176,19 @@ myHeader =
                 H.div ! A.class_ "c-design-system-nav__mobile" $
                   H.ul $ do
                     H.li $ do
-                      H.span "Design"
-                      H.ul $ do
-                        H.li $
-                          H.a ! A.href "/design/how-it-works.html" $ "Design workflow"
-                        H.li $
-                          H.a ! A.href "/design/in-practice/copywriting.html" $ "Design system in practice"
-                    H.li $ do
-                      H.span "Development"
-                      H.ul $
-                        H.li $
-                          H.a ! A.href "/development/getting-started.html" $ "Getting started"
+                      H.a ! A.href "/components/" $ "Components"
                     H.li $
-                      H.a ! A.href "/blog/index.html" $ "Blog"
+                      H.a ! A.href "/layouts/" $ "Layouts"
                     H.li $
-                      H.a ! A.href "/changelog.html" $ "Changelog"
+                      H.a ! A.href "/old/" $ "Old"
                 H.div ! A.class_ "c-design-system-nav__desktop" $
                   H.ul ! A.class_ "c-pill-navigation" $ do
-                    H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                      H.a ! A.href "#" ! customAttribute "data-menu" "menu1" ! customAttribute "data-menu-samewidth" "true" $ "Design"
-                      H.ul ! A.class_ "c-menu c-menu--large" ! A.id "menu1" $ do
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/design/how-it-works.html" $ "Design workflow"
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/design/in-practice/copywriting.html" $ "Design system in practice"
-                    H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
-                      H.a ! A.href "#" ! customAttribute "data-menu" "menu2" ! customAttribute "data-menu-samewidth" "true" $ "Development"
-                      H.ul ! A.class_ "c-menu c-menu--large" ! A.id "menu2" $ do
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/development/getting-started.html" $ "Getting started"
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/development/package-and-repo-links.html" $ "Package and repo links"
-                        H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/development/component-documentation.html" $ "Component documentation"
-                        H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/development/browser-support.html" $ "Browser support"
-                        H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/development/writing-css/architecture.html" $ "CSS architecture"
-                        H.li ! A.class_ "c-menu__item" $
-                          H.a ! A.class_ "c-menu__label" ! A.href "/development/writing-css/component-structure.html" $ "CSS component structure"
                     H.li ! A.class_ "c-pill-navigation__item" $
-                      H.a ! A.href "/blog/index.html" $ "Blog"
+                      H.a ! A.href "/components/" $ "Components"
                     H.li ! A.class_ "c-pill-navigation__item" $
-                      H.a ! A.href "/changelog.html" $ "Changelog"
+                      H.a ! A.href "/layouts/" $ "Layouts"
+                    H.li ! A.class_ "c-pill-navigation__item" $
+                      H.a ! A.href "/old/" $ "Old"
 
 myFooter =
   H.footer ! A.id "footer" $
