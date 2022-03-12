@@ -19,10 +19,12 @@ import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
--- | Render a Smart canvas as a complete HTML document.
+-- | Render a Smart canvas as a complete HTML document, as Text.
+renderCanvasText :: Dsl.HtmlCanvas -> T.Text
 renderCanvasText = T.pack . R.renderHtml . renderCanvas
 
--- | Render a Smart canvas as a complete HTML document, as Text.
+-- | Render a Smart canvas as a complete HTML document.
+renderCanvas :: Dsl.HtmlCanvas -> H.Html
 renderCanvas canvas = do
   H.docType
   H.html
