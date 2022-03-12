@@ -21,4 +21,6 @@ scaffoldFilesystem (Conf FilesystemConf {..}) subdirs =
   createChildren =
     let childSubdirs = (_fcOutputDir </>) <$> (_fcExamplesSubdir : subdirs)
     in  mapM_ mkdir childSubdirs
-  mkdir = Dir.createDirectoryIfMissing True
+  mkdir path =
+    putStrLn ("Creating directory " <> path <> "...")
+    >> Dir.createDirectoryIfMissing True path
