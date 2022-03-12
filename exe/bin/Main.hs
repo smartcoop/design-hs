@@ -49,16 +49,14 @@ import qualified Text.Blaze.Html5.Attributes   as A
 
 -- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
 -- and the canvas it represents.
--- TODO Prefix these with layouts/.
 layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-layouts = M.fromList
+layouts = M.fromList $ first ("layouts" </>) <$>
   [ ("empty.html"          , ("Empty page", emptyPage))
   , ("main-header.html"    , ("Main header", mainHeader))
   ]
 
--- TODO Prefix these with components/.
 components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-components = M.fromList
+components = M.fromList $ first ("components" </>) <$>
   [ ("accordions.html"     , ("Accordions", sampleContents accordions))
   , ("alert-stacks.html"   , ("Alert stacks", sampleContents alertStacks))
   , ("alerts.html"         , ("Alerts", sampleContents alerts))
@@ -99,13 +97,18 @@ main = A.execParser CP.confParserInfo >>= mainWithConf
 
 mainWithConf :: CT.Conf -> IO ExitCode
 mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
-  Conf.scaffoldFilesystem cnf mempty
+  -- TODO I think that having _fcExamplesSubdir in cnf is overkill.
+  Conf.scaffoldFilesystem cnf ["components", "layouts"]
 
   let indexFile = (indexF, indexHtml)
+      componentsFile = (componentsF, componentsHtml)
+      layoutsFile = (layoutsF, layoutsHtml)
       files =
         second R.renderCanvasText
           <$> indexFile
-          :   [ (examplesF fileName, canvas)
+          : componentsFile
+          : layoutsFile
+          :   [ (_fcOutputDir </> fileName, canvas)
               | (fileName, (_, canvas)) <- M.toList $ components <> layouts
               ]
 
@@ -115,45 +118,58 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   putStrLn @Text "Done!"
   exitSuccess
  where
-  examplesF f = _fcOutputDir </> _fcExamplesSubdir </> f
   indexF = _fcOutputDir </> "index.html"
-
-  mkLink (name, file) =
-
-    let
-        -- A file-uri is generated relative to the root directory.
-        fileURI = "./" </> CT.relativeToParentSubdir
-          _fcOutputDir
-          (_fcExamplesSubdir </> file)
-    in  H.a name ! A.href (H.stringValue fileURI)
+  componentsF = _fcOutputDir </> "components" </> "index.html"
+  layoutsF = _fcOutputDir </> "layouts" </> "index.html"
 
   indexHtml = Dsl.SingletonCanvas $ do
     H.title "Smart design-hs"
     H.h1 "Welcome to SmartCoop's Haskell design system!"
     H.br
     H.p $ do
-      "See also the old examples "
-      H.a ! A.href "/old/" $ "old example pages"
+      "See the "
+      H.a ! A.href "/components/" $ "components"
       "."
     H.br
-    H.h2 "Layouts"
-    layoutLinks
+    H.p $ do
+      "See the "
+      H.a ! A.href "/layouts/" $ "layouts"
+      "."
     H.br
-    H.h2 "Components"
+    H.p $ do
+      "See the "
+      H.a ! A.href "/old/" $ "old examples"
+      "."
+    H.br
+
+  componentsHtml = Dsl.SingletonCanvas $ do
+    H.title "Smart design-hs"
+    H.h1 "Components"
     componentLinks
+
+  layoutsHtml = Dsl.SingletonCanvas $ do
+    H.title "Smart design-hs"
+    H.h1 "Layouts"
+    layoutLinks
+
   -- TODO Remove duplication.
-  layoutLinks = mapM_ (H.br >>) layoutLinks'
-  layoutLinks' =
-    mkLink
-      <$> [ (H.toMarkup title, fileName)
-          | (fileName, (title, _)) <- M.toList layouts
-          ]
   componentLinks = mapM_ (H.br >>) componentLinks'
   componentLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
           | (fileName, (title, _)) <- M.toList components
           ]
+  layoutLinks = mapM_ (H.br >>) layoutLinks'
+  layoutLinks' =
+    mkLink
+      <$> [ (H.toMarkup title, fileName)
+          | (fileName, (title, _)) <- M.toList layouts
+          ]
+
+  mkLink (name, file) =
+    let
+        fileURI = "/" </> file
+    in  H.a name ! A.href (H.stringValue fileURI)
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
 
