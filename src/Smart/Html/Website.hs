@@ -157,8 +157,9 @@ myHeader =
         H.div ! A.class_ "c-toolbar" $ do
           H.div ! A.class_ "c-toolbar__left" $
             H.div ! A.class_ "c-toolbar__item" $
-              H.a ! A.href "/" $
-                H.img ! A.class_ "c-design-system-logo" ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
+              H.div ! A.class_ "c-brand c-brand--small" $
+                H.a ! A.href "/" $
+                  H.img ! A.src "https://design.smart.coop/images/logo.svg" ! A.alt "Smart"
           H.div ! A.class_ "c-toolbar__right" $
             H.div ! A.class_ "c-toolbar__item" $
               H.nav ! A.class_ "c-design-system-nav" $ do
