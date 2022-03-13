@@ -1,5 +1,6 @@
 module Smart.Html.Form
   ( FormGroup(..)
+  , FormInput(..)
   ) where
 
 import           Control.Lens
@@ -11,12 +12,29 @@ import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
+data FormInput =
+  TextInput Types.Id (Maybe Text)
+  | PasswordInput Types.Id (Maybe Text)
+  deriving Show
+
+instance H.ToMarkup FormInput where
+  toMarkup = \case
+    TextInput     id mDefault -> mkInput id "text" & addDefault mDefault
+    PasswordInput id mDefault -> mkInput id "password" & addDefault mDefault
+   where
+    mkInput (Types.Id id) type_ =
+      H.input ! A.class_ "o-form-input" ! A.type_ type_ ! A.id (H.toValue id)-- & (! maybe identity (A.value) mDefault)
+    addDefault mDefault input = case mDefault of
+      Nothing   -> input
+      Just def' -> input ! A.value (H.textValue def')
+
 -- | Group of form inputs. 
 data FormGroup =
   CheckboxGroup Types.Title [C.Checkbox]
   | CheckboxGroupInline Types.Title [C.Checkbox]
   -- | A group of text area. 
   | TextareaGroup [(Types.Title, TA.Textarea)]
+  | InputGroup [(Types.Title, FormInput)]
   deriving Show
 
 instance H.ToMarkup FormGroup where
@@ -29,6 +47,16 @@ instance H.ToMarkup FormGroup where
         .   mconcat
         $   uncurry (labelAndInput . preview $ TA._Textarea . _2)
         <$> labelsAndElems
+    InputGroup labelsAndInputs ->
+      underFormGroupHeaders
+        .   mconcat
+        $   uncurry (labelAndInput getInputId)
+        <$> labelsAndInputs
+     where
+      getInputId = Just . \case
+        TextInput     id _ -> id
+        PasswordInput id _ -> id
+
    where
     drawCheckboxes mExtraClass title checkboxes =
       mkFormGroupGenericLabelUnderControls title
