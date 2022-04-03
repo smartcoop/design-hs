@@ -21,6 +21,7 @@ instance H.ToMarkup TextInput where
       Types.elemEnabledStateAttr state'
         $ H.input
         ! A.type_ type'
+        ! A.class_ "c-input"
         ! addValue
         ! Types.id id
       where addValue = maybe mempty (A.value . H.textValue) mval
