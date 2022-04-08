@@ -169,7 +169,7 @@ layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
 layouts = M.fromList $ first ("layouts" </>) <$>
   [ ("empty.html"              , ("Empty page", emptyPage))
   , ("main-header-website.html", ("Main header (website)", mainHeaderWebsite))
-  , ("main-header.html"        , ("Main header", mainHeader))
+  , ("main-header.html"        , ("Main header (application)", mainHeader))
   ]
 
 sampleContents
