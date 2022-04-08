@@ -234,7 +234,7 @@ footer =
         H.hr ! A.class_ "c-hr"
         H.ul ! A.class_ "c-bordered-list-horizontal c-bordered-list-horizontal--muted" $
           H.li $
-            H.a ! A.href "https://github.com/smartcoop/design" $
+            H.a ! A.href "https://github.com/smartcoop/design-hs" $
               H.div ! A.class_ "o-flex" $ do
                 H.div ! A.class_ "u-spacer-right-s" $
                   H.div ! A.class_ "o-svg-icon o-svg-icon-github" $
