@@ -45,3 +45,9 @@ $ scripts/brittany.sh
 ```
 $ scripts/hlint.sh
 ```
+
+## Automatic GHCi reloading with ghcid
+
+```
+$ scripts/ghcid.sh
+```
