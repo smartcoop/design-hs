@@ -38,8 +38,8 @@ instance H.ToMarkup FormGroup where
         <$> labelsAndInputs
      where
       getInputId = Just . \case
-        Inp.PlainTextInput _ id _ -> id
-        Inp.PasswordInput  _ id _ -> id
+        Inp.PlainTextInput _ id _ _ -> id
+        Inp.PasswordInput  _ id _ _ -> id
 
    where
     drawCheckboxes mExtraClass title checkboxes =
