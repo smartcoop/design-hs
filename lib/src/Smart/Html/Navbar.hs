@@ -11,12 +11,21 @@ import Text.Blaze.Html5 ((!), Html)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
+-- | A navigation bar for the application.
 newtype Navbar = Navbar [Entry]
 
 instance H.ToMarkup Navbar where
   toMarkup = mkNavbar
 
+-- | A navigation bar for the website.
+newtype NavbarWebsite = NavbarWebsite [Entry]
+
+instance H.ToMarkup NavbarWebsite where
+  toMarkup = mkNavbarWebsite
+
 mkNavbar (Navbar entries) = navbar entries
+
+mkNavbarWebsite (NavbarWebsite entries) = navbarWebsite entries
 
 -- An entry has a name, then either a link or subentries.
 data Entry = Entry Title Action
@@ -50,19 +59,15 @@ toNavbar tree =
 
 navbar tree =
   H.header $
-    H.div ! A.class_ "c-navbar c-navbar--fixed c-navbar--bordered-bottom" $
-      H.div ! A.class_ "c-toolbar" $ do
-        H.div ! A.class_ "c-toolbar__left" $ do
-          H.div ! A.class_ "c-toolbar__item" $
-            H.toMarkup $
-              BrandXSmall "/" "https://design.smart.coop/images/logo.svg" "Smart"
-          H.div ! A.class_ "c-toolbar__item" $
-            H.nav $
-              H.ul ! A.class_ "c-pill-navigation" $
-                toNavbar tree
-        H.div ! A.class_ "c-toolbar__right" $ do
-          H.div ! A.class_ "c-toolbar__item" $
-            H.nav $
+    H.div ! A.class_ "c-navbar c-navbar--bordered-bottom c-navbar--fixed" $
+      toolbar
+        [ H.toMarkup $
+            BrandXSmall "/" "https://design.smart.coop/images/logo.svg" "Smart"
+        , H.nav $
+            H.ul ! A.class_ "c-pill-navigation" $
+              toNavbar tree
+        ]
+        [ H.nav $
               H.ul ! A.class_ "c-pill-navigation" $
                 H.li ! A.class_ "c-pill-navigation__item c-pill-navigation__item--has-child-menu" $ do
                   H.button ! A.type_ "button" ! customAttribute "data-menu" "helpMenu" $ do
@@ -80,12 +85,11 @@ navbar tree =
                           H.toMarkup svgIconExternalLink
                     H.li ! A.class_ "c-menu__item" $
                       H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Report a bug"
-          H.div ! A.class_ "c-toolbar__item" $
-            H.div ! A.class_ "c-input-with-icon" $ do
+        , H.div ! A.class_ "c-input-with-icon" $ do
               H.div ! A.class_ "o-svg-icon o-svg-icon-search  " $
                 H.toMarkup svgIconSearch
               H.input ! A.class_ "c-input" ! A.type_ "text" ! A.placeholder "Search ..."
-          H.div ! A.class_ "c-toolbar__item" $ do
+        , do
             H.a ! A.class_ "c-user-navigation" ! A.href "#" ! customAttribute "data-menu" "userMenu" $
               H.toMarkup $
                 Avatar (AvatarImage "https://design.smart.coop/images/avatars/1.jpg")
@@ -96,3 +100,27 @@ navbar tree =
               H.li ! A.class_ "c-menu__divider" ! A.role "presentational" $ ""
               H.li ! A.class_ "c-menu__item" $
                 H.a ! A.class_ "c-menu__label" ! A.href "#" $ "Sign out"
+        ]
+
+navbarWebsite tree =
+  H.header $
+    H.div ! A.class_ "o-container" $
+      H.div ! A.class_ "c-navbar c-navbar--bordered-bottom c-navbar--main" $
+        toolbar
+          [ H.toMarkup $
+              BrandSmall "/" "https://design.smart.coop/images/logo.svg" "Smart"
+          ]
+          [ H.nav $
+              H.ul ! A.class_ "c-pill-navigation" $
+                toNavbar tree
+          ]
+
+toolbar leftItems rightItems =
+  H.div ! A.class_ "c-toolbar" $ do
+    H.div ! A.class_ "c-toolbar__left" $
+      mapM_ item leftItems
+    H.div ! A.class_ "c-toolbar__right" $
+      mapM_ item rightItems
+
+  where
+  item = H.div ! A.class_ "c-toolbar__item"

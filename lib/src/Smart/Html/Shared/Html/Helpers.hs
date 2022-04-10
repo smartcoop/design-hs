@@ -2,6 +2,7 @@
 module Smart.Html.Shared.Html.Helpers
   ( multiNestedClassedElems
   , classedElem
+  , unorderedList
   ) where
 
 import qualified Data.Text                     as T
@@ -40,3 +41,6 @@ multiNestedClassedElems mkElem (toList -> classes) inner = case classes of
 classedElem :: Foldable f => (H.Html -> H.Html) -> f Text -> H.Html -> H.Html
 classedElem mkElem classes inner = mkElem inner H.! A.class_ classesConcat
   where classesConcat = H.textValue $ T.intercalate " " (toList classes)
+
+unorderedList :: Foldable f => f H.Html -> H.Html
+unorderedList = H.ul . mapM_ H.li . toList
