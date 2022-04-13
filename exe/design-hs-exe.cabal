@@ -93,6 +93,7 @@ executable design-hs-exe
     Examples.KeyValue 
     Examples.Layouts.EmptyPage
     Examples.Layouts.MainHeader
+    Examples.Layouts.Errors
     Examples
     
     Conf.Parse
