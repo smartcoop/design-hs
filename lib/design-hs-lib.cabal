@@ -94,6 +94,7 @@ library
     Smart.Html.Checkbox 
     Smart.Html.Form 
     Smart.Html.Textarea  
+    Smart.Html.Input
     Smart.Html.Loader  
     Smart.Html.Navbar
     Smart.Html.Wizard   

@@ -73,7 +73,7 @@ mkButton
   -> H.Html
 mkButton mEnabled mIconL mTitle mIconR specificClass =
   maybe identity elemEnabledStateAttr mEnabled
-    .  (H.button ! A.class_ ("c-button " <> specificClass) ! A.type_ "button")
+    .  (H.button ! A.class_ ("c-button " <> specificClass))
     $  iconL
     *> span
     <* iconR

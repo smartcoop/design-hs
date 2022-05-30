@@ -5,6 +5,7 @@ module Smart.Html.Form
 import           Control.Lens
 import qualified Data.Text                     as T
 import qualified Smart.Html.Checkbox           as C
+import qualified Smart.Html.Input              as Inp
 import qualified Smart.Html.Shared.Types       as Types
 import qualified Smart.Html.Textarea           as TA
 import qualified Text.Blaze.Html5              as H
@@ -17,6 +18,7 @@ data FormGroup =
   | CheckboxGroupInline Types.Title [C.Checkbox]
   -- | A group of text area. 
   | TextareaGroup [(Types.Title, TA.Textarea)]
+  | InputGroup [(Types.Title, Inp.TextInput)]
   deriving Show
 
 instance H.ToMarkup FormGroup where
@@ -29,6 +31,16 @@ instance H.ToMarkup FormGroup where
         .   mconcat
         $   uncurry (labelAndInput . preview $ TA._Textarea . _2)
         <$> labelsAndElems
+    InputGroup labelsAndInputs ->
+      underFormGroupHeaders
+        .   mconcat
+        $   uncurry (labelAndInput getInputId)
+        <$> labelsAndInputs
+     where
+      getInputId = Just . \case
+        Inp.PlainTextInput _ id _ _ -> id
+        Inp.PasswordInput  _ id _ _ -> id
+
    where
     drawCheckboxes mExtraClass title checkboxes =
       mkFormGroupGenericLabelUnderControls title
