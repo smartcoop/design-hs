@@ -36,8 +36,10 @@ import           Examples.SideMenu              ( sideMenus )
 import           Examples.Slate                 ( slates )
 import           Examples.StatusPill            ( statusPills )
 import           Examples.Layouts.EmptyPage     ( emptyPage )
-import           Examples.Layouts.MainHeader    ( mainHeader )
-import           Examples.Layouts.MainHeader    ( mainHeaderWebsite )
+import           Examples.Layouts.MainHeader    ( mainHeader
+                                                , mainHeaderWebsite )
+import           Examples.Layouts.Errors        ( notFound
+                                                , notFoundWebsite )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
@@ -69,7 +71,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
           : componentsFile
           : layoutsFile
           :   [ (_fcOutputDir </> fileName, canvas)
-              | (fileName, (_, canvas)) <- M.toList $ components <> layouts
+              | (fileName, (_, canvas)) <- M.toList components <> layouts
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -117,7 +119,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   layoutLinks' =
     mkLink
       <$> [ (H.toMarkup title, fileName)
-          | (fileName, (title, _)) <- M.toList layouts
+          | (fileName, (title, _)) <- layouts
           ]
 
   mkLink (name, file) =
@@ -165,11 +167,13 @@ components = M.fromList $ first ("components" </>) <$>
       Dsl.::~ Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Done file uploads")
       Dsl.::~ sampleContents fileUploadResults
 
-layouts :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-layouts = M.fromList $ first ("layouts" </>) <$>
+layouts :: [(FilePath, (Types.Title, Dsl.HtmlCanvas))]
+layouts = first ("layouts" </>) <$>
   [ ("empty.html"              , ("Empty page", emptyPage))
   , ("main-header-website.html", ("Main header (website)", mainHeaderWebsite))
   , ("main-header.html"        , ("Main header (application)", mainHeader))
+  , ("404-website.html", ("404 Not found (website)", notFoundWebsite))
+  , ("404.html"        , ("404 Not found (application)", notFound))
   ]
 
 sampleContents

@@ -82,6 +82,7 @@ library
     Smart.Html.Alert 
     Smart.Html.AlertStack 
     Smart.Html.Button 
+    Smart.Html.Errors
     Smart.Html.Slate  
     Smart.Html.Radio  
     Smart.Html.Avatar  
