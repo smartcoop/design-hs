@@ -92,8 +92,9 @@ executable design-hs-exe
     Examples.SideMenu 
     Examples.KeyValue 
     Examples.Layouts.EmptyPage
-    Examples.Layouts.MainHeader
     Examples.Layouts.Errors
+    Examples.Layouts.LandingPage
+    Examples.Layouts.MainHeader
     Examples
     
     Conf.Parse
