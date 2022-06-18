@@ -27,6 +27,16 @@ import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.IconList              ( iconLists )
 import           Examples.KeyValue              ( keyValueGroups )
+import           Examples.Layouts.EmptyPage     ( emptyPage )
+import           Examples.Layouts.Errors        ( notFound
+                                                , notFoundWebsite
+                                                )
+import           Examples.Layouts.LandingPage   ( landingPage
+                                                , navigation
+                                                )
+import           Examples.Layouts.MainHeader    ( mainHeader
+                                                , mainHeaderWebsite
+                                                )
 import           Examples.Loader                ( loaders )
 import           Examples.Navbar                ( navbars )
 import           Examples.Panel                 ( panels )
@@ -35,12 +45,6 @@ import           Examples.Ruler                 ( rulers )
 import           Examples.SideMenu              ( sideMenus )
 import           Examples.Slate                 ( slates )
 import           Examples.StatusPill            ( statusPills )
-import           Examples.Layouts.EmptyPage     ( emptyPage )
-import           Examples.Layouts.LandingPage   ( landingPage, navigation )
-import           Examples.Layouts.MainHeader    ( mainHeader
-                                                , mainHeaderWebsite )
-import           Examples.Layouts.Errors        ( notFound
-                                                , notFoundWebsite )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
@@ -61,14 +65,14 @@ mainWithConf :: CT.Conf -> IO ExitCode
 mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   Conf.scaffoldFilesystem cnf ["components", "layouts"]
 
-  let indexFile = (indexF, indexHtml)
+  let indexFile      = (indexF, indexHtml)
       componentsFile = (componentsF, componentsHtml)
-      layoutsFile = (layoutsF, layoutsHtml)
+      layoutsFile    = (layoutsF, layoutsHtml)
       files =
         second R.renderCanvasText
           <$> indexFile
-          : componentsFile
-          : layoutsFile
+          :   componentsFile
+          :   layoutsFile
           :   [ (_fcOutputDir </> fileName, canvas)
               | (fileName, (_, canvas)) <- M.toList components <> layouts
               ]
@@ -79,11 +83,11 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   putStrLn @Text "Done!"
   exitSuccess
  where
-  indexF = _fcOutputDir </> "index.html"
-  componentsF = _fcOutputDir </> "components" </> "index.html"
-  layoutsF = _fcOutputDir </> "layouts" </> "index.html"
+  indexF         = _fcOutputDir </> "index.html"
+  componentsF    = _fcOutputDir </> "components" </> "index.html"
+  layoutsF       = _fcOutputDir </> "layouts" </> "index.html"
 
-  indexHtml = landingPage
+  indexHtml      = landingPage
 
   componentsHtml = Dsl.SingletonCanvas $ do
     H.toMarkup navigation
@@ -98,11 +102,14 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
       layoutLinks
 
   mainDisplay content =
-    H.main $
-      H.div ! A.class_ "o-container o-container--medium" $
-        H.div ! A.class_ "o-container-vertical" $
-          H.div ! A.class_ "c-display" $
-            content
+    H.main
+      $ H.div
+      ! A.class_ "o-container o-container--medium"
+      $ H.div
+      ! A.class_ "o-container-vertical"
+      $ H.div
+      ! A.class_ "c-display"
+      $ content
 
   -- TODO Remove duplication.
   componentLinks = Helpers.unorderedList componentLinks'
@@ -114,46 +121,50 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
   layoutLinks = Helpers.unorderedList layoutLinks'
   layoutLinks' =
     mkLink
-      <$> [ (H.toMarkup title, fileName)
-          | (fileName, (title, _)) <- layouts
-          ]
+      <$> [ (H.toMarkup title, fileName) | (fileName, (title, _)) <- layouts ]
 
   mkLink (name, file) =
-    let
-        fileURI = "/" </> file
-    in  H.a name ! A.href (H.stringValue fileURI)
+    let fileURI = "/" </> file in H.a name ! A.href (H.stringValue fileURI)
 
   confirmWritten = putStrLn . T.unlines . fmap T.pack
 
 -- | All rendered files can be represented as a Map of the filename, the title of the file (used in linking the file, header of the file etc.)
 -- and the canvas it represents.
 components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
-components = M.fromList $ first ("components" </>) <$>
-  [ ("accordions.html"     , ("Accordions", sampleContents accordions))
-  , ("alert-stacks.html"   , ("Alert stacks", sampleContents alertStacks))
-  , ("alerts.html"         , ("Alerts", sampleContents alerts))
-  , ("bordered-lists.html" , ("Bordered lists", sampleContents borderedLists))
-  , ("brands.html"         , ("Brands", sampleContents brands))
-  , ("button-toolbars.html", ("Button toolbars", sampleContents buttonToolbars))
-  , ("buttons.html"        , ("Buttons", sampleContents buttonCanvases))
-  , ("cards.html"          , ("Cards", sampleContents cards))
-  , ( "file-attachments.html"
-    , ("File attachments", sampleContents fileAttachments)
-    )
-  , ("file-uploads.html"  , ("File uploads", fileUploadsC))
-  , ("forms.html"         , ("Form groups", sampleContents formGroups))
-  , ("global-banners.html", ("Global banners", sampleContents globalBanners))
-  , ("icon-lists.html"    , ("Icon lists", sampleContents iconLists))
-  , ("key-values.html"    , ("Key values", sampleContents keyValueGroups))
-  , ("loaders.html"       , ("Loaders", sampleContents loaders))
-  , ("navbars.html"       , ("Navbars", sampleContents navbars))
-  , ("panels.html"        , ("Panels", sampleContents panels))
-  , ("radio-groups.html"  , ("Radio groups", sampleContents radioGroups))
-  , ("rulers.html"        , ("Rulers", rulersC))
-  , ("slates.html"        , ("Slates", sampleContents slates))
-  , ("side-menus.html"    , ("Side menus", sampleContents sideMenus))
-  , ("status-pills.html"  , ("Status pills", sampleContents statusPills))
-  ]
+components =
+  M.fromList
+    $   first ("components" </>)
+    <$> [ ("accordions.html"  , ("Accordions", sampleContents accordions))
+        , ("alert-stacks.html", ("Alert stacks", sampleContents alertStacks))
+        , ("alerts.html"      , ("Alerts", sampleContents alerts))
+        , ( "bordered-lists.html"
+          , ("Bordered lists", sampleContents borderedLists)
+          )
+        , ("brands.html", ("Brands", sampleContents brands))
+        , ( "button-toolbars.html"
+          , ("Button toolbars", sampleContents buttonToolbars)
+          )
+        , ("buttons.html", ("Buttons", sampleContents buttonCanvases))
+        , ("cards.html"  , ("Cards", sampleContents cards))
+        , ( "file-attachments.html"
+          , ("File attachments", sampleContents fileAttachments)
+          )
+        , ("file-uploads.html", ("File uploads", fileUploadsC))
+        , ("forms.html"       , ("Form groups", sampleContents formGroups))
+        , ( "global-banners.html"
+          , ("Global banners", sampleContents globalBanners)
+          )
+        , ("icon-lists.html"  , ("Icon lists", sampleContents iconLists))
+        , ("key-values.html"  , ("Key values", sampleContents keyValueGroups))
+        , ("loaders.html"     , ("Loaders", sampleContents loaders))
+        , ("navbars.html"     , ("Navbars", sampleContents navbars))
+        , ("panels.html"      , ("Panels", sampleContents panels))
+        , ("radio-groups.html", ("Radio groups", sampleContents radioGroups))
+        , ("rulers.html"      , ("Rulers", rulersC))
+        , ("slates.html"      , ("Slates", sampleContents slates))
+        , ("side-menus.html"  , ("Side menus", sampleContents sideMenus))
+        , ("status-pills.html", ("Status pills", sampleContents statusPills))
+        ]
  where
   rulersC = Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Horizontal ruler")
     Dsl.::~ sampleContents rulers
@@ -164,13 +175,16 @@ components = M.fromList $ first ("components" </>) <$>
       Dsl.::~ sampleContents fileUploadResults
 
 layouts :: [(FilePath, (Types.Title, Dsl.HtmlCanvas))]
-layouts = first ("layouts" </>) <$>
-  [ ("empty.html"              , ("Empty page", emptyPage))
-  , ("main-header-website.html", ("Main header (website)", mainHeaderWebsite))
-  , ("main-header.html"        , ("Main header (application)", mainHeader))
-  , ("404-website.html", ("404 Not found (website)", notFoundWebsite))
-  , ("404.html"        , ("404 Not found (application)", notFound))
-  ]
+layouts =
+  first ("layouts" </>)
+    <$> [ ("empty.html", ("Empty page", emptyPage))
+        , ( "main-header-website.html"
+          , ("Main header (website)", mainHeaderWebsite)
+          )
+        , ("main-header.html", ("Main header (application)", mainHeader))
+        , ("404-website.html", ("404 Not found (website)", notFoundWebsite))
+        , ("404.html"        , ("404 Not found (application)", notFound))
+        ]
 
 sampleContents
   :: forall a f
