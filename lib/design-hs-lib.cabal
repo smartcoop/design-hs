@@ -110,3 +110,9 @@ library
 
     Smart.Html.Render 
 
+    -- Server side modules: used for wiring in actual pages, for example.
+
+    Smart.Server.Page
+    Smart.Server.Page.Shared
+    Smart.Server.Page.Navbar 
+
