@@ -1,6 +1,9 @@
 module Smart.Html.Navbar
   ( Navbar(..)
   , NavbarWebsite(..)
+  , Action(..)
+  , Entry(..)
+  , SubEntry(..)
   , mkNavbar
   , mkNavbarWebsite
   , toNavbar
