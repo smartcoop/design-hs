@@ -12,7 +12,7 @@ import qualified Data.Map                      as M
 import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
-import           Examples.Alert                 ( alerts )
+import           Examples.AlertDialog           ( alertDialogs )
 import           Examples.AlertStack            ( alertStacks )
 import           Examples.BorderedList          ( borderedLists )
 import           Examples.Brand                 ( brands )
@@ -134,9 +134,9 @@ components :: Map FilePath (Types.Title, Dsl.HtmlCanvas)
 components =
   M.fromList
     $   first ("components" </>)
-    <$> [ ("accordions.html"  , ("Accordions", sampleContents accordions))
-        , ("alert-stacks.html", ("Alert stacks", sampleContents alertStacks))
-        , ("alerts.html"      , ("Alerts", sampleContents alerts))
+    <$> [ ("accordions.html"   , ("Accordions", sampleContents accordions))
+        , ("alert-dialogs.html", ("Alert dialogs", sampleContents alertDialogs))
+        , ("alert-stacks.html" , ("Alert stacks", sampleContents alertStacks))
         , ( "bordered-lists.html"
           , ("Bordered lists", sampleContents borderedLists)
           )

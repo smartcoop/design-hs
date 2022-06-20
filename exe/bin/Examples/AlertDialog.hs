@@ -1,13 +1,13 @@
-module Examples.Alert
-  ( alerts
+module Examples.AlertDialog
+  ( alertDialogs
   ) where
 
-import           Smart.Html.Alert
+import           Smart.Html.AlertDialog
 import           Smart.Html.Shared.Html.Icons   ( svgIconDelete )
 import qualified Text.Blaze.Html5              as H
 
-alerts :: [Alert]
-alerts =
+alertDialogs :: [AlertDialog]
+alertDialogs =
   [ -- a cancel or confirm dialog.
     CancelConfirmAlert "Delete file"
                        "Are you sure?"

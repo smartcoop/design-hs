@@ -1,11 +1,11 @@
 {-|
-Module: Smart.Html.Alert
+Module: Smart.Html.AlertDialog
 Description: Alert dialogs
 
 <https://design.smart.coop/development/docs/c-alert-dialog.html Smart design website docs>
 -}
-module Smart.Html.Alert
-  ( Alert(..)
+module Smart.Html.AlertDialog
+  ( AlertDialog(..)
   ) where
 
 import qualified Smart.Html.Shared.Html.Helpers
@@ -18,21 +18,21 @@ import qualified Text.Blaze.Html5.Attributes   as A
 -- brittany-disable-next-binding 
 -- | An alert dialog: comes in 2 flavours, one providing a generalised footer (for as many buttons as needed)
 -- and the CancelConfirmAlert alert, with cancel and confirm buttons.
-data Alert where
-  Alert ::H.ToMarkup footer => { _aTitle  :: Title
+data AlertDialog where
+  AlertDialog ::H.ToMarkup footer => { _aTitle  :: Title
                                , _aBody   :: Body
                                , _aFooter :: footer
-                               } -> Alert
+                               } -> AlertDialog
   CancelConfirmAlert ::{ _ccaTitle  :: Title
                        , _ccaBody   :: Body
                        , _ccaConfirm :: ConfirmText
                        , _ccaConfirmAdditional :: Maybe H.Html -- ^ Additional Html for confirmation.
                        , _ccaCancel  :: CancelText
-                       } -> Alert
+                       } -> AlertDialog
 
-instance H.ToMarkup Alert where
+instance H.ToMarkup AlertDialog where
   toMarkup (CancelConfirmAlert title body confirmT mConfirmAdditional cancelT)
-    = H.toMarkup $ Alert title body footer
+    = H.toMarkup $ AlertDialog title body footer
    where
     footer = do
       dClose
@@ -52,7 +52,7 @@ instance H.ToMarkup Alert where
     dClose el = el ! H.customAttribute "data-dialog-close" "data-dialog-close"
 
   -- An alert with a custom footer.
-  toMarkup (Alert title body footer) = do
+  toMarkup (AlertDialog title body footer) = do
     backdrop
     dialogBody
     pushDialog

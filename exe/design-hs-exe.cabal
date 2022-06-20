@@ -46,21 +46,21 @@ common common-dependencies
 
     -- Characters
     , text
-    , bytestring 
+    , bytestring
 
     -- Control
     , lens
 
     -- File manip.
-    , directory 
+    , directory
     , filepath
 
-    , containers 
+    , containers
 
 executable design-hs-exe
   import: common-dependencies, lang-settings, common-extensions
   main-is: Main.hs
-  
+
 --   main-is:          serve.hs
   build-depends:
      -- Parse cli arguments.
@@ -69,35 +69,35 @@ executable design-hs-exe
 
   hs-source-dirs: bin
   other-modules:
-    Examples.Accordion 
-    Examples.Alert 
-    Examples.AlertStack 
-    Examples.Button 
-    Examples.Slate 
-    Examples.Radio 
-    Examples.BorderedList 
-    Examples.Brand 
-    Examples.ButtonToolbar 
-    Examples.GlobalBanner 
-    Examples.Ruler 
-    Examples.Card 
-    Examples.Form 
-    Examples.Loader 
-    Examples.IconList 
-    Examples.FileUpload 
+    Examples.Accordion
+    Examples.AlertDialog
+    Examples.AlertStack
+    Examples.Button
+    Examples.Slate
+    Examples.Radio
+    Examples.BorderedList
+    Examples.Brand
+    Examples.ButtonToolbar
+    Examples.GlobalBanner
+    Examples.Ruler
+    Examples.Card
+    Examples.Form
+    Examples.Loader
+    Examples.IconList
+    Examples.FileUpload
     Examples.Navbar
-    Examples.Panel 
-    Examples.StatusPill 
-    Examples.FileAttachment 
-    Examples.SideMenu 
-    Examples.KeyValue 
+    Examples.Panel
+    Examples.StatusPill
+    Examples.FileAttachment
+    Examples.SideMenu
+    Examples.KeyValue
     Examples.Layouts.EmptyPage
     Examples.Layouts.Errors
     Examples.Layouts.LandingPage
     Examples.Layouts.MainHeader
     Examples
-    
+
     Conf.Parse
     Conf.Types
-    Conf 
-    
+    Conf
+
