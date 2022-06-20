@@ -79,6 +79,7 @@ library
     Smart.Html.Shared.Html.Icons
 
     Smart.Html.Accordion
+    Smart.Html.Alert
     Smart.Html.AlertDialog
     Smart.Html.AlertStack
     Smart.Html.Button

@@ -12,6 +12,7 @@ import qualified Data.Map                      as M
 import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as T
 import           Examples.Accordion             ( accordions )
+import           Examples.Alert                 ( alerts )
 import           Examples.AlertDialog           ( alertDialogs )
 import           Examples.AlertStack            ( alertStacks )
 import           Examples.BorderedList          ( borderedLists )
@@ -27,6 +28,8 @@ import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.IconList              ( iconLists )
 import           Examples.KeyValue              ( keyValueGroups )
+import           Examples.Loader                ( loaders )
+import           Examples.Navbar                ( navbars )
 import           Examples.Pages.EmptyPage       ( emptyPage )
 import           Examples.Pages.Errors          ( notFound
                                                 , notFoundWebsite
@@ -37,8 +40,6 @@ import           Examples.Pages.LandingPage     ( landingPage
 import           Examples.Pages.MainHeader      ( mainHeader
                                                 , mainHeaderWebsite
                                                 )
-import           Examples.Loader                ( loaders )
-import           Examples.Navbar                ( navbars )
 import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
@@ -135,6 +136,7 @@ components =
   M.fromList
     $   first ("components" </>)
     <$> [ ("accordions.html"   , ("Accordions", sampleContents accordions))
+        , ("alerts.html"       , ("Alerts", sampleContents alerts))
         , ("alert-dialogs.html", ("Alert dialogs", sampleContents alertDialogs))
         , ("alert-stacks.html" , ("Alert stacks", sampleContents alertStacks))
         , ( "bordered-lists.html"

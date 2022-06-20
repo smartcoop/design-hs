@@ -70,6 +70,7 @@ executable design-hs-exe
   hs-source-dirs: bin
   other-modules:
     Examples.Accordion
+    Examples.Alert
     Examples.AlertDialog
     Examples.AlertStack
     Examples.Button
