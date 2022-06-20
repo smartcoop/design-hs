@@ -1,4 +1,4 @@
-module Examples.Layouts.EmptyPage
+module Examples.Pages.EmptyPage
   ( emptyPage
   ) where
 

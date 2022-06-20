@@ -91,10 +91,10 @@ executable design-hs-exe
     Examples.FileAttachment
     Examples.SideMenu
     Examples.KeyValue
-    Examples.Layouts.EmptyPage
-    Examples.Layouts.Errors
-    Examples.Layouts.LandingPage
-    Examples.Layouts.MainHeader
+    Examples.Pages.EmptyPage
+    Examples.Pages.Errors
+    Examples.Pages.LandingPage
+    Examples.Pages.MainHeader
     Examples
 
     Conf.Parse

@@ -27,14 +27,14 @@ import           Examples.Form                  ( formGroups )
 import           Examples.GlobalBanner          ( globalBanners )
 import           Examples.IconList              ( iconLists )
 import           Examples.KeyValue              ( keyValueGroups )
-import           Examples.Layouts.EmptyPage     ( emptyPage )
-import           Examples.Layouts.Errors        ( notFound
+import           Examples.Pages.EmptyPage       ( emptyPage )
+import           Examples.Pages.Errors          ( notFound
                                                 , notFoundWebsite
                                                 )
-import           Examples.Layouts.LandingPage   ( landingPage
+import           Examples.Pages.LandingPage     ( landingPage
                                                 , navigation
                                                 )
-import           Examples.Layouts.MainHeader    ( mainHeader
+import           Examples.Pages.MainHeader      ( mainHeader
                                                 , mainHeaderWebsite
                                                 )
 import           Examples.Loader                ( loaders )
@@ -63,18 +63,18 @@ main = A.execParser CP.confParserInfo >>= mainWithConf
 
 mainWithConf :: CT.Conf -> IO ExitCode
 mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
-  Conf.scaffoldFilesystem cnf ["components", "layouts"]
+  Conf.scaffoldFilesystem cnf ["components", "pages"]
 
   let indexFile      = (indexF, indexHtml)
       componentsFile = (componentsF, componentsHtml)
-      layoutsFile    = (layoutsF, layoutsHtml)
+      pagesFile      = (pagesF, pagesHtml)
       files =
         second R.renderCanvasText
           <$> indexFile
           :   componentsFile
-          :   layoutsFile
+          :   pagesFile
           :   [ (_fcOutputDir </> fileName, canvas)
-              | (fileName, (_, canvas)) <- M.toList components <> layouts
+              | (fileName, (_, canvas)) <- M.toList components <> pages
               ]
 
   mapM_ (uncurry T.writeFile) files
@@ -85,7 +85,7 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
  where
   indexF         = _fcOutputDir </> "index.html"
   componentsF    = _fcOutputDir </> "components" </> "index.html"
-  layoutsF       = _fcOutputDir </> "layouts" </> "index.html"
+  pagesF         = _fcOutputDir </> "pages" </> "index.html"
 
   indexHtml      = landingPage
 
@@ -95,11 +95,11 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
       H.h1 "Components"
       componentLinks
 
-  layoutsHtml = Dsl.SingletonCanvas $ do
+  pagesHtml = Dsl.SingletonCanvas $ do
     H.toMarkup navigation
     mainDisplay $ do
-      H.h1 "Layouts"
-      layoutLinks
+      H.h1 "Pages"
+      pageLinks
 
   mainDisplay content =
     H.main
@@ -118,10 +118,10 @@ mainWithConf cnf@(CT.Conf CT.FilesystemConf {..}) = do
       <$> [ (H.toMarkup title, fileName)
           | (fileName, (title, _)) <- M.toList components
           ]
-  layoutLinks = Helpers.unorderedList layoutLinks'
-  layoutLinks' =
+  pageLinks = Helpers.unorderedList pageLinks'
+  pageLinks' =
     mkLink
-      <$> [ (H.toMarkup title, fileName) | (fileName, (title, _)) <- layouts ]
+      <$> [ (H.toMarkup title, fileName) | (fileName, (title, _)) <- pages ]
 
   mkLink (name, file) =
     let fileURI = "/" </> file in H.a name ! A.href (H.stringValue fileURI)
@@ -174,9 +174,9 @@ components =
       Dsl.::~ Dsl.SingletonCanvas @H.ToMarkup (H.h1 "Done file uploads")
       Dsl.::~ sampleContents fileUploadResults
 
-layouts :: [(FilePath, (Types.Title, Dsl.HtmlCanvas))]
-layouts =
-  first ("layouts" </>)
+pages :: [(FilePath, (Types.Title, Dsl.HtmlCanvas))]
+pages =
+  first ("pages" </>)
     <$> [ ("empty.html", ("Empty page", emptyPage))
         , ( "main-header-website.html"
           , ("Main header (website)", mainHeaderWebsite)

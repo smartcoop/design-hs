@@ -1,4 +1,4 @@
-module Examples.Layouts.LandingPage
+module Examples.Pages.LandingPage
   ( landingPage
   , navigation
   ) where
@@ -21,7 +21,7 @@ landingPage = Dsl.SingletonCanvas $ do
 navigation :: NavbarWebsite
 navigation = NavbarWebsite
   [ Entry "Components" (Link "/components/")
-  , Entry "Layouts"    (Link "/layouts/")
+  , Entry "Pages"      (Link "/pages/")
   , Entry "Old"        (Link "/old/")
   ]
 

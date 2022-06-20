@@ -1,4 +1,4 @@
-module Examples.Layouts.MainHeader
+module Examples.Pages.MainHeader
   ( mainHeader
   , mainHeaderWebsite
   ) where
