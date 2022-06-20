@@ -136,7 +136,7 @@ components =
   M.fromList
     $   first ("components" </>)
     <$> [ ("accordions.html"   , ("Accordions", sampleContents accordions))
-        , ("alerts.html"       , ("Alerts", sampleContents alerts))
+        , ("alerts.html"       , ("Alerts", componentPage alerts))
         , ("alert-dialogs.html", ("Alert dialogs", sampleContents alertDialogs))
         , ("alert-stacks.html" , ("Alert stacks", sampleContents alertStacks))
         , ( "bordered-lists.html"
@@ -200,3 +200,32 @@ sampleContent elem' =
   let divContents = Dsl.SingletonCanvas @H.ToMarkup elem'
   in  Dsl.SingletonCanvas . div' $ H.toMarkup divContents
   where div' = H.div ! A.class_ "br-sample-content"
+
+-- | This mimics the presentation used on design.smart.coop for each component.
+-- It is probably overkill to recreate each individual page, but having the
+-- same general layout helps a bit in indentifying differences between this
+-- implementation and the reference.
+componentPage
+  :: forall a f
+   . (Foldable f, Functor f, H.ToMarkup a)
+  => f a
+  -> Dsl.HtmlCanvas
+componentPage elems = Dsl.SingletonCanvas $ do
+  H.toMarkup navigation
+  flexDisplay $ do
+    H.div ! A.class_ "u-padding-bottom-l" $
+      H.h1 ! A.class_ "c-d-h2" $ "Component documentation"
+    H.div ! A.class_ "o-grid" $ do
+      H.div ! A.class_ "o-grid-col-bp3-3" $ mempty
+      H.div ! A.class_ "o-grid-col-bp3-9" $ do
+        H.div ! A.class_ "br-componentgroup-header-wrapper" $
+          H.h1 ! A.class_ "br-componentgroup-header c-d-h2" $ "Title"
+        H.div ! A.class_ "br-content c-content" $
+          H.p "Paragraph paragraph."
+        H.toMarkup $ sampleContents elems
+
+flexDisplay content =
+  H.main
+    $ H.div
+    ! A.class_ "o-container o-container--flex"
+    $ content
