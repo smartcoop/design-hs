@@ -22,7 +22,6 @@ navigation :: NavbarWebsite
 navigation = NavbarWebsite
   [ Entry "Components" (Link "/components/")
   , Entry "Pages"      (Link "/pages/")
-  , Entry "Old"        (Link "/old/")
   ]
 
 landing = H.main ! A.class_ "o-container o-container--flex" $ do

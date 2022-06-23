@@ -1514,7 +1514,7 @@ myHeader =
                 H.li $ do
                   H.a ! A.href "/components/" $ "Components"
                 H.li $ H.a ! A.href "/layouts/" $ "Layouts"
-                H.li $ H.a ! A.href "/old/" $ "Old"
+                H.li $ H.a ! A.href "/pages/" $ "Pages"
               H.div
                 ! A.class_ "c-design-system-nav__desktop"
                 $ H.ul
@@ -1533,8 +1533,8 @@ myHeader =
                     H.li
                       ! A.class_ "c-pill-navigation__item"
                       $ H.a
-                      ! A.href "/old/"
-                      $ "Old"
+                      ! A.href "/pages/"
+                      $ "Pages"
 
 myFooter =
   H.footer
