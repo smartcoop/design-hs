@@ -40,6 +40,8 @@ import           Examples.Pages.LandingPage     ( landingPage
 import           Examples.Pages.MainHeader      ( mainHeader
                                                 , mainHeaderWebsite
                                                 )
+import           Examples.Pages.RegistrationPage
+                                                ( registrationPage )
 import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
@@ -49,6 +51,7 @@ import           Examples.StatusPill            ( statusPills )
 import qualified Options.Applicative           as A
                                          hiding ( style )
 import qualified Smart.Html.Dsl                as Dsl
+import qualified Smart.Html.Misc               as App
 import           Smart.Html.Render             as R
 import qualified Smart.Html.Shared.Html.Helpers
                                                as Helpers
@@ -186,6 +189,44 @@ pages =
         , ("main-header.html", ("Main header (application)", mainHeader))
         , ("404-website.html", ("404 Not found (website)", notFoundWebsite))
         , ("404.html"        , ("404 Not found (application)", notFound))
+        , ( "app-empty.html"
+          , ("Empty page (application)", Dsl.SingletonCanvas App.emptyPage)
+          )
+        , ( "app-toolbar.html"
+          , ( "Navigation bar + toolbar (application)"
+            , Dsl.SingletonCanvas App.navToolbar
+            )
+          )
+        , ( "app-titlebar.html"
+          , ("Navigation bar + titlebar", Dsl.SingletonCanvas App.navTitlebar)
+          )
+        , ( "app-form.html"
+          , ("Form (application)", Dsl.SingletonCanvas App.page)
+          )
+        , ( "app-form--banner.html"
+          , ( "Form, with banner (application)"
+            , Dsl.SingletonCanvas App.pageWithBanner
+            )
+          )
+        , ( "app-form--wizard.html"
+          , ( "Form, with wizard (application)"
+            , Dsl.SingletonCanvas App.pageWithWizard
+            )
+          )
+        , ( "app-form--side-menu.html"
+          , ( "Form, with left menu (application)"
+            , Dsl.SingletonCanvas App.pageWithSideMenu
+            )
+          )
+        , ( "app-dialog.html"
+          , ( "Form, with dialog overlay (application)"
+            , Dsl.SingletonCanvas App.pageWithDialog
+            )
+          )
+        , ( "datagrid.html"
+          , ("Datagrid (application)", Dsl.SingletonCanvas App.datagrid)
+          )
+        , ("register.html", ("Registration form", registrationPage))
         ]
 
 sampleContents
@@ -213,19 +254,21 @@ componentPage
 componentPage elems = Dsl.SingletonCanvas $ do
   H.toMarkup navigation
   flexDisplay $ do
-    H.div ! A.class_ "u-padding-bottom-l" $
-      H.h1 ! A.class_ "c-d-h2" $ "Component documentation"
+    H.div
+      ! A.class_ "u-padding-bottom-l"
+      $ H.h1
+      ! A.class_ "c-d-h2"
+      $ "Component documentation"
     H.div ! A.class_ "o-grid" $ do
       H.div ! A.class_ "o-grid-col-bp3-3" $ mempty
       H.div ! A.class_ "o-grid-col-bp3-9" $ do
-        H.div ! A.class_ "br-componentgroup-header-wrapper" $
-          H.h1 ! A.class_ "br-componentgroup-header c-d-h2" $ "Title"
-        H.div ! A.class_ "br-content c-content" $
-          H.p "Paragraph paragraph."
+        H.div
+          ! A.class_ "br-componentgroup-header-wrapper"
+          $ H.h1
+          ! A.class_ "br-componentgroup-header c-d-h2"
+          $ "Title"
+        H.div ! A.class_ "br-content c-content" $ H.p "Paragraph paragraph."
         H.toMarkup $ sampleContents elems
 
 flexDisplay content =
-  H.main
-    $ H.div
-    ! A.class_ "o-container o-container--flex"
-    $ content
+  H.main $ H.div ! A.class_ "o-container o-container--flex" $ content

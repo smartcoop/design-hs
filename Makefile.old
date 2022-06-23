@@ -16,10 +16,10 @@ all: \
   _site/old/tools-new-contract.html
 
 
-_site/old/tools-new-contract.html: src/Smart/Html/Application.hs src/Smart/Html/Tools.hs
+_site/old/tools-new-contract.html: src/Smart/Html/Tools.hs
 	mkdir -p $(dir $@)
 	runghc -isrc/ bin/generate.hs --pretty tools-new-contract > $@
 
-_site/old/%.html: src/Smart/Html/Application.hs src/Smart/Html/Website.hs
+_site/old/%.html: src/Smart/Html/Website.hs
 	mkdir -p $(dir $@)
 	runghc -isrc/ bin/generate.hs --pretty $* > $@
