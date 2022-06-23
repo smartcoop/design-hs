@@ -1513,7 +1513,6 @@ myHeader =
               H.div ! A.class_ "c-design-system-nav__mobile" $ H.ul $ do
                 H.li $ do
                   H.a ! A.href "/components/" $ "Components"
-                H.li $ H.a ! A.href "/layouts/" $ "Layouts"
                 H.li $ H.a ! A.href "/pages/" $ "Pages"
               H.div
                 ! A.class_ "c-design-system-nav__desktop"
@@ -1525,11 +1524,6 @@ myHeader =
                       $ H.a
                       ! A.href "/components/"
                       $ "Components"
-                    H.li
-                      ! A.class_ "c-pill-navigation__item"
-                      $ H.a
-                      ! A.href "/layouts/"
-                      $ "Layouts"
                     H.li
                       ! A.class_ "c-pill-navigation__item"
                       $ H.a
