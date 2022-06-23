@@ -98,6 +98,7 @@ library
     Smart.Html.Textarea
     Smart.Html.Input
     Smart.Html.Loader
+    Smart.Html.Misc
     Smart.Html.Navbar
     Smart.Html.Wizard
     Smart.Html.IconList
