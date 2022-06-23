@@ -97,6 +97,7 @@ executable design-hs-exe
     Examples.Pages.LandingPage
     Examples.Pages.MainHeader
     Examples.Pages.RegistrationPage
+    Examples.Pages.SigninPage
     Examples
 
     Conf.Parse

@@ -42,6 +42,7 @@ import           Examples.Pages.MainHeader      ( mainHeader
                                                 )
 import           Examples.Pages.RegistrationPage
                                                 ( registrationPage )
+import           Examples.Pages.SigninPage      ( signinPage )
 import           Examples.Panel                 ( panels )
 import           Examples.Radio                 ( radioGroups )
 import           Examples.Ruler                 ( rulers )
@@ -187,6 +188,7 @@ pages =
           , ("Main header (website)", mainHeaderWebsite)
           )
         , ("main-header.html", ("Main header (application)", mainHeader))
+        , ("login.html"      , ("Sign in form (website)", signinPage))
         , ("404-website.html", ("404 Not found (website)", notFoundWebsite))
         , ("404.html"        , ("404 Not found (application)", notFound))
         , ( "app-empty.html"
