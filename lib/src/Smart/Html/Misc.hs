@@ -18,6 +18,7 @@ module Smart.Html.Misc
   , pageWithDialog
   , datagrid
   , registration
+  , toolsNewContract
   , js
   ) where
 
@@ -812,6 +813,7 @@ js = do
 --------------------------------------------------------------------------------
 -- The name can be referenced by `data-dialog` attribute to trigger the dialog.
 -- It is also use to create an id and reference it by aria-labelledby.
+dialogFullscreen :: Text -> Html -> Html
 dialogFullscreen name content =
   H.div ! A.id (H.toValue name) ! A.class_ "c-dialog-context" $ do
     H.div
@@ -821,7 +823,7 @@ dialogFullscreen name content =
     H.div
       ! A.class_ "c-dialog c-dialog--fullscreen"
       ! A.role "dialog"
-      ! customAttribute "aria-labelledby" (H.toValue $ name ++ "-title")
+      ! customAttribute "aria-labelledby" (H.toValue $ name <> "-title")
       $ content
 
 dialog name content = H.div ! A.class_ "c-dialog-context c-dialog-context" $ do
@@ -841,6 +843,7 @@ dialogVisible name content =
       ! customAttribute "aria-labelledby" (H.toValue $ name ++ "-title")
       $ content
 
+dialogContent :: Text -> Html
 dialogContent name = do
   H.div ! A.class_ "c-dialog__push" $ ""
   H.div
@@ -854,7 +857,7 @@ dialogContent name = do
           ! A.class_ "c-toolbar__item"
           $ H.h2
           ! A.class_ "c-dialog__title"
-          ! A.id (H.toValue $ name ++ "-title")
+          ! A.id (H.toValue $ name <> "-title")
           $ "Dialog title"
         H.div
           ! A.class_ "c-toolbar__item"
@@ -1311,3 +1314,49 @@ buttonClodeDangerSecondary label =
           H.div ! A.class_ "o-svg-icon o-svg-icon-close" $ do
             H.toMarkup $ svgIconClose
           H.span ! A.class_ "c-button__label" $ H.toHtml label
+
+
+--------------------------------------------------------------------------------
+idSelectFunction :: Text
+idSelectFunction = "select-function"
+
+
+--------------------------------------------------------------------------------
+toolsNewContract :: Html
+toolsNewContract = document "Smart design system - New contract" $ do
+  mainContent (titlebar "New contract") $ do
+    form
+    dialogFullscreen idSelectFunction (dialogContent idSelectFunction)
+
+form =
+  vertically $
+    mapM_ (uncurry panel)
+      [ ("Contract type", subform1')
+      ]
+
+subform1' =
+  groupHorizontal $ do
+    inputDialog "position" "Your position"
+    inputTextarea "description" "Description of the contract" 5
+      ""
+    inputSelect "work-country" "Work country"
+      countries
+    inputRadios "has-risks" "Risks"
+      [ ("This position involves risks.", False)
+      , ("This position doesn't involve any risks.", False)
+      ]
+
+-- Same as inputText, but defers the choice to a dialog.
+inputDialog :: Text -> Text -> Html
+inputDialog name label =
+  H.div ! A.class_ "o-form-group" $ do
+    H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
+      H.toHtml label
+    H.div ! A.class_ "c-input-group" $ do
+      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id (H.toValue name)
+        ! A.value "Webmaster"
+        ! A.readonly "readonly"
+      H.div ! A.class_ "c-input-group__append"
+        ! customAttribute "data-dialog" (H.toValue idSelectFunction) $
+        H.div ! A.class_ "o-svg-icon o-svg-icon-edit" $
+          H.toMarkup svgIconEdit

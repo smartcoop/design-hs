@@ -227,6 +227,7 @@ pages =
           , ("Datagrid (application)", Dsl.SingletonCanvas App.datagrid)
           )
         , ("register.html", ("Registration form", registrationPage))
+        , ("tools-new-contract.html", ("Tools, new contract", Dsl.SingletonCanvas App.toolsNewContract))
         ]
 
 sampleContents

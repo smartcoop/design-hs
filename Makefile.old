@@ -13,12 +13,7 @@ all: \
   _site/old/registration.html \
   _site/old/web-empty.html \
   _site/old/blog-post.html \
-  _site/old/tools-new-contract.html
 
-
-_site/old/tools-new-contract.html: src/Smart/Html/Tools.hs
-	mkdir -p $(dir $@)
-	runghc -isrc/ bin/generate.hs --pretty tools-new-contract > $@
 
 _site/old/%.html: src/Smart/Html/Website.hs
 	mkdir -p $(dir $@)
