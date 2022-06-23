@@ -227,7 +227,15 @@ pages =
           , ("Datagrid (application)", Dsl.SingletonCanvas App.datagrid)
           )
         , ("register.html", ("Registration form", registrationPage))
-        , ("tools-new-contract.html", ("Tools, new contract", Dsl.SingletonCanvas App.toolsNewContract))
+        , ( "tools-new-contract.html"
+          , ("Tools, new contract", Dsl.SingletonCanvas App.toolsNewContract)
+          )
+        , ( "web-empty.html"
+          , ("Empty page (website)", Dsl.SingletonCanvas App.webEmpty)
+          )
+        , ( "web-blog-post"
+          , ("Blog post (website)", Dsl.SingletonCanvas App.webPage)
+          )
         ]
 
 sampleContents

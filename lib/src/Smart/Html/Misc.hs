@@ -19,6 +19,8 @@ module Smart.Html.Misc
   , datagrid
   , registration
   , toolsNewContract
+  , webEmpty
+  , webPage
   , js
   ) where
 
@@ -868,8 +870,7 @@ dialogContent name = do
           ! A.class_ "c-button__content"
           $ H.div
           ! A.class_ "o-svg-icon o-svg-icon-close  "
-          $ H.toMarkup
-          $ svgIconClose
+          $ H.toMarkup svgIconClose
   H.div
     ! A.class_ "c-dialog__body"
     $ H.div
@@ -980,10 +981,8 @@ banner = H.div ! A.class_ "c-global-banner c-global-banner--default" $ do
     $ H.span
     ! A.class_ "c-button__content"
     $ do
-        H.div
-          ! A.class_ "o-svg-icon o-svg-icon-close  "
-          $ H.toMarkup
-          $ svgIconClose
+        H.div ! A.class_ "o-svg-icon o-svg-icon-close  " $ H.toMarkup
+          svgIconClose
         H.div ! A.class_ "u-sr-accessible" $ "Close"
 
 
@@ -1312,7 +1311,7 @@ buttonClodeDangerSecondary label =
     $ do
         H.span ! A.class_ "c-button__content" $ do
           H.div ! A.class_ "o-svg-icon o-svg-icon-close" $ do
-            H.toMarkup $ svgIconClose
+            H.toMarkup svgIconClose
           H.span ! A.class_ "c-button__label" $ H.toHtml label
 
 
@@ -1328,35 +1327,248 @@ toolsNewContract = document "Smart design system - New contract" $ do
     form
     dialogFullscreen idSelectFunction (dialogContent idSelectFunction)
 
-form =
-  vertically $
-    mapM_ (uncurry panel)
-      [ ("Contract type", subform1')
-      ]
+form = vertically $ mapM_ (uncurry panel) [("Contract type", subform1')]
 
-subform1' =
-  groupHorizontal $ do
-    inputDialog "position" "Your position"
-    inputTextarea "description" "Description of the contract" 5
-      ""
-    inputSelect "work-country" "Work country"
-      countries
-    inputRadios "has-risks" "Risks"
-      [ ("This position involves risks.", False)
-      , ("This position doesn't involve any risks.", False)
-      ]
+subform1' = groupHorizontal $ do
+  inputDialog "position" "Your position"
+  inputTextarea "description" "Description of the contract" 5 ""
+  inputSelect "work-country" "Work country" countries
+  inputRadios
+    "has-risks"
+    "Risks"
+    [ ("This position involves risks."           , False)
+    , ("This position doesn't involve any risks.", False)
+    ]
 
 -- Same as inputText, but defers the choice to a dialog.
 inputDialog :: Text -> Text -> Html
-inputDialog name label =
-  H.div ! A.class_ "o-form-group" $ do
-    H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $
-      H.toHtml label
-    H.div ! A.class_ "c-input-group" $ do
-      H.input ! A.class_ "c-input" ! A.type_ "text" ! A.id (H.toValue name)
-        ! A.value "Webmaster"
-        ! A.readonly "readonly"
-      H.div ! A.class_ "c-input-group__append"
-        ! customAttribute "data-dialog" (H.toValue idSelectFunction) $
-        H.div ! A.class_ "o-svg-icon o-svg-icon-edit" $
-          H.toMarkup svgIconEdit
+inputDialog name label = H.div ! A.class_ "o-form-group" $ do
+  H.label ! A.class_ "o-form-group__label" ! A.for (H.toValue name) $ H.toHtml
+    label
+  H.div ! A.class_ "c-input-group" $ do
+    H.input
+      ! A.class_ "c-input"
+      ! A.type_ "text"
+      ! A.id (H.toValue name)
+      ! A.value "Webmaster"
+      ! A.readonly "readonly"
+    H.div
+      ! A.class_ "c-input-group__append"
+      ! customAttribute "data-dialog" (H.toValue idSelectFunction)
+      $ H.div
+      ! A.class_ "o-svg-icon o-svg-icon-edit"
+      $ H.toMarkup svgIconEdit
+
+
+--------------------------------------------------------------------------------
+webEmpty :: Html
+webEmpty = webDocument "Smart design system" $ return ()
+
+
+--------------------------------------------------------------------------------
+-- https://design.smart.coop/blog/2021/10/08/smart-announces-an-open-design-system.html
+webPage :: Html
+webPage = webDocument "Smart design system" $ article
+  "Smart announces an open design system"
+  (Just "October 8, 2021")
+  post
+  avatars
+
+post = do
+  H.p $ do
+    "We're happy to announce we, at Smart Belgium, have started to work on a design system for the web applications of the Smart group. For the first time, but surely not the last, we've decided to make this project open source and available on "
+    H.a ! A.href "https://github.com/smartcoop/design" $ "GitHub"
+    ". We believe this matches the collaborative values of Smart and will enable various parties of the Smart ecosystem to benefit from it."
+  H.p $ do
+    "The home of the design system lives at the homepage of this very website. In addition to the blog that you're reading right now, you will be able to learn what's new, find the necessary documentation to get started with "
+    H.a
+      ! A.href "https://design.smart.coop/design/how-it-works.html"
+      $ "designing"
+    ", using and "
+    H.a
+      ! A.href "https://design.smart.coop/development/getting-started.html"
+      $ "developing"
+    " the design system yourself, as well as find the right links to be able to contribute."
+  H.p "With this design system we are pursuing three goals:"
+  H.ul $ do
+    H.li
+      "The first goal is to create the visual basis of our future software developments. This may mean the different colors that can be used, the shape and size of a button, or the location of a menu or a form on the screen. This visual work follows and stands on top of the graphic charter introduced in early 2019."
+    H.li
+      "The second goal is to create and assemble those design elements in a tool called Figma. Figma is specialized to design software interfaces. In addition of design work by designers, it can also be used by software development teams to prototype what new screens could look like and how they are organized."
+    H.li
+      "The third goal is to implement and present the design using web technologies: HTML and CSS. This implementation is meant to be a source of truth for other developers, so they can replicate the design in whatever programming language and technical stack they want."
+  H.p $ do
+    "We're very excited by what we've done so far and will write additional blog posts soon. In the mean time, you can already join the conversation using "
+    H.a
+      ! A.href "https://github.com/smartcoop/design/issues/111"
+      $ "the GitHub issue for commenting for this post"
+    ". Feel free to raise your own issues to give feedback and comment on the design system, or start your first contribution."
+
+avatars =
+  H.div
+    ! A.class_ "o-container-vertical o-container-vertical--padding-mini"
+    $ H.ul
+    ! A.class_ "c-avatar-and-text-list"
+    $ do
+        H.li ! A.class_ "c-avatar-and-text" $ do
+          H.a
+            ! A.class_ "c-avatar c-avatar--img c-avatar--regular"
+            ! A.href "https://github.com/thusc/"
+            $ H.img
+            ! A.src "https://avatars.githubusercontent.com/u/45588452?v=4"
+            ! A.alt "avatar-image"
+          H.div ! A.class_ "c-avatar-and-text__text" $ H.p "Thu"
+        H.li ! A.class_ "c-avatar-and-text" $ do
+          H.a
+            ! A.class_ "c-avatar c-avatar--img c-avatar--regular"
+            ! A.href "https://github.com/Wolfr/"
+            $ H.img
+            ! A.src "https://avatars.githubusercontent.com/u/12690?v=4"
+            ! A.alt "avatar-image"
+          H.div ! A.class_ "c-avatar-and-text__text" $ H.p "Wolfr"
+
+
+--------------------------------------------------------------------------------
+webDocument title body = do
+  H.docType
+  H.html ! A.class_ "u-maximize-height" ! A.dir "ltr" ! A.lang "en" $ do
+    myHead title
+    webBody body
+
+article title mdate content authors =
+  H.article ! A.class_ "c-blog-article" $ do
+    H.div ! A.class_ "c-blog-article__header" $ do
+      H.h1 ! A.class_ "c-d-h1" $ title
+      maybe (return ()) H.p mdate
+    H.div ! A.class_ "c-blog-article__content" $ do
+      H.div ! A.class_ "c-display" $ content
+      authors
+
+
+--------------------------------------------------------------------------------
+webBody body = H.body ! A.class_ "u-maximize-height" $ do
+  myHeader
+  H.main
+    ! A.class_ "o-container"
+    $ H.div
+    ! A.class_ "o-container o-container--medium"
+    $ H.div
+    ! A.class_ "o-container-vertical"
+    $ body
+  myFooter
+  js
+
+myHeader =
+  H.header
+    ! A.id "header"
+    $ H.div
+    ! A.class_ "o-container"
+    $ H.div
+    ! A.class_ "c-navbar c-navbar--bordered-bottom c-navbar--main"
+    $ H.div
+    ! A.class_ "c-toolbar"
+    $ do
+        H.div
+          ! A.class_ "c-toolbar__left"
+          $ H.div
+          ! A.class_ "c-toolbar__item"
+          $ H.div
+          ! A.class_ "c-brand c-brand--small"
+          $ H.a
+          ! A.href "/"
+          $ H.img
+          ! A.src "https://design.smart.coop/images/logo.svg"
+          ! A.alt "Smart"
+        H.div
+          ! A.class_ "c-toolbar__right"
+          $ H.div
+          ! A.class_ "c-toolbar__item"
+          $ H.nav
+          ! A.class_ "c-design-system-nav"
+          $ do
+              H.button
+                ! A.class_
+                    "c-button c-button--borderless c-button--icon c-design-system-nav-open"
+                ! A.type_ "button"
+                ! A.id "c-design-system-nav-open"
+                $ H.span
+                ! A.class_ "c-button__content"
+                $ do
+                    H.div
+                      ! A.class_ "o-svg-icon o-svg-icon-menu  "
+                      $ svgIconMenu
+                    H.div ! A.class_ "u-sr-accessible" $ "Open menu"
+              H.button
+                ! A.class_
+                    "c-button c-button--borderless c-button--icon c-design-system-nav-close"
+                ! A.type_ "button"
+                ! A.id "c-design-system-nav-close"
+                $ H.span
+                ! A.class_ "c-button__content"
+                $ do
+                    H.div
+                      ! A.class_ "o-svg-icon o-svg-icon-close  "
+                      $ H.toMarkup svgIconClose
+                    H.div ! A.class_ "u-sr-accessible" $ "Close menu"
+              H.div ! A.class_ "c-design-system-nav__mobile" $ H.ul $ do
+                H.li $ do
+                  H.a ! A.href "/components/" $ "Components"
+                H.li $ H.a ! A.href "/layouts/" $ "Layouts"
+                H.li $ H.a ! A.href "/old/" $ "Old"
+              H.div
+                ! A.class_ "c-design-system-nav__desktop"
+                $ H.ul
+                ! A.class_ "c-pill-navigation"
+                $ do
+                    H.li
+                      ! A.class_ "c-pill-navigation__item"
+                      $ H.a
+                      ! A.href "/components/"
+                      $ "Components"
+                    H.li
+                      ! A.class_ "c-pill-navigation__item"
+                      $ H.a
+                      ! A.href "/layouts/"
+                      $ "Layouts"
+                    H.li
+                      ! A.class_ "c-pill-navigation__item"
+                      $ H.a
+                      ! A.href "/old/"
+                      $ "Old"
+
+myFooter =
+  H.footer
+    ! A.id "footer"
+    $ H.div
+    ! A.class_ "o-container-vertical"
+    $ H.div
+    ! A.class_ "o-container"
+    $ do
+        H.hr ! A.class_ "c-hr"
+        H.ul
+          ! A.class_
+              "c-bordered-list-horizontal c-bordered-list-horizontal--muted"
+          $ H.li
+          $ H.a
+          ! A.href "https://github.com/smartcoop/design"
+          $ H.div
+          ! A.class_ "o-flex"
+          $ do
+              H.div
+                ! A.class_ "u-spacer-right-s"
+                $ H.div
+                ! A.class_ "o-svg-icon o-svg-icon-github"
+                $ H.toMarkup svgIconGitHub
+              "Share feedback on GitHub"
+
+--------------------------------------------------------------------------------
+svgIconMenu =
+  S.svg
+    ! SA.width "24"
+    ! SA.height "24"
+    ! SA.viewbox "0 0 24 24"
+    ! SA.fill "none"
+    $ S.path
+    ! SA.d
+        "M4 7C4 6.44772 4.44772 6 5 6H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H5C4.44772 8 4 7.55228 4 7ZM4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12ZM4 17C4 16.4477 4.44772 16 5 16H19C19.5523 16 20 16.4477 20 17C20 17.5523 19.5523 18 19 18H5C4.44772 18 4 17.5523 4 17Z"
+    ! SA.fill "#595959"
