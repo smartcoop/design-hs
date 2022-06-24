@@ -40,6 +40,7 @@ import           Examples.Pages.LandingPage     ( landingPage
 import           Examples.Pages.MainHeader      ( mainHeader
                                                 , mainHeaderWebsite
                                                 )
+import           Examples.Pages.Panels          ( panelsPage)
 import           Examples.Pages.RegistrationPage
                                                 ( registrationPage )
 import           Examples.Pages.SigninPage      ( signinPage )
@@ -235,8 +236,11 @@ pages =
         , ( "web-empty.html"
           , ("Empty page (website)", Dsl.SingletonCanvas App.webEmpty)
           )
-        , ( "web-blog-post"
+        , ( "web-blog-post.html"
           , ("Blog post (website)", Dsl.SingletonCanvas App.webPage)
+          )
+        , ( "panels.html"
+          , ("Panel examples (application)", Dsl.SingletonCanvas panelsPage)
           )
         ]
 
