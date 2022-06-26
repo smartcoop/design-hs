@@ -50,7 +50,7 @@ common common-dependencies
 
     -- Characters
     , text
-    , bytestring 
+    , bytestring
 
     -- Control
     , lens
@@ -71,48 +71,50 @@ library
     -- However, this might conflict with custom preludes, and may
     -- therefore require mixins, which will be problemmatic.
     Prelude
-    
+
     Smart.Html.Dsl
 
-    Smart.Html.Shared.Html.Helpers 
-    Smart.Html.Shared.Types 
+    Smart.Html.Shared.Html.Helpers
+    Smart.Html.Shared.Types
     Smart.Html.Shared.Html.Icons
 
-    Smart.Html.Accordion 
-    Smart.Html.Alert 
-    Smart.Html.AlertStack 
-    Smart.Html.Button 
+    Smart.Html.Accordion
+    Smart.Html.Alert
+    Smart.Html.AlertDialog
+    Smart.Html.AlertStack
+    Smart.Html.Button
     Smart.Html.Errors
-    Smart.Html.Slate  
-    Smart.Html.Radio  
-    Smart.Html.Avatar  
-    Smart.Html.BorderedList  
-    Smart.Html.Brand   
-    Smart.Html.ButtonToolbar    
-    Smart.Html.GlobalBanner 
-    Smart.Html.Ruler 
-    Smart.Html.Card 
-    Smart.Html.Checkbox 
-    Smart.Html.Form 
-    Smart.Html.Textarea  
+    Smart.Html.Slate
+    Smart.Html.Radio
+    Smart.Html.Avatar
+    Smart.Html.BorderedList
+    Smart.Html.Brand
+    Smart.Html.ButtonToolbar
+    Smart.Html.GlobalBanner
+    Smart.Html.Ruler
+    Smart.Html.Card
+    Smart.Html.Checkbox
+    Smart.Html.Form
+    Smart.Html.Textarea
     Smart.Html.Input
-    Smart.Html.Loader  
+    Smart.Html.Loader
+    Smart.Html.Misc
     Smart.Html.Navbar
-    Smart.Html.Wizard   
-    Smart.Html.IconList   
-    Smart.Html.FileUpload    
-    Smart.Html.Panel    
-    Smart.Html.StatusPill    
+    Smart.Html.Wizard
+    Smart.Html.IconList
+    Smart.Html.FileUpload
+    Smart.Html.Panel
+    Smart.Html.StatusPill
     Smart.Html.FileAttachment
     Smart.Html.SideMenu
     Smart.Html.KeyValue
     Smart.Html.Grid
 
-    Smart.Html.Render 
+    Smart.Html.Render
 
     -- Server side modules: used for wiring in actual pages, for example.
 
     Smart.Server.Page
     Smart.Server.Page.Shared
-    Smart.Server.Page.Navbar 
+    Smart.Server.Page.Navbar
 

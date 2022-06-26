@@ -1,91 +1,60 @@
-{-|
+{- |
 Module: Smart.Html.Alert
-Description: Alert dialogs
+Description: Alerts
 
-<https://design.smart.coop/development/docs/c-alert-dialog.html Smart design website docs>
+<https://design.smart.coop/development/docs/c-alert.html Docs & examples>
 -}
 module Smart.Html.Alert
   ( Alert(..)
+  , AlertSkin(..)
   ) where
 
+import qualified Smart.Html.Button             as Btn
+import qualified Smart.Html.Dsl                as Dsl
+import           Smart.Html.Dsl                 ( Canvas(..) )
 import qualified Smart.Html.Shared.Html.Helpers
                                                as Helpers
-import           Smart.Html.Shared.Types
+import qualified Smart.Html.Shared.Html.Icons  as Icons
+import           Smart.Html.Shared.Types        ( Body(..) )
 import qualified Text.Blaze.Html5              as H
 import           Text.Blaze.Html5               ( (!) )
 import qualified Text.Blaze.Html5.Attributes   as A
 
--- brittany-disable-next-binding 
--- | An alert dialog: comes in 2 flavours, one providing a generalised footer (for as many buttons as needed)
--- and the CancelConfirmAlert alert, with cancel and confirm buttons.
+-- | A single alert. 
 data Alert where
-  Alert ::H.ToMarkup footer => { _aTitle  :: Title
-                               , _aBody   :: Body
-                               , _aFooter :: footer
-                               } -> Alert
-  CancelConfirmAlert ::{ _ccaTitle  :: Title
-                       , _ccaBody   :: Body
-                       , _ccaConfirm :: ConfirmText
-                       , _ccaConfirmAdditional :: Maybe H.Html -- ^ Additional Html for confirmation.
-                       , _ccaCancel  :: CancelText
-                       } -> Alert
+  Alert ::KnownSymbol iconType =>
+    AlertSkin -> Maybe (Icons.OSvgIconDiv iconType) -> Body -> Btn.ButtonDef -> Alert
+  AlertLight ::KnownSymbol iconType =>
+    AlertSkin -> Maybe (Icons.OSvgIconDiv iconType) -> Body -> Btn.ButtonDef -> Alert
+
+data AlertSkin =
+    AlertDefault
+  | AlertError
+  | AlertWarning
+  | AlertSuccess
 
 instance H.ToMarkup Alert where
-  toMarkup (CancelConfirmAlert title body confirmT mConfirmAdditional cancelT)
-    = H.toMarkup $ Alert title body footer
+  toMarkup = \case
+    Alert skin mIcon body button -> mkAlert skin Nothing mIcon body button
+    AlertLight skin mIcon body button ->
+      mkAlert skin (Just "c-alert--light") mIcon body button
    where
-    footer = do
-      dClose
-        . Helpers.classedElem H.button ["c-button", "c-button--secondary"]
-        . Helpers.multiNestedClassedElems
+    mkAlert skin mExtraClass mIcon body button =
+      H.div
+        !   A.class_ alertClass
+        $   H.toMarkup
+        $   Dsl.maybeEmptyCanvas @H.ToMarkup mIcon
+        :~: bodyHtml
+        ::~ Dsl.SingletonCanvas @H.ToMarkup button
+     where
+      alertClass = "c-alert " <> alertSkin <> maybe "" (" " <>) mExtraClass
+      alertSkin  = case skin of
+        AlertDefault -> "c-alert--default"
+        AlertError   -> "c-alert--error"
+        AlertWarning -> "c-alert--warning"
+        AlertSuccess -> "c-alert--success"
+      bodyHtml =
+        Helpers.multiNestedClassedElems
             H.div
-            ["c-button__content", "c-button__label"]
-        . H.toMarkup
-        $ cancelT
-      dClose
-        .  Helpers.classedElem H.button ["c-button", "c-button--primary"]
-        .  Helpers.classedElem H.div ["c-button__content"]
-        $  fromMaybe mempty mConfirmAdditional
-        >> H.div (H.toMarkup confirmT)
-        !  A.class_ "c-button__label"
-
-    dClose el = el ! H.customAttribute "data-dialog-close" "data-dialog-close"
-
-  -- An alert with a custom footer.
-  toMarkup (Alert title body footer) = do
-    backdrop
-    dialogBody
-    pushDialog
-   where
-    backdrop =
-      Helpers.classedElem H.div
-                          ["c-dialog-backdrop", "c-dialog-backdrop--visible"]
-                          mempty
-        ! A.style "position:absolute;z-index:0;" -- this is copied from design.smart.coop; and it shouldn't really be done like this.
-    dialogBody =
-      let messages = do
-            pushDialog
-            Helpers.classedElem H.div ["c-dialog__body"]
-              $ Helpers.classedElem H.div ["c-dialog__content"]
-              $ do
-                  Helpers.classedElem H.h3 ["c-h3"] (H.toMarkup title)
-                  Helpers.classedElem H.p ["u-m-0"] (H.toMarkup body)
-          dialogFooter =
-            Helpers.multiNestedClassedElems
-                H.div
-                [ "c-dialog__footer"
-                , "c-toolbar c-toolbar__spaced"
-                , "c-toolbar__right"
-                , "c-toolbar__item"
-                , "c-button-toolbar"
-                ]
-              . H.toMarkup
-              $ footer
-      in  Helpers.classedElem H.div
-                              ["c-dialog", "c-dialog--small"]
-                              (messages >> dialogFooter >> pushDialog)
-            ! A.role "dialog"
-
-
-    pushDialog = H.div mempty ! A.class_ "c-dialog__push"
-
+            ["c-alert__body", "c-alert__text", "c-alert__message", "c-content"]
+          $ H.toMarkup body

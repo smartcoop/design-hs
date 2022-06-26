@@ -1,4 +1,4 @@
-module Examples.Layouts.Errors
+module Examples.Pages.Errors
   ( notFound
   , notFoundWebsite
   ) where
